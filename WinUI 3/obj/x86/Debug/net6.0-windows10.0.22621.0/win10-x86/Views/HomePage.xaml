@@ -1,0 +1,141 @@
+﻿<Page
+    x:Class="WinUI_3.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUI_3"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="47,30,47,30">
+        <!--Loading View-->
+        <StackPanel x:ConnectionId='2' Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="LoadingView">
+            <ProgressRing Width="50" Height="50" Margin="0,0,0,10"/>
+            <TextBlock Text="Loading..."/>
+        </StackPanel>
+        <!--Original Scroll View-->
+        <ScrollViewer x:ConnectionId='3' VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" x:Name="PageScrollview" VerticalScrollBarVisibility="Hidden" Visibility="Collapsed">
+            <StackPanel Orientation="Vertical">
+                <!--Year 1-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 1" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='32' Width="300" Height="175" Stretch="Fill" x:Name="BlackIceImage"/>
+                            <Button x:ConnectionId='33' Height="175" Width="300" x:Name="BlackIceButton"                             />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='30' Width="300" Height="175" Stretch="Fill" x:Name="DustLineImage"/>
+                            <Button x:ConnectionId='31' Height="175" Width="300" x:Name="DustLineButton"                             />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='28' Width="300" Height="175" Stretch="Fill" x:Name="SkullRainImage"/>
+                            <Button x:ConnectionId='29' Height="175" Width="300" x:Name="SkullRainButton"                              />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='26' Width="300" Height="175" Stretch="Fill" x:Name="RedCrowImage"/>
+                            <Button x:ConnectionId='27' Height="175" Width="300" x:Name="RedCrowButton"                            />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 2-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 2" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='24' Width="300" Height="175" Stretch="Fill" x:Name="VelvetShellImage"/>
+                            <Button x:ConnectionId='25' Height="175" Width="300" x:Name="VelvetShellButton"                                />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='22' Width="300" Height="175" Stretch="Fill" x:Name="HealthImage"/>
+                            <Button x:ConnectionId='23' Height="175" Width="300" x:Name="HealthButton"                           />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='20' Width="300" Height="175" Stretch="Fill" x:Name="BloodOrchidImage"/>
+                            <Button x:ConnectionId='21' Height="175" Width="300" x:Name="BloodOrchidButton"                                />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='18' Width="300" Height="175" Stretch="Fill" x:Name="WhiteNoiseImage"/>
+                            <Button x:ConnectionId='19' Height="175" Width="300" x:Name="WhiteNoiseButton"                               />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 3-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 3" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='16' Width="300" Height="175" Stretch="Fill" x:Name="ChimeraImage"/>
+                            <Button x:ConnectionId='17' Height="175" Width="300" x:Name="ChimeraButton"                            />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='14' Width="300" Height="175" Stretch="Fill" x:Name="ParaBellumImage"/>
+                            <Button x:ConnectionId='15' Height="175" Width="300" x:Name="ParaBellumButton"                               />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='12' Width="300" Height="175" Stretch="Fill" x:Name="GrimSkyImage"/>
+                            <Button x:ConnectionId='13' Height="175" Width="300" x:Name="GrimSkyButton"                            />
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image x:ConnectionId='10' Width="300" Height="175" Stretch="Fill" x:Name="WindBastionImage"/>
+                            <Button x:ConnectionId='11' Height="175" Width="300" x:Name="WindBastionButton"                                />
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!--Season View-->
+        <StackPanel x:ConnectionId='4' Visibility="Collapsed" x:Name="SeasonView">
+            <StackPanel Orientation="Horizontal">
+                <Grid Margin="0,0,30,0" CornerRadius="20" Width="500" Height="300" HorizontalAlignment="Left">
+                    <Image x:ConnectionId='9' Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
+                </Grid>
+                <Grid>
+                    <StackPanel VerticalAlignment="Center">
+                        <CheckBox>
+                            <TextBlock Text="Option 1"/>
+                        </CheckBox>
+                        <CheckBox>
+                            <TextBlock Text="Option 2"/>
+                        </CheckBox>
+                        <CheckBox>
+                            <TextBlock Text="Option 3"/>
+                        </CheckBox>
+                        <CheckBox>
+                            <TextBlock Text="Option 4"/>
+                        </CheckBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            
+            <Grid>
+                <Rectangle Fill="Transparent" Stroke="White" Height="270" Margin="0,10,0,0"/>
+                <TextBlock x:ConnectionId='8' Text="Season Description Placeholder" Margin="0,10,0,0" x:Name="SeasonDescription"/>
+            </Grid>
+
+        </StackPanel>
+        
+        <!--Buttons Bar-->
+        <Grid x:ConnectionId='5' x:Name="ButtonsBar" Visibility="Collapsed">
+            <Button x:ConnectionId='6' Width="200" Height="50" x:Name="BackButton"                          VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,10,0,0">
+                <TextBlock Text="Back"/>
+            </Button>
+
+            <Button x:ConnectionId='7' Width="200" Height="50" x:Name="DownloadButton"                              VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0">
+                <TextBlock Text="Download"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
+
