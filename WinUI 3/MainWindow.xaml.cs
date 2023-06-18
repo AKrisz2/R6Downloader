@@ -29,7 +29,8 @@ namespace WinUI_3
 
         public MainWindow()
         {
-            this.InitializeComponent(); 
+            this.Title = "R6 Downloader";
+            this.InitializeComponent();
             GetAppWindowAndPresenter();
             _presenter.IsResizable = false;
 
@@ -41,6 +42,7 @@ namespace WinUI_3
             contentFrame = ContentFrame;
             navigationView = NavigationViewControl;
             _settingsButton = SettingsButton;
+
         }
         bool TrySetSystemBackdrop()
         {

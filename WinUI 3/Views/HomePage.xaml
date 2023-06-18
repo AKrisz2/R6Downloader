@@ -104,24 +104,23 @@
                 <Grid>
                     <StackPanel VerticalAlignment="Center">
                         <CheckBox>
-                            <TextBlock Text="Option 1"/>
+                            <TextBlock Text="Medium Textures"/>
                         </CheckBox>
                         <CheckBox>
-                            <TextBlock Text="Option 2"/>
+                            <TextBlock Text="High Textures"/>
                         </CheckBox>
                         <CheckBox>
-                            <TextBlock Text="Option 3"/>
+                            <TextBlock Text="Very High Textures"/>
                         </CheckBox>
                         <CheckBox>
-                            <TextBlock Text="Option 4"/>
+                            <TextBlock Text="Ultra Textures"/>
                         </CheckBox>
                     </StackPanel>
                 </Grid>
             </StackPanel>
             
             <Grid>
-                <Rectangle Fill="Transparent" Stroke="White" Height="270" Margin="0,10,0,0"/>
-                <TextBlock Text="Season Description Placeholder" Margin="0,10,0,0" x:Name="SeasonDescription"/>
+                <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription"/>
             </Grid>
 
         </StackPanel>
