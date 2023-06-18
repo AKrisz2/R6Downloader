@@ -18,6 +18,7 @@
     <None Remove="HomePage.xaml" />
     <None Remove="SettingsPage.xaml" />
     <None Remove="Views\ExtractionEventsPage.xaml~RF7185b4.TMP" />
+    <None Remove="Views\SettingsErrorPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -89,4 +90,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
   </PropertyGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
 </Project>
