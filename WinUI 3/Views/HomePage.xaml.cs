@@ -41,6 +41,29 @@ namespace WinUI_3
         BitmapImage GrimSkyImg;
         BitmapImage WindBastionImg;
 
+        BitmapImage BurntHorizonImg;
+        BitmapImage PhantomSightImg;
+        BitmapImage EmberRiseImg;
+        BitmapImage ShiftingTidesImg;
+
+        BitmapImage VoidEdgeImg;
+        BitmapImage SteelWaveImg;
+        BitmapImage ShadowLegacyImg;
+        BitmapImage NeonDawnImg;
+
+        BitmapImage CrimsonHeistImg;
+        BitmapImage NorthStarImg;
+        BitmapImage CrystalGuardImg;
+        BitmapImage HighCalibreImg;
+
+        BitmapImage DemonVeilImg;
+        BitmapImage VectorGlareImg;
+        BitmapImage BrutalSwarmImg;
+        BitmapImage SolarRaidImg;
+
+        BitmapImage CommandingForceImg;
+        BitmapImage DreadFactorImg;
+
         JObject SeasonData;
 
         string seasonFolder;
@@ -123,6 +146,51 @@ namespace WinUI_3
                     File.Delete("year3.zip");
                 }
             }
+            if (!File.Exists(App.appData + "\\images\\burnthorizon.jpg") || !File.Exists(App.appData + "\\images\\phantomsight.jpg") || !File.Exists(App.appData + "\\images\\emberrise.jpg") || !File.Exists(App.appData + "\\images\\shiftingtides.jpg"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Year%204/Year4.zip"), "year4.zip");
+                    System.IO.Compression.ZipFile.ExtractToDirectory("year4.zip", App.appData + "\\images", true);
+                    File.Delete("year4.zip");
+                }
+            }
+            if (!File.Exists(App.appData + "\\images\\voidedge.jpg") || !File.Exists(App.appData + "\\images\\steelwave.jpg") || !File.Exists(App.appData + "\\images\\shadowlegacy.jpg") || !File.Exists(App.appData + "\\images\\neondawn.jpg"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Year%205/Year5.zip"), "year5.zip");
+                    System.IO.Compression.ZipFile.ExtractToDirectory("year5.zip", App.appData + "\\images", true);
+                    File.Delete("year5.zip");
+                }
+            }
+            if (!File.Exists(App.appData + "\\images\\crimsonheist.jpg") || !File.Exists(App.appData + "\\images\\northstar.jpg") || !File.Exists(App.appData + "\\images\\crystalguard.jpg") || !File.Exists(App.appData + "\\images\\highcalibre.jpg"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Year%206/Year6.zip"), "year6.zip");
+                    System.IO.Compression.ZipFile.ExtractToDirectory("year6.zip", App.appData + "\\images", true);
+                    File.Delete("year6.zip");
+                }
+            }
+            if (!File.Exists(App.appData + "\\images\\demonveil.jpg") || !File.Exists(App.appData + "\\images\\vectorglare.jpg") || !File.Exists(App.appData + "\\images\\brutalswarm.jpg") || !File.Exists(App.appData + "\\images\\solarraid.jpg"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Year%207/Year7.zip"), "year7.zip");
+                    System.IO.Compression.ZipFile.ExtractToDirectory("year7.zip", App.appData + "\\images", true);
+                    File.Delete("year7.zip");
+                }
+            }
+            if (!File.Exists(App.appData + "\\images\\commandingforce.jpg") || !File.Exists(App.appData + "\\images\\dreadfactor.jpg"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Year%208/Year8.zip"), "year8.zip");
+                    System.IO.Compression.ZipFile.ExtractToDirectory("year8.zip", App.appData + "\\images", true);
+                    File.Delete("year8.zip");
+                }
+            }
 
             //Set Images
             BlackIceImg = new BitmapImage(new Uri(App.appData + "\\images\\blackice.jpg", UriKind.Absolute));
@@ -140,6 +208,29 @@ namespace WinUI_3
             GrimSkyImg = new BitmapImage(new Uri(App.appData + "\\images\\grimsky.jpg", UriKind.Absolute));
             WindBastionImg = new BitmapImage(new Uri(App.appData + "\\images\\windbastion.jpg", UriKind.Absolute));
 
+            BurntHorizonImg = new BitmapImage(new Uri(App.appData + "\\images\\burnthorizon.jpg", UriKind.Absolute));
+            PhantomSightImg = new BitmapImage(new Uri(App.appData + "\\images\\phantomsight.jpg", UriKind.Absolute));
+            EmberRiseImg = new BitmapImage(new Uri(App.appData + "\\images\\emberrise.jpg", UriKind.Absolute));
+            ShiftingTidesImg = new BitmapImage(new Uri(App.appData + "\\images\\shiftingtides.jpg", UriKind.Absolute));
+
+            VoidEdgeImg = new BitmapImage(new Uri(App.appData + "\\images\\voidedge.jpg", UriKind.Absolute));
+            SteelWaveImg = new BitmapImage(new Uri(App.appData + "\\images\\steelwave.jpg", UriKind.Absolute));
+            ShadowLegacyImg = new BitmapImage(new Uri(App.appData + "\\images\\shadowlegacy.jpg", UriKind.Absolute));
+            NeonDawnImg = new BitmapImage(new Uri(App.appData + "\\images\\neondawn.jpg", UriKind.Absolute));
+
+            CrimsonHeistImg = new BitmapImage(new Uri(App.appData + "\\images\\crimsonheist.jpg", UriKind.Absolute));
+            NorthStarImg = new BitmapImage(new Uri(App.appData + "\\images\\northstar.jpg", UriKind.Absolute));
+            CrystalGuardImg = new BitmapImage(new Uri(App.appData + "\\images\\crystalguard.jpg", UriKind.Absolute));
+            HighCalibreImg = new BitmapImage(new Uri(App.appData + "\\images\\highcalibre.jpg", UriKind.Absolute));
+
+            DemonVeilImg = new BitmapImage(new Uri(App.appData + "\\images\\demonveil.jpg", UriKind.Absolute));
+            VectorGlareImg = new BitmapImage(new Uri(App.appData + "\\images\\vectorglare.jpg", UriKind.Absolute));
+            BrutalSwarmImg = new BitmapImage(new Uri(App.appData + "\\images\\brutalswarm.jpg", UriKind.Absolute));
+            SolarRaidImg = new BitmapImage(new Uri(App.appData + "\\images\\solarraid.jpg", UriKind.Absolute));
+
+            CommandingForceImg = new BitmapImage(new Uri(App.appData + "\\images\\commandingforce.jpg", UriKind.Absolute));
+            DreadFactorImg = new BitmapImage(new Uri(App.appData + "\\images\\dreadfactor.jpg", UriKind.Absolute));
+
 
             //Load Images
             BlackIceImage.Source = BlackIceImg;
@@ -156,6 +247,29 @@ namespace WinUI_3
             ParaBellumImage.Source = ParaBellumImg;
             GrimSkyImage.Source = GrimSkyImg;
             WindBastionImage.Source = WindBastionImg;
+
+            BurntHorizonImage.Source = BurntHorizonImg;
+            PhantomSightImage.Source = PhantomSightImg;
+            EmberRiseImage.Source = EmberRiseImg;
+            ShiftingTidesImage.Source = ShiftingTidesImg;
+
+            VoidEdgeImage.Source = VoidEdgeImg;
+            SteelWaveImage.Source = SteelWaveImg;
+            ShadowLegacyImage.Source = ShadowLegacyImg;
+            NeonDawnImage.Source = NeonDawnImg;
+
+            CrimsonHeistImage.Source = CrimsonHeistImg;
+            NorthStarImage.Source = NorthStarImg;
+            CrystalGuardImage.Source = CrystalGuardImg;
+            HighCalibreImage.Source = HighCalibreImg;
+
+            DemonVeilImage.Source = DemonVeilImg;
+            VectorGlareImage.Source = VectorGlareImg;
+            BrutalSwarmImage.Source = BrutalSwarmImg;
+            SolarRaidImage.Source = SolarRaidImg;
+
+            CommandingForceImage.Source = CommandingForceImg;
+            DreadFactorImage.Source = DreadFactorImg;
 
             //Load Season Descriptions
             using (WebClient client = new WebClient())
@@ -348,6 +462,204 @@ namespace WinUI_3
             seasonFolder = "Y3S4_WindBastion";
             manifestWW = SeasonData["windbastion"]["manifestWW"].ToString();
             manifestContent = SeasonData["windbastion"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void BurntHorizonButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = BurntHorizonImg;
+            SeasonDescription.Text = SeasonData["burnthorizon"]["description"].ToString();
+
+            seasonFolder = "Y4S1_BurntHorizon";
+            manifestWW = SeasonData["burnthorizon"]["manifestWW"].ToString();
+            manifestContent = SeasonData["burnthorizon"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void PhantomSightButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = PhantomSightImg;
+            SeasonDescription.Text = SeasonData["phantomsight"]["description"].ToString();
+
+            seasonFolder = "Y4S2_PhantomSight";
+            manifestWW = SeasonData["phantomsight"]["manifestWW"].ToString();
+            manifestContent = SeasonData["phantomsight"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void EmberRiseButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = EmberRiseImg;
+            SeasonDescription.Text = SeasonData["emberrise"]["description"].ToString();
+
+            seasonFolder = "Y4S3_EmberRise";
+            manifestWW = SeasonData["emberrise"]["manifestWW"].ToString();
+            manifestContent = SeasonData["emberrise"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void ShiftingTidesButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = ShiftingTidesImg;
+            SeasonDescription.Text = SeasonData["shiftingtides"]["description"].ToString();
+
+            seasonFolder = "Y4S4_ShiftingTides";
+            manifestWW = SeasonData["shiftingtides"]["manifestWW"].ToString();
+            manifestContent = SeasonData["shiftingtides"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void VoidEdgeButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = VoidEdgeImg;
+            SeasonDescription.Text = SeasonData["voidedge"]["description"].ToString();
+
+            seasonFolder = "Y5S1_VoidEdge";
+            manifestWW = SeasonData["voidedge"]["manifestWW"].ToString();
+            manifestContent = SeasonData["voidedge"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void SteelWaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = SteelWaveImg;
+            SeasonDescription.Text = SeasonData["steelwave"]["description"].ToString();
+
+            seasonFolder = "Y5S2_SteelWave";
+            manifestWW = SeasonData["steelwave"]["manifestWW"].ToString();
+            manifestContent = SeasonData["steelwave"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void ShadowLegacyButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = ShadowLegacyImg;
+            SeasonDescription.Text = SeasonData["shadowlegacy"]["description"].ToString();
+
+            seasonFolder = "Y5S3_ShadowLegacy";
+            manifestWW = SeasonData["shadowlegacy"]["manifestWW"].ToString();
+            manifestContent = SeasonData["shadowlegacy"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void NeonDawnButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = NeonDawnImg;
+            SeasonDescription.Text = SeasonData["neondawn"]["description"].ToString();
+
+            seasonFolder = "Y5S4_NeonDawn";
+            manifestWW = SeasonData["neondawn"]["manifestWW"].ToString();
+            manifestContent = SeasonData["neondawn"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void CrimsonHeistButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = CrimsonHeistImg;
+            SeasonDescription.Text = SeasonData["crimsonheist"]["description"].ToString();
+
+            seasonFolder = "Y6S1_CrimsonHeist";
+            manifestWW = SeasonData["crimsonheist"]["manifestWW"].ToString();
+            manifestContent = SeasonData["crimsonheist"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void NorthStarButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = NorthStarImg;
+            SeasonDescription.Text = SeasonData["northstar"]["description"].ToString();
+
+            seasonFolder = "Y6S2_NorthStar";
+            manifestWW = SeasonData["northstar"]["manifestWW"].ToString();
+            manifestContent = SeasonData["northstar"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void CrystalGuardButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = CrystalGuardImg;
+            SeasonDescription.Text = SeasonData["crystalguard"]["description"].ToString();
+
+            seasonFolder = "Y6S3_CrystalGuard";
+            manifestWW = SeasonData["crystalguard"]["manifestWW"].ToString();
+            manifestContent = SeasonData["crystalguard"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void HighCalibreButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = HighCalibreImg;
+            SeasonDescription.Text = SeasonData["highcalibre"]["description"].ToString();
+
+            seasonFolder = "Y6S4_HighCalibre";
+            manifestWW = SeasonData["highcalibre"]["manifestWW"].ToString();
+            manifestContent = SeasonData["highcalibre"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void DemonVeilButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = DemonVeilImg;
+            SeasonDescription.Text = SeasonData["demonveil"]["description"].ToString();
+
+            seasonFolder = "Y7S1_DemonVeil";
+            manifestWW = SeasonData["demonveil"]["manifestWW"].ToString();
+            manifestContent = SeasonData["demonveil"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void VectorGlareButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = VectorGlareImg;
+            SeasonDescription.Text = SeasonData["vectorglare"]["description"].ToString();
+
+            seasonFolder = "Y7S2_VectorGlare";
+            manifestWW = SeasonData["vectorglare"]["manifestWW"].ToString();
+            manifestContent = SeasonData["vectorglare"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void BrutalSwarmButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = BrutalSwarmImg;
+            SeasonDescription.Text = SeasonData["brutalswarm"]["description"].ToString();
+
+            seasonFolder = "Y7S3_BrutalSwarm";
+            manifestWW = SeasonData["brutalswarm"]["manifestWW"].ToString();
+            manifestContent = SeasonData["brutalswarm"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void SolarRaidButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = SolarRaidImg;
+            SeasonDescription.Text = SeasonData["solarraid"]["description"].ToString();
+
+            seasonFolder = "Y7S4_SolarRaid";
+            manifestWW = SeasonData["solarraid"]["manifestWW"].ToString();
+            manifestContent = SeasonData["solarraid"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void CommandingForceButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = CommandingForceImg;
+            SeasonDescription.Text = SeasonData["commandingforce"]["description"].ToString();
+
+            seasonFolder = "Y8S1_CommandingForce";
+            manifestWW = SeasonData["commandingforce"]["manifestWW"].ToString();
+            manifestContent = SeasonData["commandingforce"]["manifestContent"].ToString();
+
+            HideStuff();
+        }
+        private void DreadFactorButton_Click(object sender, RoutedEventArgs e)
+        {
+            SeasonImage.Source = DreadFactorImg;
+            SeasonDescription.Text = SeasonData["dreadfactor"]["description"].ToString();
+
+            seasonFolder = "Y8S2_DreadFactor";
+            manifestWW = SeasonData["dreadfactor"]["manifestWW"].ToString();
+            manifestContent = SeasonData["dreadfactor"]["manifestContent"].ToString();
 
             HideStuff();
         }

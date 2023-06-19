@@ -92,6 +92,121 @@
                         </Grid>
                     </StackPanel>
                 </StackPanel>
+                <!--Year 4-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 4" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="BurntHorizonImage"/>
+                            <Button Height="175" Width="300" x:Name="BurntHorizonButton" Click="BurntHorizonButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="PhantomSightImage"/>
+                            <Button Height="175" Width="300" x:Name="PhantomSightButton" Click="PhantomSightButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="EmberRiseImage"/>
+                            <Button Height="175" Width="300" x:Name="EmberRiseButton" Click="EmberRiseButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="ShiftingTidesImage"/>
+                            <Button Height="175" Width="300" x:Name="ShiftingTidesButton" Click="ShiftingTidesButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 5-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 5" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="VoidEdgeImage"/>
+                            <Button Height="175" Width="300" x:Name="VoidEdgeButton" Click="VoidEdgeButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="SteelWaveImage"/>
+                            <Button Height="175" Width="300" x:Name="SteelWaveButton" Click="SteelWaveButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="ShadowLegacyImage"/>
+                            <Button Height="175" Width="300" x:Name="ShadowLegacyButton" Click="ShadowLegacyButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="NeonDawnImage"/>
+                            <Button Height="175" Width="300" x:Name="NeonDawnButton" Click="NeonDawnButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 6-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 6" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="CrimsonHeistImage"/>
+                            <Button Height="175" Width="300" x:Name="CrimsonHeistButton" Click="CrimsonHeistButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="NorthStarImage"/>
+                            <Button Height="175" Width="300" x:Name="NorthStarButton" Click="NorthStarButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="CrystalGuardImage"/>
+                            <Button Height="175" Width="300" x:Name="CrystalGuardButton" Click="CrystalGuardButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="HighCalibreImage"/>
+                            <Button Height="175" Width="300" x:Name="HighCalibreButton" Click="HighCalibreButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 7-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 7" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="DemonVeilImage"/>
+                            <Button Height="175" Width="300" x:Name="DemonVeilButton" Click="DemonVeilButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="VectorGlareImage"/>
+                            <Button Height="175" Width="300" x:Name="VectorGlareButton" Click="VectorGlareButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="BrutalSwarmImage"/>
+                            <Button Height="175" Width="300" x:Name="BrutalSwarmButton" Click="BrutalSwarmButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="SolarRaidImage"/>
+                            <Button Height="175" Width="300" x:Name="SolarRaidButton" Click="SolarRaidButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <!--Year 8-->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Year 8" FontSize="36" FontWeight="ExtraBold"/>
+                    <StackPanel Orientation="Horizontal" Padding="0,25">
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="CommandingForceImage"/>
+                            <Button Height="175" Width="300" x:Name="CommandingForceButton" Click="CommandingForceButton_Click"/>
+                        </Grid>
+
+                        <Grid Margin="0,0,25,0" CornerRadius="20">
+                            <Image Width="300" Height="175" Stretch="Fill" x:Name="DreadFactorImage"/>
+                            <Button Height="175" Width="300" x:Name="DreadFactorButton" Click="DreadFactorButton_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
@@ -103,13 +218,13 @@
                 </Grid>
                 <Grid>
                     <StackPanel VerticalAlignment="Center">
-                        <CheckBox>
+                        <CheckBox IsEnabled="False">
                             <TextBlock Text="Medium Textures"/>
                         </CheckBox>
-                        <CheckBox>
+                        <CheckBox IsEnabled="False">
                             <TextBlock Text="High Textures"/>
                         </CheckBox>
-                        <CheckBox>
+                        <CheckBox IsEnabled="False">
                             <TextBlock Text="Very High Textures"/>
                         </CheckBox>
                         <CheckBox>
