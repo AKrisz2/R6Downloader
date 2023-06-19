@@ -22,23 +22,23 @@
                     <TextBlock Text="Year 1" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='68' Width="300" Height="175" Stretch="Fill" x:Name="BlackIceImage"/>
-                            <Button x:ConnectionId='69' Height="175" Width="300" x:Name="BlackIceButton"                             />
+                            <Image x:ConnectionId='69' Width="300" Height="175" Stretch="Fill" x:Name="BlackIceImage"/>
+                            <Button x:ConnectionId='70' Height="175" Width="300" x:Name="BlackIceButton"                             />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='66' Width="300" Height="175" Stretch="Fill" x:Name="DustLineImage"/>
-                            <Button x:ConnectionId='67' Height="175" Width="300" x:Name="DustLineButton"                             />
+                            <Image x:ConnectionId='67' Width="300" Height="175" Stretch="Fill" x:Name="DustLineImage"/>
+                            <Button x:ConnectionId='68' Height="175" Width="300" x:Name="DustLineButton"                             />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='64' Width="300" Height="175" Stretch="Fill" x:Name="SkullRainImage"/>
-                            <Button x:ConnectionId='65' Height="175" Width="300" x:Name="SkullRainButton"                              />
+                            <Image x:ConnectionId='65' Width="300" Height="175" Stretch="Fill" x:Name="SkullRainImage"/>
+                            <Button x:ConnectionId='66' Height="175" Width="300" x:Name="SkullRainButton"                              />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='62' Width="300" Height="175" Stretch="Fill" x:Name="RedCrowImage"/>
-                            <Button x:ConnectionId='63' Height="175" Width="300" x:Name="RedCrowButton"                            />
+                            <Image x:ConnectionId='63' Width="300" Height="175" Stretch="Fill" x:Name="RedCrowImage"/>
+                            <Button x:ConnectionId='64' Height="175" Width="300" x:Name="RedCrowButton"                            />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -47,23 +47,23 @@
                     <TextBlock Text="Year 2" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='60' Width="300" Height="175" Stretch="Fill" x:Name="VelvetShellImage"/>
-                            <Button x:ConnectionId='61' Height="175" Width="300" x:Name="VelvetShellButton"                                />
+                            <Image x:ConnectionId='61' Width="300" Height="175" Stretch="Fill" x:Name="VelvetShellImage"/>
+                            <Button x:ConnectionId='62' Height="175" Width="300" x:Name="VelvetShellButton"                                />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='58' Width="300" Height="175" Stretch="Fill" x:Name="HealthImage"/>
-                            <Button x:ConnectionId='59' Height="175" Width="300" x:Name="HealthButton"                           />
+                            <Image x:ConnectionId='59' Width="300" Height="175" Stretch="Fill" x:Name="HealthImage"/>
+                            <Button x:ConnectionId='60' Height="175" Width="300" x:Name="HealthButton"                           />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='56' Width="300" Height="175" Stretch="Fill" x:Name="BloodOrchidImage"/>
-                            <Button x:ConnectionId='57' Height="175" Width="300" x:Name="BloodOrchidButton"                                />
+                            <Image x:ConnectionId='57' Width="300" Height="175" Stretch="Fill" x:Name="BloodOrchidImage"/>
+                            <Button x:ConnectionId='58' Height="175" Width="300" x:Name="BloodOrchidButton"                                />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='54' Width="300" Height="175" Stretch="Fill" x:Name="WhiteNoiseImage"/>
-                            <Button x:ConnectionId='55' Height="175" Width="300" x:Name="WhiteNoiseButton"                               />
+                            <Image x:ConnectionId='55' Width="300" Height="175" Stretch="Fill" x:Name="WhiteNoiseImage"/>
+                            <Button x:ConnectionId='56' Height="175" Width="300" x:Name="WhiteNoiseButton"                               />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -72,23 +72,23 @@
                     <TextBlock Text="Year 3" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='52' Width="300" Height="175" Stretch="Fill" x:Name="ChimeraImage"/>
-                            <Button x:ConnectionId='53' Height="175" Width="300" x:Name="ChimeraButton"                            />
+                            <Image x:ConnectionId='53' Width="300" Height="175" Stretch="Fill" x:Name="ChimeraImage"/>
+                            <Button x:ConnectionId='54' Height="175" Width="300" x:Name="ChimeraButton"                            />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='50' Width="300" Height="175" Stretch="Fill" x:Name="ParaBellumImage"/>
-                            <Button x:ConnectionId='51' Height="175" Width="300" x:Name="ParaBellumButton"                               />
+                            <Image x:ConnectionId='51' Width="300" Height="175" Stretch="Fill" x:Name="ParaBellumImage"/>
+                            <Button x:ConnectionId='52' Height="175" Width="300" x:Name="ParaBellumButton"                               />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='48' Width="300" Height="175" Stretch="Fill" x:Name="GrimSkyImage"/>
-                            <Button x:ConnectionId='49' Height="175" Width="300" x:Name="GrimSkyButton"                            />
+                            <Image x:ConnectionId='49' Width="300" Height="175" Stretch="Fill" x:Name="GrimSkyImage"/>
+                            <Button x:ConnectionId='50' Height="175" Width="300" x:Name="GrimSkyButton"                            />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='46' Width="300" Height="175" Stretch="Fill" x:Name="WindBastionImage"/>
-                            <Button x:ConnectionId='47' Height="175" Width="300" x:Name="WindBastionButton"                                />
+                            <Image x:ConnectionId='47' Width="300" Height="175" Stretch="Fill" x:Name="WindBastionImage"/>
+                            <Button x:ConnectionId='48' Height="175" Width="300" x:Name="WindBastionButton"                                />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -97,23 +97,23 @@
                     <TextBlock Text="Year 4" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='44' Width="300" Height="175" Stretch="Fill" x:Name="BurntHorizonImage"/>
-                            <Button x:ConnectionId='45' Height="175" Width="300" x:Name="BurntHorizonButton"                                 />
+                            <Image x:ConnectionId='45' Width="300" Height="175" Stretch="Fill" x:Name="BurntHorizonImage"/>
+                            <Button x:ConnectionId='46' Height="175" Width="300" x:Name="BurntHorizonButton"                                 />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='42' Width="300" Height="175" Stretch="Fill" x:Name="PhantomSightImage"/>
-                            <Button x:ConnectionId='43' Height="175" Width="300" x:Name="PhantomSightButton"                                 />
+                            <Image x:ConnectionId='43' Width="300" Height="175" Stretch="Fill" x:Name="PhantomSightImage"/>
+                            <Button x:ConnectionId='44' Height="175" Width="300" x:Name="PhantomSightButton"                                 />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='40' Width="300" Height="175" Stretch="Fill" x:Name="EmberRiseImage"/>
-                            <Button x:ConnectionId='41' Height="175" Width="300" x:Name="EmberRiseButton"                              />
+                            <Image x:ConnectionId='41' Width="300" Height="175" Stretch="Fill" x:Name="EmberRiseImage"/>
+                            <Button x:ConnectionId='42' Height="175" Width="300" x:Name="EmberRiseButton"                              />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='38' Width="300" Height="175" Stretch="Fill" x:Name="ShiftingTidesImage"/>
-                            <Button x:ConnectionId='39' Height="175" Width="300" x:Name="ShiftingTidesButton"                                  />
+                            <Image x:ConnectionId='39' Width="300" Height="175" Stretch="Fill" x:Name="ShiftingTidesImage"/>
+                            <Button x:ConnectionId='40' Height="175" Width="300" x:Name="ShiftingTidesButton"                                  />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -122,23 +122,23 @@
                     <TextBlock Text="Year 5" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='36' Width="300" Height="175" Stretch="Fill" x:Name="VoidEdgeImage"/>
-                            <Button x:ConnectionId='37' Height="175" Width="300" x:Name="VoidEdgeButton"                             />
+                            <Image x:ConnectionId='37' Width="300" Height="175" Stretch="Fill" x:Name="VoidEdgeImage"/>
+                            <Button x:ConnectionId='38' Height="175" Width="300" x:Name="VoidEdgeButton"                             />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='34' Width="300" Height="175" Stretch="Fill" x:Name="SteelWaveImage"/>
-                            <Button x:ConnectionId='35' Height="175" Width="300" x:Name="SteelWaveButton"                              />
+                            <Image x:ConnectionId='35' Width="300" Height="175" Stretch="Fill" x:Name="SteelWaveImage"/>
+                            <Button x:ConnectionId='36' Height="175" Width="300" x:Name="SteelWaveButton"                              />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='32' Width="300" Height="175" Stretch="Fill" x:Name="ShadowLegacyImage"/>
-                            <Button x:ConnectionId='33' Height="175" Width="300" x:Name="ShadowLegacyButton"                                 />
+                            <Image x:ConnectionId='33' Width="300" Height="175" Stretch="Fill" x:Name="ShadowLegacyImage"/>
+                            <Button x:ConnectionId='34' Height="175" Width="300" x:Name="ShadowLegacyButton"                                 />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='30' Width="300" Height="175" Stretch="Fill" x:Name="NeonDawnImage"/>
-                            <Button x:ConnectionId='31' Height="175" Width="300" x:Name="NeonDawnButton"                             />
+                            <Image x:ConnectionId='31' Width="300" Height="175" Stretch="Fill" x:Name="NeonDawnImage"/>
+                            <Button x:ConnectionId='32' Height="175" Width="300" x:Name="NeonDawnButton"                             />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -147,23 +147,23 @@
                     <TextBlock Text="Year 6" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='28' Width="300" Height="175" Stretch="Fill" x:Name="CrimsonHeistImage"/>
-                            <Button x:ConnectionId='29' Height="175" Width="300" x:Name="CrimsonHeistButton"                                 />
+                            <Image x:ConnectionId='29' Width="300" Height="175" Stretch="Fill" x:Name="CrimsonHeistImage"/>
+                            <Button x:ConnectionId='30' Height="175" Width="300" x:Name="CrimsonHeistButton"                                 />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='26' Width="300" Height="175" Stretch="Fill" x:Name="NorthStarImage"/>
-                            <Button x:ConnectionId='27' Height="175" Width="300" x:Name="NorthStarButton"                              />
+                            <Image x:ConnectionId='27' Width="300" Height="175" Stretch="Fill" x:Name="NorthStarImage"/>
+                            <Button x:ConnectionId='28' Height="175" Width="300" x:Name="NorthStarButton"                              />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='24' Width="300" Height="175" Stretch="Fill" x:Name="CrystalGuardImage"/>
-                            <Button x:ConnectionId='25' Height="175" Width="300" x:Name="CrystalGuardButton"                                 />
+                            <Image x:ConnectionId='25' Width="300" Height="175" Stretch="Fill" x:Name="CrystalGuardImage"/>
+                            <Button x:ConnectionId='26' Height="175" Width="300" x:Name="CrystalGuardButton"                                 />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='22' Width="300" Height="175" Stretch="Fill" x:Name="HighCalibreImage"/>
-                            <Button x:ConnectionId='23' Height="175" Width="300" x:Name="HighCalibreButton"                                />
+                            <Image x:ConnectionId='23' Width="300" Height="175" Stretch="Fill" x:Name="HighCalibreImage"/>
+                            <Button x:ConnectionId='24' Height="175" Width="300" x:Name="HighCalibreButton"                                />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -172,23 +172,23 @@
                     <TextBlock Text="Year 7" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='20' Width="300" Height="175" Stretch="Fill" x:Name="DemonVeilImage"/>
-                            <Button x:ConnectionId='21' Height="175" Width="300" x:Name="DemonVeilButton"                              />
+                            <Image x:ConnectionId='21' Width="300" Height="175" Stretch="Fill" x:Name="DemonVeilImage"/>
+                            <Button x:ConnectionId='22' Height="175" Width="300" x:Name="DemonVeilButton"                              />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='18' Width="300" Height="175" Stretch="Fill" x:Name="VectorGlareImage"/>
-                            <Button x:ConnectionId='19' Height="175" Width="300" x:Name="VectorGlareButton"                                />
+                            <Image x:ConnectionId='19' Width="300" Height="175" Stretch="Fill" x:Name="VectorGlareImage"/>
+                            <Button x:ConnectionId='20' Height="175" Width="300" x:Name="VectorGlareButton"                                />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='16' Width="300" Height="175" Stretch="Fill" x:Name="BrutalSwarmImage"/>
-                            <Button x:ConnectionId='17' Height="175" Width="300" x:Name="BrutalSwarmButton"                                />
+                            <Image x:ConnectionId='17' Width="300" Height="175" Stretch="Fill" x:Name="BrutalSwarmImage"/>
+                            <Button x:ConnectionId='18' Height="175" Width="300" x:Name="BrutalSwarmButton"                                />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='14' Width="300" Height="175" Stretch="Fill" x:Name="SolarRaidImage"/>
-                            <Button x:ConnectionId='15' Height="175" Width="300" x:Name="SolarRaidButton"                              />
+                            <Image x:ConnectionId='15' Width="300" Height="175" Stretch="Fill" x:Name="SolarRaidImage"/>
+                            <Button x:ConnectionId='16' Height="175" Width="300" x:Name="SolarRaidButton"                              />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -197,13 +197,13 @@
                     <TextBlock Text="Year 8" FontSize="36" FontWeight="ExtraBold"/>
                     <StackPanel Orientation="Horizontal" Padding="0,25">
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='12' Width="300" Height="175" Stretch="Fill" x:Name="CommandingForceImage"/>
-                            <Button x:ConnectionId='13' Height="175" Width="300" x:Name="CommandingForceButton"                                    />
+                            <Image x:ConnectionId='13' Width="300" Height="175" Stretch="Fill" x:Name="CommandingForceImage"/>
+                            <Button x:ConnectionId='14' Height="175" Width="300" x:Name="CommandingForceButton"                                    />
                         </Grid>
 
                         <Grid Margin="0,0,25,0" CornerRadius="20">
-                            <Image x:ConnectionId='10' Width="300" Height="175" Stretch="Fill" x:Name="DreadFactorImage"/>
-                            <Button x:ConnectionId='11' Height="175" Width="300" x:Name="DreadFactorButton"                                />
+                            <Image x:ConnectionId='11' Width="300" Height="175" Stretch="Fill" x:Name="DreadFactorImage"/>
+                            <Button x:ConnectionId='12' Height="175" Width="300" x:Name="DreadFactorButton"                                />
                         </Grid>
                     </StackPanel>
                 </StackPanel>
@@ -214,7 +214,7 @@
         <StackPanel x:ConnectionId='4' Visibility="Collapsed" x:Name="SeasonView">
             <StackPanel Orientation="Horizontal">
                 <Grid Margin="0,0,30,0" CornerRadius="20" Width="500" Height="300" HorizontalAlignment="Left">
-                    <Image x:ConnectionId='9' Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
+                    <Image x:ConnectionId='10' Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
                 </Grid>
                 <Grid>
                     <StackPanel VerticalAlignment="Center">
@@ -227,7 +227,7 @@
                         <CheckBox IsEnabled="False">
                             <TextBlock Text="Very High Textures"/>
                         </CheckBox>
-                        <CheckBox>
+                        <CheckBox x:ConnectionId='9' x:Name="_4kCheckbox">
                             <TextBlock Text="Ultra Textures"/>
                         </CheckBox>
                     </StackPanel>

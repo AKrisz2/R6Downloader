@@ -227,7 +227,7 @@
                         <CheckBox IsEnabled="False">
                             <TextBlock Text="Very High Textures"/>
                         </CheckBox>
-                        <CheckBox>
+                        <CheckBox x:Name="_4kCheckbox">
                             <TextBlock Text="Ultra Textures"/>
                         </CheckBox>
                     </StackPanel>

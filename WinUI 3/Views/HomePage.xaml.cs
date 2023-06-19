@@ -69,6 +69,7 @@ namespace WinUI_3
         string seasonFolder;
         string manifestWW;
         string manifestContent;
+        string manifest4K;
 
         public HomePage()
         {
@@ -326,6 +327,11 @@ namespace WinUI_3
             else
             {
                 File.Delete("downloader.bat");
+                if (_4kCheckbox.IsChecked == true)
+                {
+                    File.AppendAllText("downloader.bat",
+                    "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377239 -manifest " + manifest4K + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
+                }
                 File.AppendAllText("downloader.bat",
                     "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
                     "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
@@ -341,6 +347,7 @@ namespace WinUI_3
             seasonFolder = "Y1S1_BlackIce";
             manifestWW = SeasonData["blackice"]["manifestWW"].ToString();
             manifestContent = SeasonData["blackice"]["manifestContent"].ToString();
+            manifest4K = SeasonData["blackice"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -352,6 +359,7 @@ namespace WinUI_3
             seasonFolder = "Y1S2_DustLine";
             manifestWW = SeasonData["dustline"]["manifestWW"].ToString();
             manifestContent = SeasonData["dustline"]["manifestContent"].ToString();
+            manifest4K = SeasonData["dustline"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -363,6 +371,7 @@ namespace WinUI_3
             seasonFolder = "Y1S3_SkullRain";
             manifestWW = SeasonData["skullrain"]["manifestWW"].ToString();
             manifestContent = SeasonData["skullrain"]["manifestContent"].ToString();
+            manifest4K = SeasonData["skullrain"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -374,6 +383,7 @@ namespace WinUI_3
             seasonFolder = "Y1S4_RedCrow";
             manifestWW = SeasonData["redcrow"]["manifestWW"].ToString();
             manifestContent = SeasonData["redcrow"]["manifestContent"].ToString();
+            manifest4K = SeasonData["redcrow"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -385,6 +395,7 @@ namespace WinUI_3
             seasonFolder = "Y2S1_VelvetShell";
             manifestWW = SeasonData["velvetshell"]["manifestWW"].ToString();
             manifestContent = SeasonData["velvetshell"]["manifestContent"].ToString();
+            manifest4K = SeasonData["velvetshell"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -396,6 +407,7 @@ namespace WinUI_3
             seasonFolder = "Y2S2_Health";
             manifestWW = SeasonData["health"]["manifestWW"].ToString();
             manifestContent = SeasonData["health"]["manifestContent"].ToString();
+            manifest4K = SeasonData["health"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -407,6 +419,7 @@ namespace WinUI_3
             seasonFolder = "Y2S3_BloodOrchid";
             manifestWW = SeasonData["bloodorchid"]["manifestWW"].ToString();
             manifestContent = SeasonData["bloodorchid"]["manifestContent"].ToString();
+            manifest4K = SeasonData["bloodorchid"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -418,6 +431,7 @@ namespace WinUI_3
             seasonFolder = "Y2S4_WhiteNoise";
             manifestWW = SeasonData["whitenoise"]["manifestWW"].ToString();
             manifestContent = SeasonData["whitenoise"]["manifestContent"].ToString();
+            manifest4K = SeasonData["whitenoise"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -429,6 +443,7 @@ namespace WinUI_3
             seasonFolder = "Y3S1_Chimera";
             manifestWW = SeasonData["chimera"]["manifestWW"].ToString();
             manifestContent = SeasonData["chimera"]["manifestContent"].ToString();
+            manifest4K = SeasonData["chimera"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -440,6 +455,7 @@ namespace WinUI_3
             seasonFolder = "Y3S2_ParaBellum";
             manifestWW = SeasonData["parabellum"]["manifestWW"].ToString();
             manifestContent = SeasonData["parabellum"]["manifestContent"].ToString();
+            manifest4K = SeasonData["parabellum"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -451,6 +467,7 @@ namespace WinUI_3
             seasonFolder = "Y3S3_GrimSky";
             manifestWW = SeasonData["grimsky"]["manifestWW"].ToString();
             manifestContent = SeasonData["grimsky"]["manifestContent"].ToString();
+            manifest4K = SeasonData["grimsky"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -462,6 +479,7 @@ namespace WinUI_3
             seasonFolder = "Y3S4_WindBastion";
             manifestWW = SeasonData["windbastion"]["manifestWW"].ToString();
             manifestContent = SeasonData["windbastion"]["manifestContent"].ToString();
+            manifest4K = SeasonData["windbastion"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -473,6 +491,7 @@ namespace WinUI_3
             seasonFolder = "Y4S1_BurntHorizon";
             manifestWW = SeasonData["burnthorizon"]["manifestWW"].ToString();
             manifestContent = SeasonData["burnthorizon"]["manifestContent"].ToString();
+            manifest4K = SeasonData["burnthorizon"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -484,6 +503,7 @@ namespace WinUI_3
             seasonFolder = "Y4S2_PhantomSight";
             manifestWW = SeasonData["phantomsight"]["manifestWW"].ToString();
             manifestContent = SeasonData["phantomsight"]["manifestContent"].ToString();
+            manifest4K = SeasonData["phantomsight"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -495,6 +515,7 @@ namespace WinUI_3
             seasonFolder = "Y4S3_EmberRise";
             manifestWW = SeasonData["emberrise"]["manifestWW"].ToString();
             manifestContent = SeasonData["emberrise"]["manifestContent"].ToString();
+            manifest4K = SeasonData["emberrise"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -506,6 +527,7 @@ namespace WinUI_3
             seasonFolder = "Y4S4_ShiftingTides";
             manifestWW = SeasonData["shiftingtides"]["manifestWW"].ToString();
             manifestContent = SeasonData["shiftingtides"]["manifestContent"].ToString();
+            manifest4K = SeasonData["shiftingtides"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -517,6 +539,7 @@ namespace WinUI_3
             seasonFolder = "Y5S1_VoidEdge";
             manifestWW = SeasonData["voidedge"]["manifestWW"].ToString();
             manifestContent = SeasonData["voidedge"]["manifestContent"].ToString();
+            manifest4K = SeasonData["voidedge"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -528,6 +551,7 @@ namespace WinUI_3
             seasonFolder = "Y5S2_SteelWave";
             manifestWW = SeasonData["steelwave"]["manifestWW"].ToString();
             manifestContent = SeasonData["steelwave"]["manifestContent"].ToString();
+            manifest4K = SeasonData["steelwave"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -539,6 +563,7 @@ namespace WinUI_3
             seasonFolder = "Y5S3_ShadowLegacy";
             manifestWW = SeasonData["shadowlegacy"]["manifestWW"].ToString();
             manifestContent = SeasonData["shadowlegacy"]["manifestContent"].ToString();
+            manifest4K = SeasonData["shadowlegacy"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -550,6 +575,7 @@ namespace WinUI_3
             seasonFolder = "Y5S4_NeonDawn";
             manifestWW = SeasonData["neondawn"]["manifestWW"].ToString();
             manifestContent = SeasonData["neondawn"]["manifestContent"].ToString();
+            manifest4K = SeasonData["neondawn"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -561,6 +587,7 @@ namespace WinUI_3
             seasonFolder = "Y6S1_CrimsonHeist";
             manifestWW = SeasonData["crimsonheist"]["manifestWW"].ToString();
             manifestContent = SeasonData["crimsonheist"]["manifestContent"].ToString();
+            manifest4K = SeasonData["crimsonheist"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -572,6 +599,7 @@ namespace WinUI_3
             seasonFolder = "Y6S2_NorthStar";
             manifestWW = SeasonData["northstar"]["manifestWW"].ToString();
             manifestContent = SeasonData["northstar"]["manifestContent"].ToString();
+            manifest4K = SeasonData["northstar"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -583,6 +611,7 @@ namespace WinUI_3
             seasonFolder = "Y6S3_CrystalGuard";
             manifestWW = SeasonData["crystalguard"]["manifestWW"].ToString();
             manifestContent = SeasonData["crystalguard"]["manifestContent"].ToString();
+            manifest4K = SeasonData["crystalguard"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -594,6 +623,7 @@ namespace WinUI_3
             seasonFolder = "Y6S4_HighCalibre";
             manifestWW = SeasonData["highcalibre"]["manifestWW"].ToString();
             manifestContent = SeasonData["highcalibre"]["manifestContent"].ToString();
+            manifest4K = SeasonData["highcalibre"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -605,6 +635,7 @@ namespace WinUI_3
             seasonFolder = "Y7S1_DemonVeil";
             manifestWW = SeasonData["demonveil"]["manifestWW"].ToString();
             manifestContent = SeasonData["demonveil"]["manifestContent"].ToString();
+            manifest4K = SeasonData["demonveil"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -616,6 +647,7 @@ namespace WinUI_3
             seasonFolder = "Y7S2_VectorGlare";
             manifestWW = SeasonData["vectorglare"]["manifestWW"].ToString();
             manifestContent = SeasonData["vectorglare"]["manifestContent"].ToString();
+            manifest4K = SeasonData["vectorglare"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -627,6 +659,7 @@ namespace WinUI_3
             seasonFolder = "Y7S3_BrutalSwarm";
             manifestWW = SeasonData["brutalswarm"]["manifestWW"].ToString();
             manifestContent = SeasonData["brutalswarm"]["manifestContent"].ToString();
+            manifest4K = SeasonData["brutalswarm"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -638,6 +671,7 @@ namespace WinUI_3
             seasonFolder = "Y7S4_SolarRaid";
             manifestWW = SeasonData["solarraid"]["manifestWW"].ToString();
             manifestContent = SeasonData["solarraid"]["manifestContent"].ToString();
+            manifest4K = SeasonData["solarraid"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -649,6 +683,7 @@ namespace WinUI_3
             seasonFolder = "Y8S1_CommandingForce";
             manifestWW = SeasonData["commandingforce"]["manifestWW"].ToString();
             manifestContent = SeasonData["commandingforce"]["manifestContent"].ToString();
+            manifest4K = SeasonData["commandingforce"]["manifest4K"].ToString();
 
             HideStuff();
         }
@@ -660,6 +695,7 @@ namespace WinUI_3
             seasonFolder = "Y8S2_DreadFactor";
             manifestWW = SeasonData["dreadfactor"]["manifestWW"].ToString();
             manifestContent = SeasonData["dreadfactor"]["manifestContent"].ToString();
+            manifest4K = SeasonData["dreadfactor"]["manifest4K"].ToString();
 
             HideStuff();
         }
