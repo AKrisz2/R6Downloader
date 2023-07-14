@@ -1,4 +1,5 @@
 App.xbf
 MainWindow.xbf
 Views\HomePage.xbf
+Views\SettingsErrorPage.xbf
 Views\SettingsPage.xbf

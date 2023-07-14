@@ -224,7 +224,7 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[45];
+            _typeNameTable = new string[46];
             _typeNameTable[0] = "Microsoft.UI.Xaml.Controls.XamlControlsResources";
             _typeNameTable[1] = "Microsoft.UI.Xaml.ResourceDictionary";
             _typeNameTable[2] = "Object";
@@ -262,16 +262,17 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
             _typeNameTable[34] = "WinUI_3.HomePage";
             _typeNameTable[35] = "Microsoft.UI.Xaml.Controls.Page";
             _typeNameTable[36] = "Microsoft.UI.Xaml.Controls.UserControl";
-            _typeNameTable[37] = "Microsoft.UI.Xaml.Controls.NumberBox";
-            _typeNameTable[38] = "Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode";
-            _typeNameTable[39] = "Windows.Globalization.NumberFormatting.INumberFormatter2";
-            _typeNameTable[40] = "Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase";
-            _typeNameTable[41] = "Microsoft.UI.Xaml.Media.SolidColorBrush";
-            _typeNameTable[42] = "Microsoft.UI.Xaml.TextReadingOrder";
-            _typeNameTable[43] = "Microsoft.UI.Xaml.Controls.NumberBoxValidationMode";
-            _typeNameTable[44] = "WinUI_3.Views.SettingsPage";
+            _typeNameTable[37] = "WinUI_3.Views.SettingsErrorPage";
+            _typeNameTable[38] = "Microsoft.UI.Xaml.Controls.NumberBox";
+            _typeNameTable[39] = "Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode";
+            _typeNameTable[40] = "Windows.Globalization.NumberFormatting.INumberFormatter2";
+            _typeNameTable[41] = "Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase";
+            _typeNameTable[42] = "Microsoft.UI.Xaml.Media.SolidColorBrush";
+            _typeNameTable[43] = "Microsoft.UI.Xaml.TextReadingOrder";
+            _typeNameTable[44] = "Microsoft.UI.Xaml.Controls.NumberBoxValidationMode";
+            _typeNameTable[45] = "WinUI_3.Views.SettingsPage";
 
-            _typeTable = new global::System.Type[45];
+            _typeTable = new global::System.Type[46];
             _typeTable[0] = typeof(global::Microsoft.UI.Xaml.Controls.XamlControlsResources);
             _typeTable[1] = typeof(global::Microsoft.UI.Xaml.ResourceDictionary);
             _typeTable[2] = typeof(global::System.Object);
@@ -309,14 +310,15 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
             _typeTable[34] = typeof(global::WinUI_3.HomePage);
             _typeTable[35] = typeof(global::Microsoft.UI.Xaml.Controls.Page);
             _typeTable[36] = typeof(global::Microsoft.UI.Xaml.Controls.UserControl);
-            _typeTable[37] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBox);
-            _typeTable[38] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode);
-            _typeTable[39] = typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2);
-            _typeTable[40] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase);
-            _typeTable[41] = typeof(global::Microsoft.UI.Xaml.Media.SolidColorBrush);
-            _typeTable[42] = typeof(global::Microsoft.UI.Xaml.TextReadingOrder);
-            _typeTable[43] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode);
-            _typeTable[44] = typeof(global::WinUI_3.Views.SettingsPage);
+            _typeTable[37] = typeof(global::WinUI_3.Views.SettingsErrorPage);
+            _typeTable[38] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBox);
+            _typeTable[39] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode);
+            _typeTable[40] = typeof(global::Windows.Globalization.NumberFormatting.INumberFormatter2);
+            _typeTable[41] = typeof(global::Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase);
+            _typeTable[42] = typeof(global::Microsoft.UI.Xaml.Media.SolidColorBrush);
+            _typeTable[43] = typeof(global::Microsoft.UI.Xaml.TextReadingOrder);
+            _typeTable[44] = typeof(global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode);
+            _typeTable[45] = typeof(global::WinUI_3.Views.SettingsPage);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -359,8 +361,9 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
         private object Activate_30_MainWindow() { return new global::WinUI_3.MainWindow(); }
         private object Activate_32_ProgressRing() { return new global::Microsoft.UI.Xaml.Controls.ProgressRing(); }
         private object Activate_34_HomePage() { return new global::WinUI_3.HomePage(); }
-        private object Activate_37_NumberBox() { return new global::Microsoft.UI.Xaml.Controls.NumberBox(); }
-        private object Activate_44_SettingsPage() { return new global::WinUI_3.Views.SettingsPage(); }
+        private object Activate_37_SettingsErrorPage() { return new global::WinUI_3.Views.SettingsErrorPage(); }
+        private object Activate_38_NumberBox() { return new global::Microsoft.UI.Xaml.Controls.NumberBox(); }
+        private object Activate_45_SettingsPage() { return new global::WinUI_3.Views.SettingsPage(); }
         private void MapAdd_0_XamlControlsResources(object instance, object key, object item)
         {
             var collection = (global::System.Collections.Generic.IDictionary<global::System.Object, global::System.Object>)instance;
@@ -638,9 +641,16 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
                 xamlType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 37:   //  Microsoft.UI.Xaml.Controls.NumberBox
+            case 37:   //  WinUI_3.Views.SettingsErrorPage
+                userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
+                userType.Activator = Activate_37_SettingsErrorPage;
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 38:   //  Microsoft.UI.Xaml.Controls.NumberBox
                 userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Control"));
-                userType.Activator = Activate_37_NumberBox;
+                userType.Activator = Activate_38_NumberBox;
                 userType.AddMemberName("Value");
                 userType.AddMemberName("Minimum");
                 userType.AddMemberName("Maximum");
@@ -663,7 +673,7 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 38:   //  Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode
+            case 39:   //  Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode
                 userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
                 userType.AddEnumValue("Hidden", global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode.Hidden);
                 userType.AddEnumValue("Compact", global::Microsoft.UI.Xaml.Controls.NumberBoxSpinButtonPlacementMode.Compact);
@@ -671,34 +681,34 @@ namespace WinUI_3.WinUI_3_XamlTypeInfo
                 xamlType = userType;
                 break;
 
-            case 39:   //  Windows.Globalization.NumberFormatting.INumberFormatter2
+            case 40:   //  Windows.Globalization.NumberFormatting.INumberFormatter2
                 userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, null);
                 userType.SetIsReturnTypeStub();
                 xamlType = userType;
                 break;
 
-            case 40:   //  Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase
+            case 41:   //  Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase
                 xamlType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 41:   //  Microsoft.UI.Xaml.Media.SolidColorBrush
+            case 42:   //  Microsoft.UI.Xaml.Media.SolidColorBrush
                 xamlType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 42:   //  Microsoft.UI.Xaml.TextReadingOrder
+            case 43:   //  Microsoft.UI.Xaml.TextReadingOrder
                 xamlType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
 
-            case 43:   //  Microsoft.UI.Xaml.Controls.NumberBoxValidationMode
+            case 44:   //  Microsoft.UI.Xaml.Controls.NumberBoxValidationMode
                 userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("System.Enum"));
                 userType.AddEnumValue("InvalidInputOverwritten", global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode.InvalidInputOverwritten);
                 userType.AddEnumValue("Disabled", global::Microsoft.UI.Xaml.Controls.NumberBoxValidationMode.Disabled);
                 xamlType = userType;
                 break;
 
-            case 44:   //  WinUI_3.Views.SettingsPage
+            case 45:   //  WinUI_3.Views.SettingsPage
                 userType = new global::WinUI_3.WinUI_3_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Microsoft.UI.Xaml.Controls.Page"));
-                userType.Activator = Activate_44_SettingsPage;
+                userType.Activator = Activate_45_SettingsPage;
                 userType.SetIsLocalType();
                 xamlType = userType;
                 break;

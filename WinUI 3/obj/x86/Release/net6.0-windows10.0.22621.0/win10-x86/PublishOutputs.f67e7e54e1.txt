@@ -1,4 +1,33 @@
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.exe
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.deps.json
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.runtimeconfig.json
 C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.pdb
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.SDK.NET.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinRT.Runtime.dll
 C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.WindowsAppRuntime.Bootstrap.dll
 C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\resources.pri
-C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.exe
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.InteractiveExperiences.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.WinUI.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.AppLifecycle.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.AppNotifications.Builder.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.AppNotifications.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.ApplicationModel.Resources.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.PushNotifications.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.Security.AccessControl.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.System.Power.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.System.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.Windows.Widgets.Projection.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Microsoft.WindowsAppRuntime.Release.Net.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Newtonsoft.Json.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\PInvoke.Kernel32.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\PInvoke.User32.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\PInvoke.Windows.Core.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\PInvoke.Windows.ShellScalingApi.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\RestSharp.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\System.Text.Encodings.Web.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\System.Text.Json.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\Validation.dll
+C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-x86\publish\WinUI 3.dll
