@@ -16,6 +16,7 @@ using System.Diagnostics;
 using WinUI_3.Views;
 using Microsoft.UI.Text;
 using System.Xml.Linq;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -60,14 +61,12 @@ namespace WinUI_3
             _seasonDescription = SeasonDescription;
             _seasonView = SeasonView;
             _buttonsBar = ButtonsBar;
-
-            GetSeasons();
         }
-        public static async void GetSeasons()
+        private async Task GetSeasons()
         {
             using (WebClient client = new WebClient())
             {
-                json = JObject.Parse(client.DownloadString("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/seasonteszt.json"));
+                json = JObject.Parse(await client.DownloadStringTaskAsync("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/seasonteszt.json"));
             }
             foreach (var property in json.Properties())
             {
@@ -203,6 +202,10 @@ namespace WinUI_3
 
             SeasonImage.Source = null;
             SeasonDescription.Text = null;
+        }
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await GetSeasons();
         }
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
