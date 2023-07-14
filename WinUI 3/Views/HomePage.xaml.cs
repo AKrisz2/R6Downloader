@@ -104,7 +104,6 @@ namespace WinUI_3
                         seasonImage.Stretch = Stretch.Fill;
                         BitmapImage image = new BitmapImage();
 
-
                         if (File.Exists(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg") && CalculateMD5(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg") == items[i].ElementAt(j).First["md5"].ToString())
                         {
                             image.UriSource = new Uri(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg", UriKind.Absolute);

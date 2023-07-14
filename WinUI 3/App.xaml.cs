@@ -38,6 +38,7 @@ namespace WinUI_3
             if (!Directory.Exists(appData))
             {
                 Directory.CreateDirectory(appData);
+                Directory.CreateDirectory(appData + "\\images");
             }
 
             this.InitializeComponent();
