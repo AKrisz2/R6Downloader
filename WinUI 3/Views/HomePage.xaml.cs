@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using System.Diagnostics;
 using WinUI_3.Views;
 using Microsoft.UI.Text;
+using System.Xml.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -103,7 +104,23 @@ namespace WinUI_3
                         seasonImage.Height = 175;
                         seasonImage.Stretch = Stretch.Fill;
                         BitmapImage image = new BitmapImage();
-                        image.UriSource = new Uri(items[i].ElementAt(j).First["link"].ToString());
+
+
+                        if (File.Exists(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg") && CalculateMD5(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg") == items[i].ElementAt(j).First["md5"].ToString())
+                        {
+                            image.UriSource = new Uri(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg", UriKind.Absolute);
+                        }
+                        else if (!File.Exists(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg") || CalculateMD5(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg") != items[i].ElementAt(j).First["md5"].ToString())
+                        {
+                            using (var client = new WebClient())
+                            {
+                                client.DownloadFile(new Uri(items[i].ElementAt(j).First["link"].ToString()), items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg");
+                                File.Copy(items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg", App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg", true);
+                                File.Delete(items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg");
+                                image.UriSource = new Uri(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg", UriKind.Absolute);
+                            }
+                        }
+
                         seasonImage.Source = image;
                         seasonGrid.Children.Add(seasonImage);
 
@@ -131,7 +148,7 @@ namespace WinUI_3
             int seasonNumber = int.Parse(button.Name);
 
             BitmapImage image = new BitmapImage();
-            image.UriSource = new Uri(seasons[seasonNumber].First["link"].ToString());
+            image.UriSource = new Uri(App.appData + "\\images\\" + seasons[seasonNumber].First["nameShort"] + ".jpg", UriKind.Absolute);
             _seasonImage.Source = image;
             _seasonDescription.Text = seasons[seasonNumber].First["description"].ToString();
             manifest4K = seasons[seasonNumber].First["manifest4K"].ToString();
