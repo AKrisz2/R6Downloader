@@ -44,8 +44,15 @@ namespace WinUI_3
         public static StackPanel _seasonView;
         public static Grid _buttonsBar;
 
+        public static Button _downloadButton;
+        public static Button _playButton;
+        public static Button _verifyButton;
+        public static Button _backButton;
+        public static Button _refreshNameButton;
+
         public static int seasonNumber = 0;
 
+        public static int selectedSeason;
         public static string seasonFolder;
         public static string manifestWW;
         public static string manifestContent;
@@ -65,9 +72,17 @@ namespace WinUI_3
             _seasonDescription = SeasonDescription;
             _seasonView = SeasonView;
             _buttonsBar = ButtonsBar;
+            _playButton = PlayButton;
+            _verifyButton = VerifyButton;
+            _downloadButton = DownloadButton;
+            _backButton = BackButton;
+            _refreshNameButton = RefreshNameButton;
         }
         private async Task GetSeasons()
         {
+            selectedSeason = 0;
+            seasons.Clear();
+            seasonNumber = 0;
             using (WebClient client = new WebClient())
             {
                 json = JObject.Parse(await client.DownloadStringTaskAsync("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/seasonteszt.json"));
@@ -151,6 +166,7 @@ namespace WinUI_3
         {
             Button button = (Button)sender;
             int seasonNumber = int.Parse(button.Name);
+            selectedSeason = seasonNumber;
 
             BitmapImage image = new BitmapImage();
             image.UriSource = new Uri(App.appData + "\\images\\" + seasons[seasonNumber].First["nameShort"] + ".jpg", UriKind.Absolute);
@@ -164,6 +180,15 @@ namespace WinUI_3
             yearViewer.Visibility = Visibility.Collapsed;
             _seasonView.Visibility = Visibility.Visible;
             _buttonsBar.Visibility = Visibility.Visible;
+
+            if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe"))
+            {
+                ShowPlayButton();
+            }
+            else
+            {
+                HidePlayButton();
+            }
         }
         static string CalculateMD5(string filename)
         {
@@ -181,14 +206,25 @@ namespace WinUI_3
             if (!File.Exists("DepotDownloader\\DepotDownloader.dll"))
             using (var client = new WebClient())
             {
-                client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                client.DownloadFileCompleted += DepotDownloaderDownloaded;
                 client.DownloadFileAsync(new Uri("https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.5.0/depotdownloader-2.5.0.zip"), "depotdownloader.zip");
             }
+            if (!Directory.Exists("Cracks"))
+            using (var client = new WebClient())
+            {
+                client.DownloadFileCompleted += CracksDownloaded;
+                client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
+            }
         }
-        private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        private void DepotDownloaderDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             System.IO.Compression.ZipFile.ExtractToDirectory("depotdownloader.zip", App.appFolder + "\\DepotDownloader\\");
             File.Delete("depotdownloader.zip");
+        }
+        private void CracksDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            System.IO.Compression.ZipFile.ExtractToDirectory("cracks.zip", App.appFolder + "\\Cracks\\");
+            File.Delete("cracks.zip");
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -217,22 +253,22 @@ namespace WinUI_3
 
                 var result = await dialog.ShowAsync();
             }
-            else if(App.password == null)
-            {
-                ContentDialog dialog = new ContentDialog();
-                dialog.XamlRoot = this.XamlRoot;
-                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "Please enter Steam password!";
-                dialog.PrimaryButtonText = "OK";
-                dialog.DefaultButton = ContentDialogButton.Primary;
-                dialog.Content = new PasswordPage();
-
-                var result = await dialog.ShowAsync();
-            }
             else
             {
-                File.Delete("downloader.bat"); 
+                if (App.password == null)
+                {
+                    ContentDialog dialog1 = new ContentDialog();
+                    dialog1.XamlRoot = this.XamlRoot;
+                    dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    dialog1.Title = "Please enter Steam password!";
+                    dialog1.PrimaryButtonText = "OK";
+                    dialog1.DefaultButton = ContentDialogButton.Primary;
+                    dialog1.Content = new PasswordPage();
 
+                    var result1 = await dialog1.ShowAsync();
+                }
+                
+                File.Delete("downloader.bat");
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
@@ -245,7 +281,7 @@ namespace WinUI_3
 
                 
                 File.AppendAllText("downloader.bat",
-                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
                     "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
                 
                 if (_4kCheckbox.IsChecked == true)
@@ -315,12 +351,137 @@ namespace WinUI_3
                 process.BeginOutputReadLine();
 
                 await process.WaitForExitAsync();
+
+                //Download Done
+                CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
+                ShowPlayButton();
             }
 
             // Get the captured output as a string
             string output = outputBuilder.ToString().Trim();
 
             return output;
+        }
+        public void CopyCrack(int seasonNum, string folder)
+        {
+            if (seasonNum <= 21) //Y1S1-Y6S2
+            {
+                string sourceFolder = "Cracks\\Y1SX-Y6S2";
+                string destinationFolder = folder;
+
+                string[] files = Directory.GetFiles(sourceFolder);
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destinationPath = Path.Combine(destinationFolder, fileName);
+                    File.Copy(file, destinationPath, true);
+                }
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "CHANGEGAMENAME", seasonFolder);
+            }
+            else if (seasonNum == 22) //Y6S3
+            {
+                string sourceFolder = "Cracks\\Y6S3";
+                string destinationFolder = folder;
+
+                string[] files = Directory.GetFiles(sourceFolder);
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destinationPath = Path.Combine(destinationFolder, fileName);
+                    File.Copy(file, destinationPath, true);
+                }
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "RainbowSixSiegeYS", seasonFolder);
+            }
+            else if (seasonNum >= 23) //Y6S4+
+            {
+                string sourceFolder = "Cracks\\Y6S4-Y8SX";
+                string destinationFolder = folder;
+
+                string[] files = Directory.GetFiles(sourceFolder);
+
+                foreach (string file in files)
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destinationPath = Path.Combine(destinationFolder, fileName);
+                    File.Copy(file, destinationPath, true);
+                }
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username =", App.settings["ingame"].ToString());
+            }
+        }
+        public void ChangeIngameName(int seasonNum, string folder)
+        {
+            if (seasonNum <= 21) //Y1S1-Y6S2
+            {
+                string destinationFolder = folder;
+
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+            }
+            else if (seasonNum == 22) //Y6S3
+            {
+                string destinationFolder = folder;
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+            }
+            else if (seasonNum >= 23) //Y6S4+
+            {
+                string destinationFolder = folder;
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username =", App.settings["ingame"].ToString());
+            }
+        }
+        void ReplaceStringInFile(string filePath, string oldText, string newText)
+        {
+            string fileContent = File.ReadAllText(filePath);
+
+            string updatedContent = fileContent.Replace(oldText, newText);
+
+            File.WriteAllText(filePath, updatedContent);
+        }
+        void ReplaceLineStartsWith(string filePath, string lineStart, string newText)
+        {
+            string[] lines = File.ReadAllLines(filePath);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                if (lines[i].StartsWith(lineStart))
+                {
+                    lines[i] = "Username = " + newText;
+                    break;
+                }
+            }
+            File.WriteAllLines(filePath, lines);
+        }
+        public static void ShowPlayButton()
+        {
+            _downloadButton.Visibility = Visibility.Collapsed;
+            _playButton.Visibility = Visibility.Visible;
+            _verifyButton.Visibility = Visibility.Visible;
+            _backButton.Visibility = Visibility.Visible;
+            _refreshNameButton.Visibility = Visibility.Visible;
+        }
+        public static void HidePlayButton()
+        {
+            _downloadButton.Visibility = Visibility.Visible;
+            _playButton.Visibility = Visibility.Collapsed;
+            _verifyButton.Visibility = Visibility.Collapsed;
+            _backButton.Visibility = Visibility.Visible;
+            _refreshNameButton.Visibility= Visibility.Collapsed;
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe";
+                process.Start();
+            }
+        }
+
+        private void RefreshNameButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeIngameName(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
         }
     }
 }

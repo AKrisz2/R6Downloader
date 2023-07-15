@@ -2,6 +2,7 @@ App.xbf
 MainWindow.xbf
 Views\DownloadWarning.xbf
 Views\HomePage.xbf
+Views\NameChange.xbf
 Views\PasswordPage.xbf
 Views\SettingsErrorPage.xbf
 Views\SettingsPage.xbf

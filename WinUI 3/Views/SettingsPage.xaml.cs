@@ -79,5 +79,18 @@ namespace WinUI_3.Views
 
             var result = await dialog.ShowAsync();
         }
+
+        private async void changeIngameName_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Enter your name!";
+            dialog.PrimaryButtonText = "OK";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new NameChange();
+
+            var result = await dialog.ShowAsync();
+        }
     }
 }
