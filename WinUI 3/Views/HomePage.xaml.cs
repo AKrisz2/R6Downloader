@@ -181,7 +181,7 @@ namespace WinUI_3
             _seasonView.Visibility = Visibility.Visible;
             _buttonsBar.Visibility = Visibility.Visible;
 
-            if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe"))
+            if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe") || File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
             {
                 ShowPlayButton();
             }
@@ -474,7 +474,14 @@ namespace WinUI_3
         {
             using (Process process = new Process())
             {
-                process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe";
+                if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
+                {
+                    process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe";
+                }
+                else if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe"))
+                {
+                    process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe";
+                }
                 process.Start();
             }
         }
