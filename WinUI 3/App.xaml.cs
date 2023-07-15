@@ -26,6 +26,7 @@ namespace WinUI_3
         public static Window Window => m_window;
         public static JObject settings;
         public static JObject imageHashes;
+        public static string password;
         public static string appFolder;
         public static string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\R6Downloader";
 

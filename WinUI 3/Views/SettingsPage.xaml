@@ -15,6 +15,10 @@
         <StackPanel Orientation="Vertical" Margin="47" HorizontalAlignment="Left">
             <TextBlock Text="Username" Margin="0,0,0,10"/>
             <TextBox Width="200" Height="25" x:Name="usernameInput" HorizontalAlignment="Left"/>
+            
+            <Button Margin="0,10,0,0" x:Name="setPassword" Click="setPassword_Click">
+                <TextBlock Text="Set Steam Password"/>
+            </Button>
 
             <TextBlock Text="Download Folder" Margin="0,30,0,10"/>
             <TextBlock Text="C:/Downloads/" x:Name="downloadFolder"/>

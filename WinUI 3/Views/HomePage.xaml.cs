@@ -17,6 +17,8 @@ using WinUI_3.Views;
 using Microsoft.UI.Text;
 using System.Xml.Linq;
 using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using System.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -48,6 +50,8 @@ namespace WinUI_3
         public static string manifestWW;
         public static string manifestContent;
         public static string manifest4K;
+        
+        private Process process;
 
         public HomePage()
         {
@@ -136,6 +140,9 @@ namespace WinUI_3
                     }
                 }
             }
+
+            DownloadStuff();
+
             loadingStack.Visibility = Visibility.Collapsed;
             yearViewer.Visibility = Visibility.Visible;
             MainWindow._settingsButton.Visibility = Visibility.Visible;
@@ -177,21 +184,11 @@ namespace WinUI_3
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
                 client.DownloadFileAsync(new Uri("https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.5.0/depotdownloader-2.5.0.zip"), "depotdownloader.zip");
             }
-            else
-            {
-                MainWindow._settingsButton.Visibility = Visibility.Visible;
-                LoadingView.Visibility = Visibility.Collapsed;
-                PageScrollview.Visibility = Visibility.Visible;
-            }
         }
         private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
             System.IO.Compression.ZipFile.ExtractToDirectory("depotdownloader.zip", App.appFolder + "\\DepotDownloader\\");
             File.Delete("depotdownloader.zip");
-
-            MainWindow._settingsButton.Visibility = Visibility.Visible;
-            LoadingView.Visibility = Visibility.Collapsed;
-            PageScrollview.Visibility = Visibility.Visible;
         }
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
@@ -220,20 +217,107 @@ namespace WinUI_3
 
                 var result = await dialog.ShowAsync();
             }
+            else if(App.password == null)
+            {
+                ContentDialog dialog = new ContentDialog();
+                dialog.XamlRoot = this.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Please enter Steam password!";
+                dialog.PrimaryButtonText = "OK";
+                dialog.DefaultButton = ContentDialogButton.Primary;
+                dialog.Content = new PasswordPage();
+
+                var result = await dialog.ShowAsync();
+            }
             else
             {
-                File.Delete("downloader.bat");
+                File.Delete("downloader.bat"); 
+
+                ContentDialog dialog = new ContentDialog();
+                dialog.XamlRoot = this.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Warning!";
+                dialog.PrimaryButtonText = "OK";
+                dialog.DefaultButton = ContentDialogButton.Primary;
+                dialog.Content = new DownloadWarning();
+
+                var result = await dialog.ShowAsync();
+
                 if (_4kCheckbox.IsChecked == true)
                 {
                     File.AppendAllText("downloader.bat",
-                    "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377239 -manifest " + manifest4K + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
+                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377239 -manifest " + manifest4K + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
                 }
                 File.AppendAllText("downloader.bat",
-                    "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
-                    "dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
-                    "pause");
-                Process.Start("downloader.bat");
+                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                    "@echo Download Complete!");
+
+                string batchFilePath = "downloader.bat";
+                string workingDirectory = App.appFolder;
+
+                SeasonDescription.Visibility = Visibility.Collapsed;
+                DownloadScroller.Visibility = Visibility.Visible;
+                _4kCheckbox.IsEnabled = false;
+                BackButton.IsEnabled = false;
+                DownloadButton.IsEnabled = false;
+
+                SynchronizationContext synchronizationContext = SynchronizationContext.Current;
+                process = new Process();
+                string output = await RunCommand(batchFilePath, workingDirectory, synchronizationContext);
+
+                UpdateOutputInUI(synchronizationContext, output);
+
+                // Scroll to the bottom
+                DownloadText.UpdateLayout();
+                DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
             }
+        }
+
+        private void UpdateOutputInUI(SynchronizationContext synchronizationContext, string output)
+        {
+            synchronizationContext.Post(_ =>
+            {
+                DownloadText.Text += output + Environment.NewLine; // Append the output with a new line
+
+                // Scroll to the bottom
+                DownloadText.UpdateLayout();
+                DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
+            }, null);
+        }
+
+        public async Task<string> RunCommand(string batchFilePath, string workingDirectory, SynchronizationContext synchronizationContext)
+        {
+            StringBuilder outputBuilder = new StringBuilder();
+
+            using (Process process = new Process())
+            {
+                process.StartInfo.FileName = batchFilePath;
+                process.StartInfo.WorkingDirectory = workingDirectory;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardInput = true;
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.CreateNoWindow = true;
+
+                process.OutputDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        outputBuilder.AppendLine(e.Data);
+                        UpdateOutputInUI(synchronizationContext, e.Data); // Update the output in the UI
+                    }
+                };
+
+                process.Start();
+                process.BeginOutputReadLine();
+
+                await process.WaitForExitAsync();
+            }
+
+            // Get the captured output as a string
+            string output = outputBuilder.ToString().Trim();
+
+            return output;
         }
     }
 }

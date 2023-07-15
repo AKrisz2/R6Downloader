@@ -45,9 +45,13 @@
             </StackPanel>
             
             <Grid>
-                <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription"/>
+                <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription" Visibility="Visible"/>
             </Grid>
-
+            <StackPanel>
+                <ScrollViewer Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="240" VerticalScrollBarVisibility="Hidden">
+                    <TextBlock x:Name="DownloadText" Visibility="Visible" TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </StackPanel>
         </StackPanel>
         
         <!--Buttons Bar-->

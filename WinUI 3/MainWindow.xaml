@@ -29,7 +29,7 @@
                 </muxc:NavigationView.MenuItems>
                 
                 <NavigationView.FooterMenuItems>
-                    <NavigationViewItem Icon="Setting" Content="Settings" Tag="WinUI_3.Views.SettingsPage" Visibility="Collapsed" x:Name="SettingsButton"/>
+                    <NavigationViewItem Icon="Setting" Content="Settings" Tag="WinUI_3.Views.SettingsPage" Visibility="Visible" x:Name="SettingsButton"/>
                 </NavigationView.FooterMenuItems>
 
                 <Grid>

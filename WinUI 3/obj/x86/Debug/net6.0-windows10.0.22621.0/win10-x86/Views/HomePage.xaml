@@ -17,14 +17,14 @@
         </StackPanel>
         <!--Original Scroll View-->
         <ScrollViewer x:ConnectionId='3' VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" x:Name="PageScrollview" VerticalScrollBarVisibility="Hidden">
-            <StackPanel x:ConnectionId='11' Orientation="Vertical" x:Name="YourParentControl"></StackPanel>
+            <StackPanel x:ConnectionId='13' Orientation="Vertical" x:Name="YourParentControl"></StackPanel>
         </ScrollViewer>
 
         <!--Season View-->
         <StackPanel x:ConnectionId='4' Visibility="Collapsed" x:Name="SeasonView">
             <StackPanel Orientation="Horizontal">
                 <Grid Margin="0,0,30,0" CornerRadius="20" Width="500" Height="300" HorizontalAlignment="Left">
-                    <Image x:ConnectionId='10' Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
+                    <Image x:ConnectionId='12' Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
                 </Grid>
                 <Grid>
                     <StackPanel VerticalAlignment="Center">
@@ -37,7 +37,7 @@
                         <CheckBox IsEnabled="False">
                             <TextBlock Text="Very High Textures"/>
                         </CheckBox>
-                        <CheckBox x:ConnectionId='9' x:Name="_4kCheckbox">
+                        <CheckBox x:ConnectionId='11' x:Name="_4kCheckbox">
                             <TextBlock Text="Ultra Textures"/>
                         </CheckBox>
                     </StackPanel>
@@ -45,9 +45,13 @@
             </StackPanel>
             
             <Grid>
-                <TextBlock x:ConnectionId='8' Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription"/>
+                <TextBlock x:ConnectionId='10' Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription" Visibility="Visible"/>
             </Grid>
-
+            <StackPanel>
+                <ScrollViewer x:ConnectionId='8' Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="240" VerticalScrollBarVisibility="Hidden">
+                    <TextBlock x:ConnectionId='9' x:Name="DownloadText" Visibility="Visible" TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </StackPanel>
         </StackPanel>
         
         <!--Buttons Bar-->

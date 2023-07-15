@@ -17,6 +17,12 @@
     <None Update="Package.appxmanifest">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Views\DownloadWarning.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PasswordPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\SettingsErrorPage.xaml">

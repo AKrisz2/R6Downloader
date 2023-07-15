@@ -7,6 +7,7 @@ using Windows.Storage.AccessCache;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using System;
+using Microsoft.UI.Xaml;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -64,6 +65,19 @@ namespace WinUI_3.Views
                 downloadFolder.Text = folder.Path + "\\";
                 App.settings["folder"] = downloadFolder.Text;
             }
+        }
+
+        private async void setPassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Please enter Steam password!";
+            dialog.PrimaryButtonText = "OK";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new PasswordPage();
+
+            var result = await dialog.ShowAsync();
         }
     }
 }

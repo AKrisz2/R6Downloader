@@ -17,7 +17,9 @@
     <None Remove="BlankPage1.xaml" />
     <None Remove="HomePage.xaml" />
     <None Remove="SettingsPage.xaml" />
+    <None Remove="Views\DownloadWarning.xaml" />
     <None Remove="Views\ExtractionEventsPage.xaml~RF7185b4.TMP" />
+    <None Remove="Views\PasswordPage.xaml" />
     <None Remove="Views\SettingsErrorPage.xaml" />
   </ItemGroup>
 
@@ -95,5 +97,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DownloadWarning.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\PasswordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices; // For DllImport
 using WinRT; // required to support Window.As<ICompositionSupportsSystemBackdrop>()
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Windowing;
+using System.Diagnostics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,10 +27,13 @@ namespace WinUI_3
         public static Frame contentFrame;
         public static NavigationView navigationView;
         public static NavigationViewItem _settingsButton;
+        private Process process;
 
         public MainWindow()
         {
             this.Title = "R6 Downloader";
+            this.Closed += MainWindow_Closed;
+            CoreApplication.Exiting += CoreApplication_Exiting;
             this.InitializeComponent();
             GetAppWindowAndPresenter();
             _presenter.IsResizable = false;
@@ -43,6 +47,53 @@ namespace WinUI_3
             navigationView = NavigationViewControl;
             _settingsButton = SettingsButton;
 
+        }
+        private void KillProcess(Process process)
+        {
+            process.Kill();
+            process.WaitForExit(5000); // Wait for the process to exit gracefully
+            if (!process.HasExited)
+            {
+                process.CloseMainWindow();
+            }
+        }
+        private void KillProcessByName(string processName)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            foreach (Process process in processes)
+            {
+                process.Kill();
+            }
+        }
+        private void MainWindow_Closed(object sender, WindowEventArgs e)
+        {
+            if (process != null && !process.HasExited && IsCmdRunningDownloadBat(process))
+            {
+                KillProcess(process);
+            }
+            process?.Dispose();
+            KillProcessByName("dotnet");
+        }
+        private bool IsCmdRunningDownloadBat(Process process)
+        {
+            if (process.MainModule != null)
+            {
+                string processFileName = process.MainModule.FileName;
+                if (processFileName.EndsWith("cmd.exe", StringComparison.OrdinalIgnoreCase))
+                {
+                    string cmdArguments = process.StartInfo.Arguments;
+                    return cmdArguments.Contains("downloader.bat");
+                }
+            }
+            return false;
+        }
+        private void CoreApplication_Exiting(object sender, object e)
+        {
+            if (process != null && !process.HasExited && IsCmdRunningDownloadBat(process))
+            {
+                KillProcess(process);
+            }
+            process?.Dispose();
         }
         bool TrySetSystemBackdrop()
         {
