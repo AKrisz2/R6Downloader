@@ -479,7 +479,7 @@ namespace WinUI_3
             return Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
                 .Select(filePath => Path.GetRelativePath(directoryPath, filePath))
                 .Where(relativePath => !IsExcludedDirectory(relativePath, excludedDirectories))
-                .Select(relativePath => relativePath + "=0")
+                .Select(relativePath => relativePath.Replace("\\", "/") + "=0")
                 .ToList();
         }
 

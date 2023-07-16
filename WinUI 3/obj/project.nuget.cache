@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6cM3ntgESqfcfk2N+Y+/1ZQVjTibSOO42Nhx2AECpeDCZLZLzN7VnXKPFONjICgEg1rXYXqzmRAmxnKyQ6IgEA==",
+  "dgSpecHash": "93KSiKGbqIo8sH4yPha4qgty7M3UtdVJRZIOinFSl0oYNLWd20JhfqplR296Nv1WztbOZjZh7IAAkT7lAs7m4w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Krisz\\source\\repos\\WinUI 3\\WinUI 3\\WinUI 3.csproj",
   "expectedPackageFiles": [
@@ -24,10 +24,7 @@
     "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.13.nupkg.sha512",
     "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.28\\microsoft.windows.sdk.net.ref.10.0.22621.28.nupkg.sha512",
     "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-arm64\\6.0.13\\microsoft.aspnetcore.app.runtime.win-arm64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\6.0.13\\microsoft.netcore.app.runtime.win-x86.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-arm64\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-arm64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\6.0.13\\microsoft.aspnetcore.app.runtime.win-x86.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-x86.6.0.13.nupkg.sha512"
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-arm64\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-arm64.6.0.13.nupkg.sha512"
   ],
   "logs": []
 }
