@@ -358,6 +358,7 @@ namespace WinUI_3
 
                 //Download Done
                 CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
+                GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
                 MainWindow._settingsButton.IsEnabled = true;
                 _4kCheckbox.IsEnabled = true;
                 ShowPlayButton();
@@ -401,7 +402,7 @@ namespace WinUI_3
                     File.Copy(file, destinationPath, true);
                 }
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
-                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["UserId"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "RainbowSixSiegeYS", seasonFolder);
             }
             else if (seasonNum >= 23) //Y6S4+
@@ -418,7 +419,7 @@ namespace WinUI_3
                     File.Copy(file, destinationPath, true);
                 }
                 ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
-                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "UserId = ", App.settings["UserId"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "UserId = ", App.settings["userId"].ToString());
             }
         }
         public void ChangeIngameName(int seasonNum, string folder)
@@ -461,6 +462,31 @@ namespace WinUI_3
                 }
             }
             File.WriteAllLines(filePath, lines);
+        }
+        public void GenerateStreaminginstall(string gameFolder)
+        {
+            File.Delete(gameFolder + "\\streaminginstall.ini");
+            string streaminginstallText = "[MissionToChunk]\r\n1=0,1,2,3,4,5,6,7,8,9,47\r\n2=10,11,12,13,14,15,16,17,18,19,48\r\n3=20\r\n4=21\r\n5=22,23,24,25,26,27,28,29,30,31,49\r\n6=32\r\n7=33\r\n8=34\r\n9=35\r\n10=36\r\n11=37,38,39,40,41,42,43,44,45,46,50\r\n[FileToChunk]\r\n";
+
+            List<string> files = ListFiles(gameFolder);
+
+            File.WriteAllLines(gameFolder + "\\streaminginstall.ini", new[] { streaminginstallText }.Concat(files.Skip(1)));
+        }
+        static List<string> ListFiles(string directoryPath)
+        {
+            string[] excludedDirectories = { ".DepotDownloader", "MatchReplay", "SAVE_GAMES", "Support", "BattlEye" };
+
+            return Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
+                .Select(filePath => Path.GetRelativePath(directoryPath, filePath))
+                .Where(relativePath => !IsExcludedDirectory(relativePath, excludedDirectories))
+                .Select(relativePath => relativePath + "=0")
+                .ToList();
+        }
+
+        static bool IsExcludedDirectory(string path, string[] excludedDirectories)
+        {
+            return excludedDirectories.Any(excludedDir =>
+                path.StartsWith(excludedDir + Path.DirectorySeparatorChar) || path.Equals(excludedDir));
         }
         public static void ShowPlayButton()
         {

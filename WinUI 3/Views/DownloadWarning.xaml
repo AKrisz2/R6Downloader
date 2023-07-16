@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
-        <TextBlock Text="Make sure to not switch off the download page&#013;and to accept Steam Guard on your phone!&#013;&#013;If the download seems stuck, please wait."/>
+        <TextBlock Text="Make sure to not switch off the download page&#013;and to accept Steam Guard on your phone!&#013;&#013;If the download seems stuck, or program freezes, please wait."/>
     </StackPanel>
 </Page>
