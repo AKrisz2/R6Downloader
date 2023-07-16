@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using Windows.Storage;
 using static PInvoke.User32;
@@ -51,6 +52,12 @@ namespace WinUI_3
                 File.WriteAllText("config.json", await new HttpClient().GetStringAsync("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/config.json"));
             }
             settings = JObject.Parse(File.ReadAllText("config.json"));
+
+            if (settings["userId"].ToString() == "")
+            {
+                settings["userId"] = GenerateRandomUserId();
+                File.WriteAllText("config.json", App.settings.ToString());
+            }
         }
 
         /// <summary>
@@ -58,6 +65,28 @@ namespace WinUI_3
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="args">Details about the launch request and process.</param>
+        static string GenerateRandomUserId()
+        {
+            StringBuilder sb = new StringBuilder();
+            Random random = new Random();
+
+            // Generate 32 characters (8 + 4 + 4 + 4 + 12)
+            for (int i = 0; i < 32; i++)
+            {
+                if (i == 8 || i == 13 || i == 18 || i == 23)
+                {
+                    sb.Append('-');
+                }
+                else
+                {
+                    int randomNumber = random.Next(36); // 26 letters + 10 numbers
+                    char randomChar = (char)(randomNumber < 10 ? randomNumber + 48 : randomNumber + 87);
+                    sb.Append(randomChar);
+                }
+            }
+
+            return sb.ToString();
+        }
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();

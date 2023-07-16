@@ -4,21 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading;
 using System.Net;
-using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Diagnostics;
 using WinUI_3.Views;
 using Microsoft.UI.Text;
-using System.Xml.Linq;
 using System.Threading.Tasks;
-using Microsoft.UI.Xaml.Controls.Primitives;
 using System.Text;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -49,6 +46,7 @@ namespace WinUI_3
         public static Button _verifyButton;
         public static Button _backButton;
         public static Button _refreshNameButton;
+        public static Button _closeGameButton;
 
         public static int seasonNumber = 0;
 
@@ -57,8 +55,8 @@ namespace WinUI_3
         public static string manifestWW;
         public static string manifestContent;
         public static string manifest4K;
-        
-        private Process process;
+
+        public static Process process;
 
         public HomePage()
         {
@@ -77,6 +75,9 @@ namespace WinUI_3
             _downloadButton = DownloadButton;
             _backButton = BackButton;
             _refreshNameButton = RefreshNameButton;
+            _closeGameButton = CloseGameButton;
+
+            process = new Process();
         }
         private async Task GetSeasons()
         {
@@ -85,7 +86,7 @@ namespace WinUI_3
             seasonNumber = 0;
             using (WebClient client = new WebClient())
             {
-                json = JObject.Parse(await client.DownloadStringTaskAsync("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/seasonteszt.json"));
+                json = JObject.Parse(await client.DownloadStringTaskAsync("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/seasons.json"));
             }
             foreach (var property in json.Properties())
             {
@@ -327,6 +328,9 @@ namespace WinUI_3
 
         public async Task<string> RunCommand(string batchFilePath, string workingDirectory, SynchronizationContext synchronizationContext)
         {
+            _playButton.IsEnabled = false;
+            _backButton.IsEnabled = false;
+            MainWindow._settingsButton.IsEnabled = false;
             StringBuilder outputBuilder = new StringBuilder();
 
             using (Process process = new Process())
@@ -354,6 +358,8 @@ namespace WinUI_3
 
                 //Download Done
                 CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
+                MainWindow._settingsButton.IsEnabled = true;
+                _4kCheckbox.IsEnabled = true;
                 ShowPlayButton();
             }
 
@@ -377,7 +383,8 @@ namespace WinUI_3
                     string destinationPath = Path.Combine(destinationFolder, fileName);
                     File.Copy(file, destinationPath, true);
                 }
-                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "CHANGEGAMENAME", seasonFolder);
             }
             else if (seasonNum == 22) //Y6S3
@@ -393,7 +400,8 @@ namespace WinUI_3
                     string destinationPath = Path.Combine(destinationFolder, fileName);
                     File.Copy(file, destinationPath, true);
                 }
-                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["UserId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "RainbowSixSiegeYS", seasonFolder);
             }
             else if (seasonNum >= 23) //Y6S4+
@@ -409,7 +417,8 @@ namespace WinUI_3
                     string destinationPath = Path.Combine(destinationFolder, fileName);
                     File.Copy(file, destinationPath, true);
                 }
-                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "UserId = ", App.settings["UserId"].ToString());
             }
         }
         public void ChangeIngameName(int seasonNum, string folder)
@@ -418,17 +427,17 @@ namespace WinUI_3
             {
                 string destinationFolder = folder;
 
-                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
             else if (seasonNum == 22) //Y6S3
             {
                 string destinationFolder = folder;
-                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
             else if (seasonNum >= 23) //Y6S4+
             {
                 string destinationFolder = folder;
-                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username =", App.settings["ingame"].ToString());
+                ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
             }
         }
         void ReplaceStringInFile(string filePath, string oldText, string newText)
@@ -447,7 +456,7 @@ namespace WinUI_3
             {
                 if (lines[i].StartsWith(lineStart))
                 {
-                    lines[i] = "Username = " + newText;
+                    lines[i] = lineStart + newText;
                     break;
                 }
             }
@@ -456,9 +465,15 @@ namespace WinUI_3
         public static void ShowPlayButton()
         {
             _downloadButton.Visibility = Visibility.Collapsed;
+
+            _playButton.IsEnabled = true;
             _playButton.Visibility = Visibility.Visible;
+
             _verifyButton.Visibility = Visibility.Visible;
+
             _backButton.Visibility = Visibility.Visible;
+            _backButton.IsEnabled = true;
+
             _refreshNameButton.Visibility = Visibility.Visible;
         }
         public static void HidePlayButton()
@@ -472,23 +487,81 @@ namespace WinUI_3
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            using (Process process = new Process())
+            if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
             {
-                if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
+                process.StartInfo = new ProcessStartInfo
                 {
-                    process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe";
-                }
-                else if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe"))
+                    FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe",
+                    UseShellExecute = true,
+                    Arguments = "/belaunch"
+                };
+            }
+            else if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe"))
+            {
+                process.StartInfo = new ProcessStartInfo
                 {
-                    process.StartInfo.FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe";
-                }
-                process.Start();
+                    FileName = App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe",
+                    UseShellExecute = true,
+                    Arguments = "/belaunch"
+                };
+            }
+
+            process.EnableRaisingEvents = true;
+            process.Exited += ProcessExited;
+            process.Start();
+
+            _playButton.Visibility = Visibility.Collapsed;
+            _playButton.IsEnabled = false;
+
+            _refreshNameButton.IsEnabled = false;
+            _verifyButton.IsEnabled = false;
+
+            _closeGameButton.Visibility = Visibility.Visible;
+            _closeGameButton.IsEnabled = true;
+
+            _backButton.IsEnabled = false;
+
+            MainWindow._settingsButton.IsEnabled = false;
+        }
+        private void ProcessExited(object sender, EventArgs e)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                _playButton.Visibility = Visibility.Visible;
+                _playButton.IsEnabled = true;
+
+                _refreshNameButton.IsEnabled = true;
+                _verifyButton.IsEnabled = true;
+
+                _closeGameButton.Visibility = Visibility.Collapsed;
+                _closeGameButton.IsEnabled = false;
+
+                _backButton.IsEnabled = true;
+
+                MainWindow._settingsButton.IsEnabled = true;
+            });
+            process = null;
+            process = new Process();
+        }
+        private void KillProcessByName(string processName)
+        {
+            Process[] processes = Process.GetProcessesByName(processName);
+            foreach (Process process in processes)
+            {
+                process.Kill();
             }
         }
-
         private void RefreshNameButton_Click(object sender, RoutedEventArgs e)
         {
             ChangeIngameName(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
+        }
+
+        private void CloseGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            KillProcessByName("RainbowSix");
+            KillProcessByName("rainbowsix");
+            KillProcessByName("RainbowSixGame");
+            KillProcessByName("rainbowsixgame");
         }
     }
 }

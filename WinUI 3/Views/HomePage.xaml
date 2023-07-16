@@ -75,6 +75,9 @@
             <Button Width="200" Height="50" x:Name="PlayButton" Click="PlayButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
                 <TextBlock Text="Play"/>
             </Button>
+            <Button Width="200" Height="50" x:Name="CloseGameButton" Click="CloseGameButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
+                <TextBlock Text="Force Close Game"/>
+            </Button>
         </Grid>
     </Grid>
 </Page>
