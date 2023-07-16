@@ -182,7 +182,7 @@ namespace WinUI_3
             _seasonView.Visibility = Visibility.Visible;
             _buttonsBar.Visibility = Visibility.Visible;
 
-            if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSix.exe") || File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
+            if(File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\CPlay.ini") || File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\uplay_r2.ini"))
             {
                 ShowPlayButton();
             }
@@ -466,7 +466,7 @@ namespace WinUI_3
         public void GenerateStreaminginstall(string gameFolder)
         {
             File.Delete(gameFolder + "\\streaminginstall.ini");
-            string streaminginstallText = "[MissionToChunk]\r\n1=0,1,2,3,4,5,6,7,8,9,47\r\n2=10,11,12,13,14,15,16,17,18,19,48\r\n3=20\r\n4=21\r\n5=22,23,24,25,26,27,28,29,30,31,49\r\n6=32\r\n7=33\r\n8=34\r\n9=35\r\n10=36\r\n11=37,38,39,40,41,42,43,44,45,46,50\r\n[FileToChunk]\r\n";
+            string streaminginstallText = "[MissionToChunk]\r\n1=0,1,2,3,4,5,6,7,8,9,47\r\n2=10,11,12,13,14,15,16,17,18,19,48\r\n3=20\r\n4=21\r\n5=22,23,24,25,26,27,28,29,30,31,49\r\n6=32\r\n7=33\r\n8=34\r\n9=35\r\n10=36\r\n11=37,38,39,40,41,42,43,44,45,46,50\r\n[FileToChunk]";
 
             List<string> files = ListFiles(gameFolder);
 
@@ -474,7 +474,7 @@ namespace WinUI_3
         }
         static List<string> ListFiles(string directoryPath)
         {
-            string[] excludedDirectories = { ".DepotDownloader", "MatchReplay", "SAVE_GAMES", "Support", "BattlEye" };
+            string[] excludedDirectories = { ".DepotDownloader", "MatchReplay", "SAVE_GAMES", "Support", "BattlEye", "download", "Temp" };
 
             return Directory.EnumerateFiles(directoryPath, "*", SearchOption.AllDirectories)
                 .Select(filePath => Path.GetRelativePath(directoryPath, filePath))
