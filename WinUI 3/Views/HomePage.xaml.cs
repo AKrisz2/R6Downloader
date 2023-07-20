@@ -371,7 +371,7 @@ namespace WinUI_3
         }
         public void CopyCrack(int seasonNum, string folder)
         {
-            if (seasonNum <= 21) //Y1S1-Y6S2
+            if (seasonNum <= 22) //Y1S1-Y6S2
             {
                 string sourceFolder = "Cracks\\Y1SX-Y6S2";
                 string destinationFolder = folder;
@@ -388,7 +388,7 @@ namespace WinUI_3
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "CHANGEGAMENAME", seasonFolder);
             }
-            else if (seasonNum == 22) //Y6S3
+            else if (seasonNum == 23) //Y6S3
             {
                 string sourceFolder = "Cracks\\Y6S3";
                 string destinationFolder = folder;
@@ -405,7 +405,7 @@ namespace WinUI_3
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "RainbowSixSiegeYS", seasonFolder);
             }
-            else if (seasonNum >= 23) //Y6S4+
+            else if (seasonNum >= 24) //Y6S4+
             {
                 string sourceFolder = "Cracks\\Y6S4-Y8SX";
                 string destinationFolder = folder;
@@ -424,18 +424,18 @@ namespace WinUI_3
         }
         public void ChangeIngameName(int seasonNum, string folder)
         {
-            if (seasonNum <= 21) //Y1S1-Y6S2
+            if (seasonNum <= 22) //Y1S1-Y6S2
             {
                 string destinationFolder = folder;
 
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
-            else if (seasonNum == 22) //Y6S3
+            else if (seasonNum == 23) //Y6S3
             {
                 string destinationFolder = folder;
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
-            else if (seasonNum >= 23) //Y6S4+
+            else if (seasonNum >= 24) //Y6S4+
             {
                 string destinationFolder = folder;
                 ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
