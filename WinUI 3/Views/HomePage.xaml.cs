@@ -20,6 +20,7 @@ using System.Drawing;
 using Microsoft.UI.Xaml.Shapes;
 using Microsoft.UI;
 using Path = System.IO.Path;
+using Windows.UI.ViewManagement;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -156,8 +157,11 @@ namespace WinUI_3
                         Grid imageContainer = new Grid();
                         if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini") || File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
                         {
+                            var uiSettings = new UISettings();
+                            var accentColor = uiSettings.GetColorValue(UIColorType.Accent);
+
                             Microsoft.UI.Xaml.Shapes.Rectangle background = new Microsoft.UI.Xaml.Shapes.Rectangle();
-                            SolidColorBrush brush = new SolidColorBrush(Colors.OrangeRed);
+                            SolidColorBrush brush = new SolidColorBrush(accentColor);
                             background.Fill = brush;
                             background.Height = 15;
                             background.VerticalAlignment = VerticalAlignment.Bottom;
