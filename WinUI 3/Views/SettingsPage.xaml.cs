@@ -28,18 +28,18 @@ namespace WinUI_3.Views
 
         private void loadSettings()
         {
-            usernameInput.Text = App.settings["name"].ToString();
             downloadFolder.Text = App.settings["folder"].ToString();
+
             maxDownloads.Value = Convert.ToInt16(App.settings["maxDownloads"].ToString());
             rusToggle.IsOn = (bool)App.settings["rus"];
         }
 
         private void saveSettingsButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            App.settings["name"] = usernameInput.Text;
             App.settings["folder"] = downloadFolder.Text;
             App.settings["maxDownloads"] = maxDownloads.Text;
             App.settings["rus"] = rusToggle.IsOn;
+            
 
             File.WriteAllText("config.json", App.settings.ToString());
         }
@@ -67,19 +67,28 @@ namespace WinUI_3.Views
                 downloadFolder.Text = folder.Path + "\\";
                 App.settings["folder"] = downloadFolder.Text;
             }
+
+
         }
 
-        private async void setPassword_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private async void connectSteam_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
             dialog.XamlRoot = this.XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Please enter Steam password!";
-            dialog.PrimaryButtonText = "OK";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new PasswordPage();
-
+            dialog.Title = "Set Username and Password";
+            dialog.PrimaryButtonText = "Save";
+            dialog.CloseButtonText = "Cancel";
+            dialog.Content = new ConnectSteamPage();
             var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                App.settings["name"] = ConnectSteamPage._usernameTB.Text;
+                App.settings["password"] = ConnectSteamPage.passwordPB.Password;
+
+                File.WriteAllText("config.json", App.settings.ToString());
+            }
         }
 
         private async void changeIngameName_Click(object sender, RoutedEventArgs e)
