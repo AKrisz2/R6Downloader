@@ -16,6 +16,10 @@ using Microsoft.UI.Text;
 using System.Threading.Tasks;
 using System.Text;
 using Windows.UI.Core;
+using System.Drawing;
+using Microsoft.UI.Xaml.Shapes;
+using Microsoft.UI;
+using Path = System.IO.Path;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -148,11 +152,40 @@ namespace WinUI_3
                         }
 
                         seasonImage.Source = image;
-                        seasonGrid.Children.Add(seasonImage);
+
+                        Grid imageContainer = new Grid();
+                        if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini") || File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
+                        {
+                            Microsoft.UI.Xaml.Shapes.Rectangle background = new Microsoft.UI.Xaml.Shapes.Rectangle();
+                            SolidColorBrush brush = new SolidColorBrush(Colors.OrangeRed);
+                            background.Fill = brush;
+                            background.Height = 15;
+                            background.VerticalAlignment = VerticalAlignment.Bottom;
+
+                            TextBlock installedText = new TextBlock();
+                            installedText.Text = "Installed";
+                            installedText.HorizontalAlignment = HorizontalAlignment.Center;
+                            installedText.VerticalAlignment = VerticalAlignment.Bottom;
+                            installedText.Margin = new Thickness(0, 0, 0, 1);
+                            installedText.FontSize = 10;
+                            installedText.FontWeight = FontWeights.Bold;
+
+                            imageContainer.Children.Add(background);
+                            imageContainer.Children.Add(installedText);
+
+                            seasonImage.Margin = new Thickness(0, 0, 0, background.Height);
+                        }
+                        else
+                        {
+                            seasonImage.Height = 190;
+                        }
+                        imageContainer.Children.Add(seasonImage);
+
+                        seasonGrid.Children.Add(imageContainer);
 
                         Button seasonButton = new Button();
                         seasonButton.Width = 300;
-                        seasonButton.Height = 175;
+                        seasonButton.Height = 190;
                         seasonButton.Name = seasonNumber.ToString();
                         seasonButton.Click += SeasonButton_Click;
                         seasonGrid.Children.Add(seasonButton);
@@ -261,6 +294,8 @@ namespace WinUI_3
         }
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
+            VerifyButton.IsEnabled = false;
+            RefreshNameButton.IsEnabled = false;
             if (App.settings["name"].ToString() == "" || App.settings["folder"].ToString() == "")
             {
                 ContentDialog dialog = new ContentDialog();
@@ -327,6 +362,8 @@ namespace WinUI_3
                 _4kCheckbox.IsEnabled = false;
                 BackButton.IsEnabled = false;
                 DownloadButton.IsEnabled = false;
+                VerifyButton.IsEnabled = true;
+                RefreshNameButton.IsEnabled = true;
 
                 SynchronizationContext synchronizationContext = SynchronizationContext.Current;
                 process = new Process();
