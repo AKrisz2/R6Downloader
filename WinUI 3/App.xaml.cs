@@ -40,6 +40,9 @@ namespace WinUI_3
             if (!Directory.Exists(appData))
             {
                 Directory.CreateDirectory(appData);
+            }
+            if(!Directory.Exists(appData + "\\images"))
+            {
                 Directory.CreateDirectory(appData + "\\images");
             }
 

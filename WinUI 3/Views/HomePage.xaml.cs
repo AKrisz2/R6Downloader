@@ -81,6 +81,14 @@ namespace WinUI_3
         }
         private async Task GetSeasons()
         {
+            if (IsDirectoryEmpty(App.appData + "\\images\\"))
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFileCompleted += ImagesDownloaded;
+                    client.DownloadFile(new Uri("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/images.zip"), "images.zip");
+                }
+            }
             selectedSeason = 0;
             seasons.Clear();
             seasonNumber = 0;
@@ -123,7 +131,6 @@ namespace WinUI_3
                         seasonImage.Height = 175;
                         seasonImage.Stretch = Stretch.Fill;
                         BitmapImage image = new BitmapImage();
-
                         if (File.Exists(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg") && CalculateMD5(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"].ToString() + ".jpg") == items[i].ElementAt(j).First["md5"].ToString())
                         {
                             image.UriSource = new Uri(App.appData + "\\images\\" + items[i].ElementAt(j).First["nameShort"] + ".jpg", UriKind.Absolute);
@@ -158,6 +165,11 @@ namespace WinUI_3
             }
 
             DownloadStuff();
+
+            if (File.Exists("images.zip"))
+            {
+                File.Delete("images.zip");
+            }
 
             loadingStack.Visibility = Visibility.Collapsed;
             yearViewer.Visibility = Visibility.Visible;
@@ -221,6 +233,11 @@ namespace WinUI_3
         {
             System.IO.Compression.ZipFile.ExtractToDirectory("depotdownloader.zip", App.appFolder + "\\DepotDownloader\\");
             File.Delete("depotdownloader.zip");
+        }
+        private void ImagesDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
+        {
+            System.IO.Compression.ZipFile.ExtractToDirectory("images.zip", App.appData + "\\images\\");
+            File.Delete("images.zip");
         }
         private void CracksDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -481,6 +498,18 @@ namespace WinUI_3
                 .Where(relativePath => !IsExcludedDirectory(relativePath, excludedDirectories))
                 .Select(relativePath => relativePath.Replace("\\", "/") + "=0")
                 .ToList();
+        }
+        static bool IsDirectoryEmpty(string path)
+        {
+            // Enumerate files and directories in the specified path
+            foreach (var entry in Directory.EnumerateFileSystemEntries(path))
+            {
+                // If there's at least one entry, the directory is not empty
+                return false;
+            }
+
+            // If no entries are found, the directory is empty
+            return true;
         }
 
         static bool IsExcludedDirectory(string path, string[] excludedDirectories)
