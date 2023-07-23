@@ -55,6 +55,7 @@ namespace WinUI_3
         public static string manifestWW;
         public static string manifestContent;
         public static string manifest4K;
+        public static string manifestRus;
 
         public static Process process;
 
@@ -188,6 +189,7 @@ namespace WinUI_3
             manifest4K = seasons[seasonNumber].First["manifest4K"].ToString();
             manifestContent = seasons[seasonNumber].First["manifestContent"].ToString();
             manifestWW = seasons[seasonNumber].First["manifestWW"].ToString();
+            manifestRus = seasons[seasonNumber].First["manifestRus"].ToString();
             seasonFolder = seasons[seasonNumber].First["name"].ToString();
 
             yearViewer.Visibility = Visibility.Collapsed;
@@ -297,11 +299,18 @@ namespace WinUI_3
 
                 var result = await dialog.ShowAsync();
 
-                
-                File.AppendAllText("downloader.bat",
-                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
-                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
-                
+                if (!(bool)App.settings["rus"])
+                {
+                    File.AppendAllText("downloader.bat",
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
+                }
+                else if ((bool)App.settings["rus"])
+                {
+                    File.AppendAllText("downloader.bat",
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377238 -manifest " + manifestRus + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.password + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
+                }
                 if (_4kCheckbox.IsChecked == true)
                 {
                     File.AppendAllText("downloader.bat",

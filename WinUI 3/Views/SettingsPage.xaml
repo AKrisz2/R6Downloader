@@ -32,6 +32,8 @@
             <TextBlock Text="Max Concurrent Downloads" Margin="0,30,0,0"/>
             <NumberBox Value="10" Minimum="1" Maximum="100" SpinButtonPlacementMode="Compact" Width="150" HorizontalAlignment="Left" Margin="0,10,0,0" x:Name="maxDownloads"
                        ToolTipService.ToolTip="This controls how many chunks can be downloaded at the same time. You can increase/decrease it to set a speed limit.&#013;(If you're experiencing chunk errors, decrease this value)"/>
+            <TextBlock Text="Download RUS version" Margin="0,30,0,0"/>
+            <ToggleSwitch OffContent="Off" OnContent="On" IsOn="False" x:Name="rusToggle"/>
         </StackPanel>
 
         <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="47">

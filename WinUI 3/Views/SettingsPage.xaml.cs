@@ -31,6 +31,7 @@ namespace WinUI_3.Views
             usernameInput.Text = App.settings["name"].ToString();
             downloadFolder.Text = App.settings["folder"].ToString();
             maxDownloads.Value = Convert.ToInt16(App.settings["maxDownloads"].ToString());
+            rusToggle.IsOn = (bool)App.settings["rus"];
         }
 
         private void saveSettingsButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -38,6 +39,7 @@ namespace WinUI_3.Views
             App.settings["name"] = usernameInput.Text;
             App.settings["folder"] = downloadFolder.Text;
             App.settings["maxDownloads"] = maxDownloads.Text;
+            App.settings["rus"] = rusToggle.IsOn;
 
             File.WriteAllText("config.json", App.settings.ToString());
         }
