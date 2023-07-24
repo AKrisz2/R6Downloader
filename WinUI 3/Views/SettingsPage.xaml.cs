@@ -33,6 +33,7 @@ namespace WinUI_3.Views
             {
                 downloadFolder.Text = App.settings["folder"].ToString();
             }
+            changeInGameName.Text = App.settings["ingame"].ToString();
             maxDownloads.Value = float.Parse(App.settings["maxDownloads"].ToString(), CultureInfo.InvariantCulture.NumberFormat); ;
             rusToggle.IsOn = (bool)App.settings["rus"];
         }

@@ -57,6 +57,7 @@ namespace WinUI_3
 
         public static int selectedSeason;
         public static string seasonFolder;
+        public static int crackType;
         public static string manifestWW;
         public static string manifestContent;
         public static string manifest4K;
@@ -228,6 +229,7 @@ namespace WinUI_3
             manifestWW = seasons[seasonNumber].First["manifestWW"].ToString();
             manifestRus = seasons[seasonNumber].First["manifestRus"].ToString();
             seasonFolder = seasons[seasonNumber].First["name"].ToString();
+            crackType = Convert.ToInt16(seasons[seasonNumber].First["crackType"].ToString());
 
             yearViewer.Visibility = Visibility.Collapsed;
             _seasonView.Visibility = Visibility.Visible;
@@ -298,8 +300,8 @@ namespace WinUI_3
         }
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            VerifyButton.IsEnabled = false;
-            RefreshNameButton.IsEnabled = false;
+            _verifyButton.IsEnabled = false;
+            _refreshNameButton.IsEnabled = false;
             if (App.settings["name"].ToString() == "" || App.settings["folder"].ToString() == "")
             {
                 ContentDialog dialog = new ContentDialog();
@@ -371,8 +373,6 @@ namespace WinUI_3
                 _4kCheckbox.IsEnabled = false;
                 BackButton.IsEnabled = false;
                 DownloadButton.IsEnabled = false;
-                VerifyButton.IsEnabled = true;
-                RefreshNameButton.IsEnabled = true;
 
                 SynchronizationContext synchronizationContext = SynchronizationContext.Current;
                 process = new Process();
@@ -433,6 +433,8 @@ namespace WinUI_3
                 GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
                 MainWindow._settingsButton.IsEnabled = true;
                 _4kCheckbox.IsEnabled = true;
+                _verifyButton.IsEnabled = false;
+                _refreshNameButton.IsEnabled = false;
                 ShowPlayButton();
             }
 
@@ -443,7 +445,7 @@ namespace WinUI_3
         }
         public void CopyCrack(int seasonNum, string folder)
         {
-            if (seasonNum <= 22) //Y1S1-Y6S2
+            if (crackType == 1) //Y1S1-Y6S2
             {
                 string sourceFolder = "Cracks\\Y1SX-Y6S2";
                 string destinationFolder = folder;
@@ -460,7 +462,7 @@ namespace WinUI_3
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "CHANGEGAMENAME", seasonFolder);
             }
-            else if (seasonNum == 23) //Y6S3
+            else if (crackType == 2) //Y6S3
             {
                 string sourceFolder = "Cracks\\Y6S3";
                 string destinationFolder = folder;
@@ -477,7 +479,7 @@ namespace WinUI_3
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "UserId = ", App.settings["userId"].ToString());
                 ReplaceStringInFile(destinationFolder + "\\CODEX.ini", "RainbowSixSiegeYS", seasonFolder);
             }
-            else if (seasonNum >= 24) //Y6S4+
+            else if (crackType == 3) //Y6S4+
             {
                 string sourceFolder = "Cracks\\Y6S4-Y8SX";
                 string destinationFolder = folder;
@@ -496,18 +498,18 @@ namespace WinUI_3
         }
         public void ChangeIngameName(int seasonNum, string folder)
         {
-            if (seasonNum <= 22) //Y1S1-Y6S2
+            if (crackType == 1) //Y1S1-Y6S2
             {
                 string destinationFolder = folder;
 
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
-            else if (seasonNum == 23) //Y6S3
+            else if (crackType == 2) //Y6S3
             {
                 string destinationFolder = folder;
                 ReplaceLineStartsWith(destinationFolder + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
             }
-            else if (seasonNum >= 24) //Y6S4+
+            else if (crackType == 3) //Y6S4+
             {
                 string destinationFolder = folder;
                 ReplaceLineStartsWith(destinationFolder + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());

@@ -48,8 +48,8 @@
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                <TextBlock TextAlignment="Left" Text="Change In-Game Name: " Margin="20,20,0,0" x:Name="ChangeIGN" />
-                <TextBox Text="" Width="200" x:Name="changeInGameName" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="ChangeIGN" HorizontalAlignment="Right" Margin="0,0,20,0" Height="35" TextChanged="changeInGameName_TextChanged"/>
+                <TextBlock TextAlignment="Left" Text="In-Game Name: " Margin="20,20,0,0" x:Name="ChangeIGN" />
+                <TextBox Text="" Width="200" x:Name="changeInGameName" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="ChangeIGN" HorizontalAlignment="Right" Margin="0,0,20,0" Height="35" TextAlignment="Center" TextChanged="changeInGameName_TextChanged"/>
             </Grid>
 
 
