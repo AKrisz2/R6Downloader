@@ -16,21 +16,21 @@
 
         <StackPanel Orientation="Vertical">
 
-            <Grid Margin="25" CornerRadius="15">
+            <Grid Margin="5" CornerRadius="15">
 
-                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                </Rectangle>
+
                 <TextBlock Margin="20,20,0,0"  Text="Steam Credentials" x:Name="connectToSteam"/>
 
                 <Button Width="200" Content="Login Steam" x:Name="connectSteam" Click="connectSteam_Click" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="connectToSteam" HorizontalAlignment="Right"
                         Margin="0,0,20,0"/>
             </Grid>
 
-            <Grid Margin="25" CornerRadius="15">
-                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+            <Grid Margin="5" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                </Rectangle>
+
                 <Button Content="Change folder" Width="200" x:Name="changeDownloadFolder" Click="changeDownloadFolder_Click" 
                        RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="downloadFolder" HorizontalAlignment="Right" Margin="0,0,20,0"/>
 
@@ -39,10 +39,10 @@
 
             </Grid>
 
-            <Grid Margin="25" CornerRadius="15">
-                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+            <Grid Margin="5" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                </Rectangle>
+
 
                 <TextBlock TextAlignment="Left" Text="Max Concurrent Downloads: " Margin="20,20,0,0" x:Name="MaxDownloads"/>
                 <NumberBox Value="10" Minimum="1" Maximum="100" SpinButtonPlacementMode="Compact" Width="200" HorizontalAlignment="Right" x:Name="maxDownloads"
@@ -51,10 +51,10 @@
             </Grid>
 
 
-            <Grid Margin="25" CornerRadius="15">
-                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+            <Grid Margin="5" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                </Rectangle>
+
 
                 <TextBlock TextAlignment="Left" Text="Change In-Game Name: " Margin="20,20,0,0" x:Name="ChangeIGN" />
 
@@ -62,10 +62,10 @@
             </Grid>
 
 
-            <Grid Margin="25" CornerRadius="15">
-                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60" >
+            <Grid Margin="5" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                </Rectangle>
+
 
                 <TextBlock TextAlignment="Left" Text="Download RUS version: " Margin="20,20,0,0" x:Name="RUSToggle"/>
 
@@ -73,13 +73,12 @@
             </Grid>
 
 
-            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="25">
+            <Grid Margin="5" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
+                <TextBlock Text="Save settings" x:Name="SaveSettings" Margin="20,20,0,0"/>
+                <Button Content="Save" Width="200" x:Name="saveSettingsButton" Click="saveSettingsButton_Click" RelativePanel.AlignRightWith="SaveSettings" HorizontalAlignment="Right" Margin="0,0,20,0" />
 
-                <Button Width="100" x:Name="saveSettingsButton" Click="saveSettingsButton_Click" VerticalAlignment="Bottom">
-                    <TextBlock Text="Save" />
-                </Button>
-
-            </StackPanel>
+            </Grid>
 
         </StackPanel>
         
