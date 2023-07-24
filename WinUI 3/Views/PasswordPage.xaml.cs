@@ -23,14 +23,11 @@ namespace WinUI_3.Views
     /// </summary>
     public sealed partial class PasswordPage : Page
     {
+        public static PasswordBox _passwordBox;
         public PasswordPage()
         {
             this.InitializeComponent();
-        }
-
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            App.password = PasswordInput.Password;
+            _passwordBox = PasswordInput;
         }
     }
 }
