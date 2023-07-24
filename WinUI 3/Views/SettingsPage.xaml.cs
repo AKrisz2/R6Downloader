@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using System;
 using Microsoft.UI.Xaml;
+using System.Globalization;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,18 +33,8 @@ namespace WinUI_3.Views
             {
                 downloadFolder.Text = App.settings["folder"].ToString();
             }
-            maxDownloads.Value = Convert.ToInt16(App.settings["maxDownloads"].ToString());
+            maxDownloads.Value = float.Parse(App.settings["maxDownloads"].ToString(), CultureInfo.InvariantCulture.NumberFormat); ;
             rusToggle.IsOn = (bool)App.settings["rus"];
-        }
-
-        private void saveSettingsButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            App.settings["ingame"] = changeInGameName.Text;
-            App.settings["folder"] = downloadFolder.Text;
-            App.settings["maxDownloads"] = maxDownloads.Text;
-            App.settings["rus"] = rusToggle.IsOn;
-
-            File.WriteAllText("config.json", App.settings.ToString());
         }
 
         private async void changeDownloadFolder_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -64,10 +55,11 @@ namespace WinUI_3.Views
 
             // Open the picker for the user to pick a folder
             StorageFolder folder = await openPicker.PickSingleFolderAsync();
-            if (folder == null)
+            if(folder != null)
             {
                 downloadFolder.Text = folder.Path + "\\";
-                App.settings["folder"] = downloadFolder.Text;
+                App.settings["folder"] = folder.Path + "\\";
+                File.WriteAllText("config.json", App.settings.ToString());
             }
         }
 
@@ -89,6 +81,24 @@ namespace WinUI_3.Views
 
                 File.WriteAllText("config.json", App.settings.ToString());
             }
+        }
+
+        private void changeInGameName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            App.settings["ingame"] = changeInGameName.Text;
+            File.WriteAllText("config.json", App.settings.ToString());
+        }
+
+        private void rusToggle_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            App.settings["rus"] = rusToggle.IsOn;
+            File.WriteAllText("config.json", App.settings.ToString());
+        }
+
+        private void maxDownloads_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        {
+            App.settings["maxDownloads"] = maxDownloads.Value;
+            File.WriteAllText("config.json", App.settings.ToString());
         }
     }
 
