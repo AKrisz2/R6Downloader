@@ -28,8 +28,7 @@
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
                 
-                <TextBlock Text="Path not set. " x:Name="pathS" Margin="20,20,0,0"/>
-                <TextBlock Text="" x:Name="downloadFolder"  Margin="20,20,0,0"/>
+                <TextBlock Text="Path not set." x:Name="downloadFolder"  Margin="20,20,0,0"/>
                 <Button Content="Change folder" Width="200" x:Name="changeDownloadFolder" Click="changeDownloadFolder_Click" 
                        RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="downloadFolder" HorizontalAlignment="Right" Margin="0,0,20,0"/>
                 

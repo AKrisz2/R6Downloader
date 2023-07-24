@@ -28,7 +28,10 @@ namespace WinUI_3.Views
 
         private void loadSettings()
         {
-            downloadFolder.Text = App.settings["folder"].ToString();
+            if (App.settings["folder"].ToString() != "")
+            {
+                downloadFolder.Text = App.settings["folder"].ToString();
+            }
             maxDownloads.Value = Convert.ToInt16(App.settings["maxDownloads"].ToString());
             rusToggle.IsOn = (bool)App.settings["rus"];
         }
@@ -61,14 +64,11 @@ namespace WinUI_3.Views
 
             // Open the picker for the user to pick a folder
             StorageFolder folder = await openPicker.PickSingleFolderAsync();
-            if (folder != null)
+            if (folder == null)
             {
-                pathS.Visibility = Visibility.Collapsed;
                 downloadFolder.Text = folder.Path + "\\";
                 App.settings["folder"] = downloadFolder.Text;
-            }else pathS.Visibility = Visibility.Visible;
-
-
+            }
         }
 
         private async void connectSteam_Click(object sender, RoutedEventArgs e)
