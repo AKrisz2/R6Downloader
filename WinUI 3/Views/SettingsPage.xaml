@@ -13,40 +13,76 @@
 
     <Grid>
 
-        <StackPanel Orientation="Vertical" Margin="47" HorizontalAlignment="Left">
 
-            <Button Width="200" Content="Connect to Steam" Height="50" Margin="0,10,0,0" x:Name="connectSteam" Click="connectSteam_Click">
+        <StackPanel Orientation="Vertical">
 
-            </Button>
-            <TextBox Width="200" Height="25" x:Name="usernameInput" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="Collapsed"/>
+            <Grid Margin="25" CornerRadius="15">
 
-            <TextBox Width="200" Margin="0,10,0,0" x:Name="setPassword" Visibility="Collapsed"></TextBox>
+                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
 
-            <Button Width="200" Margin="0,10,0,0" x:Name="changeIngameName" Click="changeIngameName_Click">
-                <TextBlock Text="Change Name Ingame"/>
-            </Button>
+                </Rectangle>
+                <TextBlock Margin="20,20,0,0"  Text="Steam Credentials" x:Name="connectToSteam"/>
 
-            <TextBlock Text="Download Folder" Margin="0,8,0,0"/>
-            <Button Width="200" Margin="0,1,0,0" x:Name="changeDownloadFolder" Click="changeDownloadFolder_Click">
-                <TextBlock Text="Change Folder"/>
-            </Button>
-            
-            <TextBlock Text="Path not set." x:Name="downloadFolder"/>
+                <Button Width="200" Content="Login Steam" x:Name="connectSteam" Click="connectSteam_Click" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="connectToSteam" HorizontalAlignment="Right"
+                        Margin="0,0,20,0"/>
+            </Grid>
 
-            <TextBlock Text="Max Concurrent Downloads" Margin="0,30,0,0"/>
-            <NumberBox Value="10" Minimum="1" Maximum="100" SpinButtonPlacementMode="Compact" Width="200" HorizontalAlignment="Left" Margin="0,10,0,0" x:Name="maxDownloads"
-                       ToolTipService.ToolTip="This controls how many chunks can be downloaded at the same time. You can increase/decrease it to set a speed limit.&#013;(If you're experiencing chunk errors, decrease this value)"/>
-            <TextBlock Text="Download RUS version" Margin="0,30,0,0"/>
-            <ToggleSwitch OffContent="Off" OnContent="On" IsOn="False" x:Name="rusToggle"/>
-            
+            <Grid Margin="25" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+
+                </Rectangle>
+                <Button Content="Change folder" Width="200" x:Name="changeDownloadFolder" Click="changeDownloadFolder_Click" 
+                       RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="downloadFolder" HorizontalAlignment="Right" Margin="0,0,20,0"/>
+
+                <TextBlock Text="Path not set." x:Name="downloadFolder"  Margin="20,20,0,0"/>
+
+
+            </Grid>
+
+            <Grid Margin="25" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+
+                </Rectangle>
+
+                <TextBlock TextAlignment="Left" Text="Max Concurrent Downloads: " Margin="20,20,0,0" x:Name="MaxDownloads"/>
+                <NumberBox Value="10" Minimum="1" Maximum="100" SpinButtonPlacementMode="Compact" Width="200" HorizontalAlignment="Right" x:Name="maxDownloads"
+                       ToolTipService.ToolTip="This controls how many chunks can be downloaded at the same time. You can increase/decrease it to set a speed limit.&#013;(If you're experiencing chunk errors, decrease this value)"
+                      RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="MaxDownloads" Margin="0,0,20,0" Height="35"/>
+            </Grid>
+
+
+            <Grid Margin="25" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.5" Height="60">
+
+                </Rectangle>
+
+                <TextBlock TextAlignment="Left" Text="Change In-Game Name: " Margin="20,20,0,0" x:Name="ChangeIGN" />
+
+                <TextBox Text="" Width="200" x:Name="changeInGameName" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="ChangeIGN" HorizontalAlignment="Right" Margin="0,0,20,0" Height="35"/>
+            </Grid>
+
+
+            <Grid Margin="25" CornerRadius="15">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60" >
+
+                </Rectangle>
+
+                <TextBlock TextAlignment="Left" Text="Download RUS version: " Margin="20,20,0,0" x:Name="RUSToggle"/>
+
+                <ToggleSwitch Width="200" IsOn="False" x:Name="rusToggle"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="RUSToggle" HorizontalAlignment="Right" Margin="0,0,-50,0"/>
+            </Grid>
+
+
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="25">
+
+                <Button Width="100" x:Name="saveSettingsButton" Click="saveSettingsButton_Click" VerticalAlignment="Bottom">
+                    <TextBlock Text="Save" />
+                </Button>
+
+            </StackPanel>
+
         </StackPanel>
-
-        <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="47">
-            <Button Width="100" x:Name="saveSettingsButton" Click="saveSettingsButton_Click" VerticalAlignment="Bottom">
-                <TextBlock Text="Save"/>
-            </Button>
-
-        </StackPanel>
-
+        
     </Grid>
+    
 </Page>
