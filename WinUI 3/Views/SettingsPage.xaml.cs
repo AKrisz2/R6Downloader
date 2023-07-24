@@ -63,9 +63,10 @@ namespace WinUI_3.Views
             StorageFolder folder = await openPicker.PickSingleFolderAsync();
             if (folder != null)
             {
+                pathS.Visibility = Visibility.Collapsed;
                 downloadFolder.Text = folder.Path + "\\";
                 App.settings["folder"] = downloadFolder.Text;
-            }
+            }else pathS.Visibility = Visibility.Visible;
 
 
         }
