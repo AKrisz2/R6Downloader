@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="WinUI_3.Views.DiskSpacePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUI_3.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="47,30,47,30">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="x GB of x GB available" FontSize="24" x:Name="FreeSpaceText"/>
+                <TextBlock Text=" -" FontSize="24"/>
+                <TextBlock Text="&#x20;x GB taken up by downloader" FontSize="24" x:Name="TotalSize"/>
+            </StackPanel>
+
+            <Grid CornerRadius="5" Margin="0,10,0,10" HorizontalAlignment="Left">
+                <Rectangle Fill="#4d4d4d" Opacity="0.3" Width="1277" Height="10"/>
+                <StackPanel Orientation="Horizontal" x:Name="CustomProgressBar">
+                    
+                </StackPanel>
+            </Grid>
+            <ScrollViewer  VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" MaxHeight="590">
+                <StackPanel Orientation="Vertical" x:Name="InstalledSeasonsStack">
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>

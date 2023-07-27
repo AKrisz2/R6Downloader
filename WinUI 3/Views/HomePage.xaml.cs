@@ -37,6 +37,7 @@ namespace WinUI_3
         public static StackPanel parentStack;
         public static JObject json;
         public static List<JToken> seasons = new List<JToken>();
+        public static List<R6Season> installedSeasons = new List<R6Season>();
 
         public static StackPanel loadingStack;
         public static ScrollViewer yearViewer;
@@ -89,8 +90,9 @@ namespace WinUI_3
 
             process = new Process();
         }
-        private async Task GetSeasons()
+        public async Task GetSeasons()
         {
+            installedSeasons.Clear();
             if (IsDirectoryEmpty(App.appData + "\\images\\"))
             {
                 using (var client = new WebClient())
@@ -189,6 +191,18 @@ namespace WinUI_3
 
                             else if(File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
                                 ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
+
+                            //Add season to installed list for storage check
+
+                            R6Season seasonInstance = new R6Season(); 
+                            seasonInstance.Name = items[i].ElementAt(j).First["name"].ToString();
+
+                            long sizeInBytes = GetFolderSize(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"]);
+                            double sizeInGigabytes = BytesToGigabytes(sizeInBytes);
+
+                            seasonInstance.Size = sizeInGigabytes.ToString().Split('.').First() + " GB";
+                            seasonInstance.Path = App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"].ToString();
+                            installedSeasons.Add(seasonInstance);
                         }
                         else
                         {
@@ -303,6 +317,8 @@ namespace WinUI_3
 
             SeasonImage.Source = null;
             SeasonDescription.Text = null;
+
+            GetSeasons();
         }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -706,7 +722,6 @@ namespace WinUI_3
                 // You can display an error message or log the exception for further investigation.
             }
         }
-
         private async void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
@@ -723,5 +738,41 @@ namespace WinUI_3
                 Directory.Delete(App.settings["folder"].ToString() + seasonFolder, true);
             }
         }
+        static long GetFolderSize(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException("Folder not found.");
+            }
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(folderPath);
+            long size = 0;
+
+            // Calculate the size of files in the current directory
+            foreach (FileInfo file in directoryInfo.GetFiles())
+            {
+                size += file.Length;
+            }
+
+            // Calculate the size of files in subdirectories
+            foreach (DirectoryInfo subDir in directoryInfo.GetDirectories())
+            {
+                size += GetFolderSize(subDir.FullName);
+            }
+
+            return size;
+        }
+
+        static double BytesToGigabytes(long bytes)
+        {
+            const int bytesInGigabyte = 1073741824; // 1024^3
+            return (double)bytes / bytesInGigabyte;
+        }
+    }
+    public class R6Season
+    {
+        public string Name { get; set; }
+        public string Size { get; set; }
+        public string Path { get; set; }
     }
 }

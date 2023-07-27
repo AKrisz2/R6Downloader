@@ -22,9 +22,13 @@ namespace WinUI_3.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        HomePage homePage;
         public SettingsPage()
         {
             this.InitializeComponent();
+
+            homePage = new HomePage();
+            homePage.GetSeasons();
 
             loadSettings();
         }
@@ -124,6 +128,11 @@ namespace WinUI_3.Views
         {
             App.settings["maxDownloads"] = maxDownloads.Value;
             File.WriteAllText("config.json", App.settings.ToString());
+        }
+
+        private void ShowStorageButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.contentFrame.Navigate(typeof(DiskSpacePage), string.Empty);
         }
     }
 

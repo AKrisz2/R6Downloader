@@ -17,6 +17,7 @@
     <None Remove="BlankPage1.xaml" />
     <None Remove="HomePage.xaml" />
     <None Remove="SettingsPage.xaml" />
+    <None Remove="Views\DiskSpacePage.xaml" />
     <None Remove="Views\DownloadFolderErrorPage.xaml" />
     <None Remove="Views\DownloadWarning.xaml" />
     <None Remove="Views\ExtractionEventsPage.xaml~RF7185b4.TMP" />
@@ -106,6 +107,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DiskSpacePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\UninstallWarningPage.xaml">
