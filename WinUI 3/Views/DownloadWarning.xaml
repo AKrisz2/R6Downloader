@@ -5,8 +5,7 @@
     xmlns:local="using:WinUI_3.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
         <TextBlock Text="Make sure to not switch off the download page&#013;and to accept Steam Guard on your phone!&#013;&#013;If the download seems stuck, or program freezes, please wait."/>

@@ -17,6 +17,12 @@
     <None Update="Package.appxmanifest">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="Views\UninstallWarningPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DownloadFolderErrorPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\DownloadWarning.xaml">
       <SubType>Designer</SubType>
     </Page>

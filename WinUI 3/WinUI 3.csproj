@@ -17,11 +17,13 @@
     <None Remove="BlankPage1.xaml" />
     <None Remove="HomePage.xaml" />
     <None Remove="SettingsPage.xaml" />
+    <None Remove="Views\DownloadFolderErrorPage.xaml" />
     <None Remove="Views\DownloadWarning.xaml" />
     <None Remove="Views\ExtractionEventsPage.xaml~RF7185b4.TMP" />
     <None Remove="Views\NameChange.xaml" />
     <None Remove="Views\PasswordPage.xaml" />
     <None Remove="Views\SettingsErrorPage.xaml" />
+    <None Remove="Views\UninstallWarningPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,6 +106,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\UninstallWarningPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\DownloadFolderErrorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\NameChange.xaml">

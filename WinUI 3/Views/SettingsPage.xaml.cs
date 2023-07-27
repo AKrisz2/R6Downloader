@@ -9,6 +9,8 @@ using Windows.Storage.Pickers;
 using System;
 using Microsoft.UI.Xaml;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -56,11 +58,26 @@ namespace WinUI_3.Views
 
             // Open the picker for the user to pick a folder
             StorageFolder folder = await openPicker.PickSingleFolderAsync();
-            if(folder != null)
+            if (folder != null)
             {
-                downloadFolder.Text = folder.Path + "\\";
-                App.settings["folder"] = folder.Path + "\\";
-                File.WriteAllText("config.json", App.settings.ToString());
+                if (HasSpecialCharacters(folder.Path))
+                {
+                    ContentDialog dialog = new ContentDialog();
+                    dialog.XamlRoot = this.XamlRoot;
+                    dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                    dialog.Title = "Error";
+                    dialog.PrimaryButtonText = "OK";
+                    dialog.Content = new DownloadFolderErrorPage();
+                    var result = await dialog.ShowAsync();
+
+                    changeDownloadFolder_Click(sender, e);
+                }
+                else
+                {
+                    downloadFolder.Text = folder.Path + "\\";
+                    App.settings["folder"] = folder.Path + "\\";
+                    File.WriteAllText("config.json", App.settings.ToString());
+                }
             }
         }
 
@@ -82,6 +99,13 @@ namespace WinUI_3.Views
 
                 File.WriteAllText("config.json", App.settings.ToString());
             }
+        }
+        private bool HasSpecialCharacters(string input)
+        {
+            // Regular expression pattern to match allowed characters
+            // Here, we allow only letters, numbers, spaces, underscores, and hyphens in the folder path
+            string pattern = @"^[A-Za-z0-9.-_\s]+$";
+            return !Regex.IsMatch(input, pattern);
         }
 
         private void changeInGameName_TextChanged(object sender, TextChangedEventArgs e)

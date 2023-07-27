@@ -63,6 +63,10 @@
             <Button Width="200" Height="50" x:Name="VerifyButton" Click="DownloadButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,420,0" Visibility="Collapsed">
                 <TextBlock Text="Verify Game Files"/>
             </Button>
+            
+            <Button Width="200" Height="50" x:Name="UninstallButton" Click="UninstallButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,630,0" Visibility="Collapsed">
+                <TextBlock Text="Uninstall"/>
+            </Button>
 
             <Button Width="200" Height="50" x:Name="DownloadButton" Click="DownloadButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Visible">
                 <TextBlock Text="Download"/>

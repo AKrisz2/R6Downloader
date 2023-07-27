@@ -20,15 +20,21 @@
 
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                <TextBlock Margin="20,20,0,0"  Text="Steam Credentials" x:Name="connectToSteam"/>
-                <Button Width="200" Content="Login Steam" x:Name="connectSteam" Click="connectSteam_Click" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="connectToSteam" HorizontalAlignment="Right"
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Steam Login" x:Name="connectToSteam"/>
+                    <TextBlock Text="Input Steam credentials to use the downloader." FontSize="10" Foreground="LightGray"/>
+                </StackPanel>
+                <Button Width="200" Content="Login" x:Name="connectSteam" Click="connectSteam_Click" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="connectToSteam" HorizontalAlignment="Right"
                         Margin="0,0,20,0"/>
             </Grid>
 
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
-                
-                <TextBlock Text="Path not set." x:Name="downloadFolder"  Margin="20,20,0,0"/>
+
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Download Folder"/>
+                    <TextBlock Text="Path not set." x:Name="downloadFolder" FontSize="10" Foreground="LightGray"/>
+                </StackPanel>
                 <Button Content="Change folder" Width="200" x:Name="changeDownloadFolder" Click="changeDownloadFolder_Click" 
                        RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="downloadFolder" HorizontalAlignment="Right" Margin="0,0,20,0"/>
                 
@@ -36,11 +42,13 @@
 
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
-
-                <TextBlock TextAlignment="Left" Text="Max Concurrent Downloads: " Margin="20,20,0,0" x:Name="MaxDownloads"/>
+                
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Max Concurrent Downloads" x:Name="MaxDownloads"/>
+                    <TextBlock Text="This controls how many chunks can be downloaded at the same time. Increase/decrease it to set a speed limit, or if you're experiencing chunk errors." FontSize="10" Foreground="LightGray"/>
+                </StackPanel>
                 <NumberBox Minimum="1" Maximum="100" SpinButtonPlacementMode="Compact" Width="200" HorizontalAlignment="Right" x:Name="maxDownloads"
-                       ToolTipService.ToolTip="This controls how many chunks can be downloaded at the same time. You can increase/decrease it to set a speed limit.&#013;(If you're experiencing chunk errors, decrease this value)"
-                      RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="MaxDownloads" Margin="0,0,20,0" Height="35" ValueChanged="maxDownloads_ValueChanged"/>
+                           RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="MaxDownloads" Margin="0,0,20,0" Height="35" ValueChanged="maxDownloads_ValueChanged"/>
                 
             </Grid>
 
@@ -48,7 +56,10 @@
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                <TextBlock TextAlignment="Left" Text="In-Game Name: " Margin="20,20,0,0" x:Name="ChangeIGN" />
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="In-Game Name" x:Name="ChangeIGN" />
+                    <TextBlock Text="Change your display name in-game." FontSize="10" Foreground="LightGray"/>
+                </StackPanel>
                 <TextBox Text="" Width="200" x:Name="changeInGameName" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="ChangeIGN" HorizontalAlignment="Right" Margin="0,0,20,0" Height="35" TextAlignment="Center" TextChanged="changeInGameName_TextChanged"/>
             </Grid>
 
@@ -56,7 +67,10 @@
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
-                <TextBlock TextAlignment="Left" Text="Download RUS version: " Margin="20,20,0,0" x:Name="RUSToggle"/>
+                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                    <TextBlock TextAlignment="Left" Text="Download RUS version" x:Name="RUSToggle"/>
+                    <TextBlock Text="Toggle ON if you own the Russian version of the game." FontSize="10" Foreground="LightGray"/>
+                </StackPanel>
                 <ToggleSwitch Width="200" IsOn="False" x:Name="rusToggle"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="RUSToggle" HorizontalAlignment="Right" Margin="0,0,-50,0" IsEnabledChanged="rusToggle_IsEnabledChanged"/>
            
             </Grid>
