@@ -21,6 +21,7 @@ using Microsoft.UI.Xaml.Shapes;
 using Microsoft.UI;
 using Path = System.IO.Path;
 using Windows.UI.ViewManagement;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -50,7 +51,7 @@ namespace WinUI_3
         public static Button _playButton;
         public static Button _verifyButton;
         public static Button _backButton;
-        public static Button _refreshNameButton;
+        public static Button _openGameFolderButton;
         public static Button _closeGameButton;
 
         public static int seasonNumber = 0;
@@ -81,7 +82,7 @@ namespace WinUI_3
             _verifyButton = VerifyButton;
             _downloadButton = DownloadButton;
             _backButton = BackButton;
-            _refreshNameButton = RefreshNameButton;
+            _openGameFolderButton = OpenGameFolderButton;
             _closeGameButton = CloseGameButton;
 
             process = new Process();
@@ -179,6 +180,13 @@ namespace WinUI_3
                             imageContainer.Children.Add(installedText);
 
                             seasonImage.Margin = new Thickness(0, 0, 0, background.Height);
+
+                            //Automatically change name ingame if game is installed
+                            if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini"))
+                                ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString()); 
+
+                            else if(File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
+                                ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
                         }
                         else
                         {
@@ -301,7 +309,7 @@ namespace WinUI_3
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
             _verifyButton.IsEnabled = false;
-            _refreshNameButton.IsEnabled = false;
+            _openGameFolderButton.IsEnabled = false;
             if (App.settings["name"].ToString() == "" || App.settings["folder"].ToString() == "")
             {
                 ContentDialog dialog = new ContentDialog();
@@ -434,7 +442,7 @@ namespace WinUI_3
                 MainWindow._settingsButton.IsEnabled = true;
                 _4kCheckbox.IsEnabled = true;
                 _verifyButton.IsEnabled = false;
-                _refreshNameButton.IsEnabled = false;
+                _openGameFolderButton.IsEnabled = false;
                 ShowPlayButton();
             }
 
@@ -586,7 +594,7 @@ namespace WinUI_3
             _backButton.Visibility = Visibility.Visible;
             _backButton.IsEnabled = true;
 
-            _refreshNameButton.Visibility = Visibility.Visible;
+            _openGameFolderButton.Visibility = Visibility.Visible;
         }
         public static void HidePlayButton()
         {
@@ -594,7 +602,7 @@ namespace WinUI_3
             _playButton.Visibility = Visibility.Collapsed;
             _verifyButton.Visibility = Visibility.Collapsed;
             _backButton.Visibility = Visibility.Visible;
-            _refreshNameButton.Visibility= Visibility.Collapsed;
+            _openGameFolderButton.Visibility= Visibility.Collapsed;
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -625,7 +633,7 @@ namespace WinUI_3
             _playButton.Visibility = Visibility.Collapsed;
             _playButton.IsEnabled = false;
 
-            _refreshNameButton.IsEnabled = false;
+            _openGameFolderButton.IsEnabled = false;
             _verifyButton.IsEnabled = false;
 
             _closeGameButton.Visibility = Visibility.Visible;
@@ -642,7 +650,7 @@ namespace WinUI_3
                 _playButton.Visibility = Visibility.Visible;
                 _playButton.IsEnabled = true;
 
-                _refreshNameButton.IsEnabled = true;
+                _openGameFolderButton.IsEnabled = true;
                 _verifyButton.IsEnabled = true;
 
                 _closeGameButton.Visibility = Visibility.Collapsed;
@@ -663,10 +671,6 @@ namespace WinUI_3
                 process.Kill();
             }
         }
-        private void RefreshNameButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeIngameName(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
-        }
 
         private void CloseGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -674,6 +678,20 @@ namespace WinUI_3
             KillProcessByName("rainbowsix");
             KillProcessByName("RainbowSixGame");
             KillProcessByName("rainbowsixgame");
+        }
+
+        private async void OpenGameFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await Launcher.LaunchFolderPathAsync(App.settings["folder"].ToString() + seasonFolder);
+            }
+            catch (Exception ex)
+            {
+                // Handle any exceptions that might occur while opening Windows Explorer.
+                // For example, the folder might not exist, or the user might not have permission to access it.
+                // You can display an error message or log the exception for further investigation.
+            }
         }
     }
 }

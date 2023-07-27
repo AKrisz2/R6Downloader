@@ -68,8 +68,8 @@
                 <TextBlock Text="Download"/>
             </Button>
 
-            <Button Width="200" Height="50" x:Name="RefreshNameButton" Click="RefreshNameButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,210,0" Visibility="Collapsed">
-                <TextBlock Text="Refresh Name"/>
+            <Button Width="200" Height="50" x:Name="OpenGameFolderButton" Click="OpenGameFolderButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,210,0" Visibility="Collapsed">
+                <TextBlock Text="Open Folder in Explorer"/>
             </Button>
 
             <Button Width="200" Height="50" x:Name="PlayButton" Click="PlayButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
