@@ -9,7 +9,7 @@
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
-        <TextBlock Text="Username and/or download folder is not set.&#013;Please go to the settings and check them."/>
+        <TextBlock Text="Steam user and/or download folder is not set.&#013;Please go to the settings and make sure they're set correctly!"/>
     </StackPanel>
 
 </Page>

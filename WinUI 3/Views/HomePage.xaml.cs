@@ -22,6 +22,7 @@ using Microsoft.UI;
 using Path = System.IO.Path;
 using Windows.UI.ViewManagement;
 using Windows.System;
+using PInvoke;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -337,6 +338,10 @@ namespace WinUI_3
                 dialog.Content = new SettingsErrorPage();
 
                 var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    MainWindow._settingsButton.IsSelected = true;
+                }
             }
             else
             {
