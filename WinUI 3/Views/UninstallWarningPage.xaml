@@ -10,7 +10,7 @@
     <Grid>
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
             <!-- Content body -->
-            <TextBlock Text="Do you really want to uninstall this version?" TextWrapping="Wrap"/>
+            <TextBlock Text="Do you really want to uninstall the selected versions?" TextWrapping="Wrap"/>
         </StackPanel>
     </Grid>
 </Page>

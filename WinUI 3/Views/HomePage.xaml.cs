@@ -54,7 +54,6 @@ namespace WinUI_3
         public static Button _backButton;
         public static Button _openGameFolderButton;
         public static Button _closeGameButton;
-        public static Button _uninstallGameButton;
 
         public static int seasonNumber = 0;
 
@@ -86,7 +85,6 @@ namespace WinUI_3
             _backButton = BackButton;
             _openGameFolderButton = OpenGameFolderButton;
             _closeGameButton = CloseGameButton;
-            _uninstallGameButton = UninstallButton;
 
             process = new Process();
         }
@@ -428,7 +426,6 @@ namespace WinUI_3
         {
             _playButton.IsEnabled = false;
             _backButton.IsEnabled = false;
-            _uninstallGameButton.IsEnabled = false;
             MainWindow._settingsButton.IsEnabled = false;
             StringBuilder outputBuilder = new StringBuilder();
 
@@ -612,9 +609,6 @@ namespace WinUI_3
             _playButton.IsEnabled = true;
             _playButton.Visibility = Visibility.Visible;
 
-            _uninstallGameButton.IsEnabled = true;
-            _uninstallGameButton.Visibility = Visibility.Visible;
-
             _verifyButton.Visibility = Visibility.Visible;
 
             _backButton.Visibility = Visibility.Visible;
@@ -626,7 +620,6 @@ namespace WinUI_3
         {
             _downloadButton.Visibility = Visibility.Visible;
             _playButton.Visibility = Visibility.Collapsed;
-            _uninstallGameButton.Visibility = Visibility.Collapsed;
             _verifyButton.Visibility = Visibility.Collapsed;
             _backButton.Visibility = Visibility.Visible;
             _openGameFolderButton.Visibility= Visibility.Collapsed;
@@ -661,7 +654,6 @@ namespace WinUI_3
             _playButton.IsEnabled = false;
 
             _openGameFolderButton.IsEnabled = true;
-            _uninstallGameButton.IsEnabled = false;
             _verifyButton.IsEnabled = false;
 
             _closeGameButton.Visibility = Visibility.Visible;
@@ -678,7 +670,6 @@ namespace WinUI_3
                 _playButton.Visibility = Visibility.Visible;
                 _playButton.IsEnabled = true;
 
-                _uninstallGameButton.IsEnabled = true;
                 _openGameFolderButton.IsEnabled = true;
                 _verifyButton.IsEnabled = true;
 
@@ -724,19 +715,7 @@ namespace WinUI_3
         }
         private async void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Warning";
-            dialog.PrimaryButtonText = "Yes";
-            dialog.CloseButtonText = "No";
-            dialog.Content = new UninstallWarningPage();
-            var result = await dialog.ShowAsync();
 
-            if (result == ContentDialogResult.Primary)
-            {
-                Directory.Delete(App.settings["folder"].ToString() + seasonFolder, true);
-            }
         }
         static long GetFolderSize(string folderPath)
         {

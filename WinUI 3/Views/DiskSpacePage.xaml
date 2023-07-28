@@ -10,22 +10,33 @@
 
     <Grid Padding="47,30,47,30">
         <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="x GB of x GB available" FontSize="24" x:Name="FreeSpaceText"/>
-                <TextBlock Text=" -" FontSize="24"/>
-                <TextBlock Text="&#x20;x GB taken up by downloader" FontSize="24" x:Name="TotalSize"/>
-            </StackPanel>
+            <Grid CornerRadius="5" Margin="0,10,0,5" HorizontalAlignment="Left">
+                    <Rectangle Fill="#4d4d4d" Opacity="0.3" Width="1277" Height="10"/>
+                    <StackPanel Orientation="Horizontal" x:Name="CustomProgressBar">
 
-            <Grid CornerRadius="5" Margin="0,10,0,10" HorizontalAlignment="Left">
-                <Rectangle Fill="#4d4d4d" Opacity="0.3" Width="1277" Height="10"/>
-                <StackPanel Orientation="Horizontal" x:Name="CustomProgressBar">
-                    
-                </StackPanel>
+                    </StackPanel>
             </Grid>
-            <ScrollViewer  VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" MaxHeight="590">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#fcba03" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Other" FontWeight="Bold" Margin="0,0,10,0" x:Name="otherSpaceSubText"/>
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#87cefa" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Downloader" FontWeight="Bold" Margin="0,0,10,0" x:Name="totalSizeSubText"/>
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#4d4d4d" Opacity="0.3" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Free" FontWeight="Bold" x:Name="freeSpaceSubText"/>
+            </StackPanel>
+            <ScrollViewer  VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" MaxHeight="530">
                 <StackPanel Orientation="Vertical" x:Name="InstalledSeasonsStack">
                 </StackPanel>
             </ScrollViewer>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Width="200" Height="50" Content="Uninstall" IsEnabled="False" x:Name="UninstallButton" Click="UninstallButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

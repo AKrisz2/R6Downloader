@@ -27,20 +27,19 @@ namespace WinUI_3.Views
     public sealed partial class DiskSpacePage : Page
     {
         public static int totalInstallSize;
+        public static int otherSpace;
         public (long,long) driveSize;
-        public List<Color> colors;
+        public List<string> selectedSeasons;
         public DiskSpacePage()
         {
             this.InitializeComponent();
-            totalInstallSize = 0;
 
-            colors = new List<Color>();
-            colors.Clear();
+            selectedSeasons = new List<string>();
+
+            totalInstallSize = 0;
 
             foreach (var season in HomePage.installedSeasons)
             {
-                colors.Add(GenerateRandomColor());
-
                 //Create grid to hold season
                 Grid seasonGrid = new Grid();
                 seasonGrid.Margin = new Thickness(5);
@@ -60,16 +59,6 @@ namespace WinUI_3.Views
                 nameStack.VerticalAlignment = VerticalAlignment.Center;
                 nameStack.Orientation = Orientation.Horizontal;
 
-                //Add color to season name
-                Rectangle seasonColor = new Rectangle();
-                seasonColor.Height = 10;
-                seasonColor.Width = 10;
-                seasonColor.Margin = new Thickness(0, 0, 10, 0);
-                seasonColor.RadiusX = 10;
-                seasonColor.RadiusY = 10;
-                seasonColor.Fill = new SolidColorBrush(colors.Last());
-                nameStack.Children.Add(seasonColor);
-
                 //Add season name
                 TextBlock seasonName = new TextBlock();
                 seasonName.Margin = new Thickness(0, 0, 5, 0);
@@ -84,14 +73,13 @@ namespace WinUI_3.Views
                 seasonGrid.Children.Add(nameStack);
 
                 //Add manage button
-                Button manageButton = new Button();
-                manageButton.Content = "Manage Install";
-                manageButton.HorizontalAlignment = HorizontalAlignment.Right;
-                manageButton.Width = 200;
-                manageButton.Margin = new Thickness(0, 0, 20, 0);
-                manageButton.Name = season.Path;
-                manageButton.Click += ManageButton_Click;
-                seasonGrid.Children.Add(manageButton);
+                CheckBox checkSeason = new CheckBox();
+                checkSeason.HorizontalAlignment = HorizontalAlignment.Right;
+                checkSeason.Margin = new Thickness(0, 0, 20, 0);
+                checkSeason.Name = season.Path;
+                checkSeason.Checked += CheckSeason_Checked;
+                checkSeason.Unchecked += CheckSeason_Unchecked;
+                seasonGrid.Children.Add(checkSeason);
 
                 InstalledSeasonsStack.Children.Add(seasonGrid);
 
@@ -99,10 +87,32 @@ namespace WinUI_3.Views
             }
 
             driveSize = GetDriveSize(App.settings["folder"].ToString().Substring(0, 1));
-            FreeSpaceText.Text = $"{driveSize.Item1} GB of {driveSize.Item2} GB available";
-            TotalSize.Text = " " + totalInstallSize + " GB taken up by downloader";
             CreateProgressBar();
+            otherSpaceSubText.Text = "Other " + (driveSize.Item2 - driveSize.Item1 - totalInstallSize) + " GB";
+            totalSizeSubText.Text = "Downloader " + totalInstallSize + " GB";
+            freeSpaceSubText.Text = "Free " + driveSize.Item1 + " GB";
         }
+
+        private void CheckSeason_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox boxChecked)
+            {
+                if (selectedSeasons.Count == 0)
+                    UninstallButton.IsEnabled = true;
+                selectedSeasons.Add(boxChecked.Name);
+            }
+        }
+
+        private void CheckSeason_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (sender is CheckBox boxChecked)
+            {
+                selectedSeasons.Remove(boxChecked.Name);
+                if (selectedSeasons.Count == 0)
+                    UninstallButton.IsEnabled = false;
+            }
+        }
+
         private static (long, long) GetDriveSize(string driveLetter)
         {
             try
@@ -133,7 +143,6 @@ namespace WinUI_3.Views
         {
             double oneUnit = (double)1277 / driveSize.Item2;
             List<double> sizeList = new List<double>();
-            int colorIndex = 0;
 
             //Calculate space taken up on drive
             Rectangle otherSpace = new Rectangle();
@@ -157,31 +166,30 @@ namespace WinUI_3.Views
             foreach(var size in sizeList)
             {
                 Rectangle seasonSpace = new Rectangle();
-                seasonSpace.Fill = new SolidColorBrush(colors.ElementAt(colorIndex));
+                seasonSpace.Fill = new SolidColorBrush(Color.FromArgb(255, 135, 206, 250));
                 seasonSpace.Width = size;
 
                 CustomProgressBar.Children.Add(seasonSpace);
-                colorIndex++;
             }
         }
-        public static Color GenerateRandomColor()
+
+        private async void UninstallButton_Click(object sender, RoutedEventArgs e)
         {
-            Random random = new Random();
+            ContentDialog dialog = new ContentDialog();
+            dialog.XamlRoot = this.XamlRoot;
+            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog.Title = "Warning";
+            dialog.PrimaryButtonText = "Yes";
+            dialog.CloseButtonText = "No";
+            dialog.Content = new UninstallWarningPage();
+            var result = await dialog.ShowAsync();
 
-            // Generate random values for red, green, and blue components
-            byte red = Convert.ToByte(random.Next(0, 256));
-            byte green = Convert.ToByte(random.Next(0, 256));
-            byte blue = Convert.ToByte(random.Next(0, 256));
-
-            // Create a random color using Color.FromArgb
-            return Color.FromArgb(255, red, green, blue);
-        }
-
-        private void ManageButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button clickedButton)
+            if (result == ContentDialogResult.Primary)
             {
-                //Do stuff
+                foreach(var folder in selectedSeasons)
+                    Directory.Delete(folder, true);
+
+                MainWindow.contentFrame.Navigate(typeof(HomePage), string.Empty);
             }
         }
     }
