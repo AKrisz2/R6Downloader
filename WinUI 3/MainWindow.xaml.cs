@@ -10,6 +10,11 @@ using WinRT; // required to support Window.As<ICompositionSupportsSystemBackdrop
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
+using Microsoft.WindowsAppSDK.Runtime;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using WinUI_3.Views;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,6 +39,14 @@ namespace WinUI_3
             this.Title = "R6 Downloader";
             this.Closed += MainWindow_Closed;
             CoreApplication.Exiting += CoreApplication_Exiting;
+
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+
+            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+
+            appWindow.SetIcon("Resources/icon.ico");
+
             this.InitializeComponent();
             GetAppWindowAndPresenter();
             _presenter.IsResizable = false;
@@ -46,7 +59,6 @@ namespace WinUI_3
             contentFrame = ContentFrame;
             navigationView = NavigationViewControl;
             _settingsButton = SettingsButton;
-
         }
         private void KillProcess(Process process)
         {

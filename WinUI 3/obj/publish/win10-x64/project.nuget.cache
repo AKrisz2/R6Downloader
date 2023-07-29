@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wbM8PcYdjkNXCLa/SXqBEU1YBSO6ysuTK0UE8Jg5IAseZyIleiI3vXye6wUP/lF1jLq50dkrGvbYKiCaeq7Ryg==",
+  "dgSpecHash": "Z3vMOnjzyEB1zERzfPwV41LDfZpnrBrti7Puq0ejf0aKDT2WlvCyQ0P3acSfDyQPxyWPyvL3VWWE2z2CC5b8ng==",
   "success": true,
   "projectFilePath": "C:\\Users\\Krisz\\source\\repos\\WinUI 3\\WinUI 3\\WinUI 3.csproj",
   "expectedPackageFiles": [
@@ -18,14 +18,14 @@
     "C:\\Users\\Krisz\\.nuget\\packages\\system.text.json\\7.0.2\\system.text.json.7.0.2.nupkg.sha512",
     "C:\\Users\\Krisz\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\Krisz\\.nuget\\packages\\validation\\2.4.15\\validation.2.4.15.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.13\\microsoft.netcore.app.runtime.win-x64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-arm64\\6.0.13\\microsoft.netcore.app.runtime.win-arm64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-arm64\\6.0.13\\microsoft.windowsdesktop.app.runtime.win-arm64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.13\\microsoft.aspnetcore.app.runtime.win-x64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-arm64\\6.0.13\\microsoft.aspnetcore.app.runtime.win-arm64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\6.0.13\\microsoft.netcore.app.crossgen2.win-x64.6.0.13.nupkg.sha512",
-    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.28\\microsoft.windows.sdk.net.ref.10.0.22621.28.nupkg.sha512"
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.20\\microsoft.netcore.app.runtime.win-x64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-arm64\\6.0.20\\microsoft.netcore.app.runtime.win-arm64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.20\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-arm64\\6.0.20\\microsoft.windowsdesktop.app.runtime.win-arm64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.20\\microsoft.aspnetcore.app.runtime.win-x64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-arm64\\6.0.20\\microsoft.aspnetcore.app.runtime.win-arm64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.netcore.app.crossgen2.win-x64\\6.0.20\\microsoft.netcore.app.crossgen2.win-x64.6.0.20.nupkg.sha512",
+    "C:\\Users\\Krisz\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22621.29\\microsoft.windows.sdk.net.ref.10.0.22621.29.nupkg.sha512"
   ],
   "logs": []
 }

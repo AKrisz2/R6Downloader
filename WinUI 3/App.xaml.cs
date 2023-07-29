@@ -7,7 +7,10 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
+using Windows.ApplicationModel.Core;
+using Windows.Media.Protection.PlayReady;
 using Windows.Storage;
+using static PInvoke.Kernel32;
 using static PInvoke.User32;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -96,7 +99,6 @@ namespace WinUI_3
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(m_window);
 
             SetWindowDetails(hwnd, 1436, 746);
-
             m_window.Activate();
         }
 

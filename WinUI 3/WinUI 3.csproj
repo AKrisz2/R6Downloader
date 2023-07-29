@@ -12,6 +12,12 @@
 	<WindowsPackageType>None</WindowsPackageType>
 	<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
 	<PlatformTarget>AnyCPU</PlatformTarget>
+	<AssemblyName>R6Downloader</AssemblyName>
+	<SignAssembly>False</SignAssembly>
+	<FileVersion></FileVersion>
+	<AssemblyVersion></AssemblyVersion>
+	<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BlankPage1.xaml" />
@@ -25,6 +31,7 @@
     <None Remove="Views\PasswordPage.xaml" />
     <None Remove="Views\SettingsErrorPage.xaml" />
     <None Remove="Views\UninstallWarningPage.xaml" />
+    <None Remove="Views\UpdateAvailable.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +42,7 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+	  <Content Include="Resources\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,8 +53,7 @@
     <PackageReference Include="RestSharp" Version="110.2.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
-
-  <!-- 
+	<!-- 
     Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
     Tools extension to be activated for this project even if the Windows App SDK Nuget
     package has not yet been restored.
@@ -89,24 +96,33 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
     <DebugType>full</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
     <DebugType>full</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
     <DebugType>full</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
     <DebugType>full</DebugType>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
     <CustomAdditionalCompileInputs Remove="Views\SettingsErrorPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\UpdateAvailable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\DiskSpacePage.xaml">

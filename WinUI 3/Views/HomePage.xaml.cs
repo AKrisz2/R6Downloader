@@ -23,6 +23,7 @@ using Path = System.IO.Path;
 using Windows.UI.ViewManagement;
 using Windows.System;
 using PInvoke;
+using Microsoft.WindowsAppSDK.Runtime;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,6 +38,7 @@ namespace WinUI_3
     {
         public static StackPanel parentStack;
         public static JObject json;
+        public static JObject version;
         public static List<JToken> seasons = new List<JToken>();
         public static List<R6Season> installedSeasons = new List<R6Season>();
 
@@ -88,6 +90,10 @@ namespace WinUI_3
             _closeGameButton = CloseGameButton;
 
             process = new Process();
+        }
+        public async Task CheckUpdate()
+        {
+            
         }
         public async Task GetSeasons()
         {
@@ -316,12 +322,33 @@ namespace WinUI_3
 
             SeasonImage.Source = null;
             SeasonDescription.Text = null;
-
-            GetSeasons();
         }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            await GetSeasons();
+            using (WebClient client = new WebClient())
+            {
+                version = JObject.Parse(client.DownloadString("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/version.json"));
+            }
+            if (version["version"].ToString() != "1")
+            {
+                ContentDialog dialog = new ContentDialog();
+                dialog.XamlRoot = this.XamlRoot;
+                dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog.Title = "Update available!";
+                dialog.PrimaryButtonText = "OK";
+                dialog.DefaultButton = ContentDialogButton.Primary;
+                dialog.Content = new UpdateAvailable();
+
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.Primary)
+                {
+                    Application.Current.Exit();
+                }
+            }
+            else
+            {
+                await GetSeasons();
+            }
         }
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
