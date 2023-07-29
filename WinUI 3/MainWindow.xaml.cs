@@ -15,6 +15,8 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using WinUI_3.Views;
 using WinRT.Interop;
+using System.Reflection;
+using System.IO;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -45,7 +47,8 @@ namespace WinUI_3
 
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
 
-            appWindow.SetIcon("Resources/icon.ico");
+            appWindow.SetIcon("icon.ico");
+            File.Delete("icon.ico");
 
             this.InitializeComponent();
             GetAppWindowAndPresenter();

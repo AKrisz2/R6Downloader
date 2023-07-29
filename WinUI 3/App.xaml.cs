@@ -48,8 +48,14 @@ namespace WinUI_3
                 Directory.CreateDirectory(appData + "\\images");
             }
 
+            using (var client = new WebClient())
+            {
+                client.DownloadFile(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/icon.ico"), "icon.ico");
+            }
+
             this.InitializeComponent();
         }
+
         public async void ReadSettingsFile()
         {
             if (!File.Exists("config.json"))
