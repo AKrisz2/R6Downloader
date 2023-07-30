@@ -68,7 +68,8 @@ namespace WinUI_3
         public static string manifest4K;
         public static string manifestRus;
 
-        public static Process process;
+        public static Process process; 
+        private StreamWriter processStreamWriter;
 
         public HomePage()
         {
@@ -90,10 +91,6 @@ namespace WinUI_3
             _closeGameButton = CloseGameButton;
 
             process = new Process();
-        }
-        public async Task CheckUpdate()
-        {
-            
         }
         public async Task GetSeasons()
         {
@@ -458,50 +455,104 @@ namespace WinUI_3
         {
             _playButton.IsEnabled = false;
             _backButton.IsEnabled = false;
+            Input2FAButton.Visibility = Visibility.Visible;
             MainWindow._settingsButton.IsEnabled = false;
             StringBuilder outputBuilder = new StringBuilder();
 
-            using (Process process = new Process())
+            process = new Process();
+            process.StartInfo.FileName = batchFilePath;
+            process.StartInfo.WorkingDirectory = workingDirectory;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true; // Enable redirecting standard error stream
+            process.StartInfo.RedirectStandardInput = true; // Enable redirecting standard input stream
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+
+            process.OutputDataReceived += async (sender, e) =>
             {
-                process.StartInfo.FileName = batchFilePath;
-                process.StartInfo.WorkingDirectory = workingDirectory;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.RedirectStandardInput = true;
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.CreateNoWindow = true;
-
-                process.OutputDataReceived += (sender, e) =>
+                if (e.Data != null)
                 {
-                    if (e.Data != null)
-                    {
-                        outputBuilder.AppendLine(e.Data);
-                        UpdateOutputInUI(synchronizationContext, e.Data); // Update the output in the UI
-                    }
-                };
+                    string outputLine = e.Data;
+                    UpdateOutputInUI(synchronizationContext, outputLine); // Update the output in the UI
+                }
+            };
 
-                process.Start();
-                process.BeginOutputReadLine();
+            process.EnableRaisingEvents = true; // Enable raising events to detect process exit
+            process.Exited += Process_Exited; // Register the event handler for process exit
 
-                await process.WaitForExitAsync();
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
 
-                //Download Done
-                CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
-                GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
-                MainWindow._settingsButton.IsEnabled = true;
-                _4kCheckbox.IsEnabled = true;
-                _verifyButton.IsEnabled = true;
-                _openGameFolderButton.IsEnabled = true;
-
-                SeasonDescription.Visibility = Visibility.Visible;
-                DownloadScroller.Visibility = Visibility.Collapsed;
-
-                ShowPlayButton();
-            }
+            await process.WaitForExitAsync();
 
             // Get the captured output as a string
             string output = outputBuilder.ToString().Trim();
 
+            process.Dispose();
+            process = null;
+
             return output;
+        }
+
+        private void Process_Exited(object sender, EventArgs e)
+        {
+            CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
+            GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
+            MainWindow._settingsButton.IsEnabled = true;
+            _4kCheckbox.IsEnabled = true;
+            _verifyButton.IsEnabled = true;
+            _openGameFolderButton.IsEnabled = true;
+
+            SeasonDescription.Visibility = Visibility.Visible;
+            DownloadScroller.Visibility = Visibility.Collapsed;
+            Input2FAButton.Visibility = Visibility.Collapsed;
+
+            ShowPlayButton();
+        }
+
+        private async void Input2FAButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog1 = new ContentDialog();
+            dialog1.XamlRoot = this.XamlRoot;
+            dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog1.Title = "Please enter Steam Guard!";
+            dialog1.PrimaryButtonText = "OK";
+            dialog1.DefaultButton = ContentDialogButton.Primary;
+            dialog1.Content = new _2FAPage();
+
+            var result1 = await dialog1.ShowAsync();
+            if (result1 == ContentDialogResult.Primary)
+            {
+                if (process != null && !process.HasExited)
+                {
+                    using (StreamWriter writer = process.StandardInput)
+                    {
+                        await writer.WriteLineAsync(_2FAPage._steamGuardInput.Text);
+                    }
+                    _2FAPage._steamGuardInput.Text = null;
+                    Input2FAButton.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    // Handle the case when the process has already exited or is not running
+                    // (Optional: Display a message to the user)
+                }
+            }
+        }
+
+        private async Task<int> WaitForExitAsync()
+        {
+            TaskCompletionSource<int> processExitCompletionSource = new TaskCompletionSource<int>();
+
+            void ProcessExited(object sender, EventArgs e)
+            {
+                processExitCompletionSource.TrySetResult(process.ExitCode);
+            }
+
+            process.Exited += ProcessExited;
+
+            return await processExitCompletionSource.Task;
         }
         public void CopyCrack(int seasonNum, string folder)
         {
@@ -656,7 +707,6 @@ namespace WinUI_3
             _backButton.Visibility = Visibility.Visible;
             _openGameFolderButton.Visibility= Visibility.Collapsed;
         }
-
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))

@@ -32,6 +32,7 @@
     <None Remove="Views\SettingsErrorPage.xaml" />
     <None Remove="Views\UninstallWarningPage.xaml" />
     <None Remove="Views\UpdateAvailable.xaml" />
+    <None Remove="Views\_2FAPage.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -117,6 +118,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\_2FAPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\UpdateAvailable.xaml">

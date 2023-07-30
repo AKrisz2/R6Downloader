@@ -47,13 +47,15 @@
             <Grid>
                 <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription" Visibility="Visible"/>
             </Grid>
-            <StackPanel>
-                <ScrollViewer Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="240" VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <Button Content="Input Steam Guard" Width="200" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="Input2FAButton" Click="Input2FAButton_Click" Visibility="Collapsed"/>
+                <ScrollViewer Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="250" VerticalScrollBarVisibility="Hidden">
                     <TextBlock x:Name="DownloadText" Visibility="Visible" TextWrapping="Wrap"/>
                 </ScrollViewer>
-            </StackPanel>
+            </Grid>
         </StackPanel>
-        
+
+
         <!--Buttons Bar-->
         <Grid x:Name="ButtonsBar" Visibility="Collapsed">
             <Button Width="200" Height="50" x:Name="BackButton" Click="BackButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,10,0,0">
