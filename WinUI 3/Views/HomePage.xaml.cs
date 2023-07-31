@@ -474,6 +474,14 @@ namespace WinUI_3
                 {
                     string outputLine = e.Data;
                     UpdateOutputInUI(synchronizationContext, outputLine); // Update the output in the UI
+
+                    if(outputLine.Contains("Got depot key"))
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            Input2FAButton.Visibility = Visibility.Collapsed;
+                        });
+                    }
                 }
             };
 
@@ -499,16 +507,19 @@ namespace WinUI_3
         {
             CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
             GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
-            MainWindow._settingsButton.IsEnabled = true;
-            _4kCheckbox.IsEnabled = true;
-            _verifyButton.IsEnabled = true;
-            _openGameFolderButton.IsEnabled = true;
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                MainWindow._settingsButton.IsEnabled = true;
+                _4kCheckbox.IsEnabled = true;
+                _verifyButton.IsEnabled = true;
+                _openGameFolderButton.IsEnabled = true;
 
-            SeasonDescription.Visibility = Visibility.Visible;
-            DownloadScroller.Visibility = Visibility.Collapsed;
-            Input2FAButton.Visibility = Visibility.Collapsed;
+                SeasonDescription.Visibility = Visibility.Visible;
+                DownloadScroller.Visibility = Visibility.Collapsed;
+                Input2FAButton.Visibility = Visibility.Collapsed;
 
-            ShowPlayButton();
+                ShowPlayButton();
+            });
         }
 
         private async void Input2FAButton_Click(object sender, RoutedEventArgs e)

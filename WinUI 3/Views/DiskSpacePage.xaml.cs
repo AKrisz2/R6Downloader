@@ -75,7 +75,6 @@ namespace WinUI_3.Views
                 //Add manage button
                 CheckBox checkSeason = new CheckBox();
                 checkSeason.HorizontalAlignment = HorizontalAlignment.Right;
-                checkSeason.Margin = new Thickness(0, 0, 20, 0);
                 checkSeason.Name = season.Path;
                 checkSeason.Checked += CheckSeason_Checked;
                 checkSeason.Unchecked += CheckSeason_Unchecked;
