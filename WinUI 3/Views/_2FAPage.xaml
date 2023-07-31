@@ -9,6 +9,9 @@
     mc:Ignorable="d">
 
     <Grid>
-        <TextBox x:Name="SteamGuardInput" Width="270"/>
+        <StackPanel>
+            <TextBlock Text="Input Steam Guard code, or accept login request.&#013;If you accepted the login, click 'OK'" Margin="0,0,0,5"/>
+            <TextBox x:Name="SteamGuardInput" Width="270"/>
+        </StackPanel>
     </Grid>
 </Page>

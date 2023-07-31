@@ -48,7 +48,6 @@
                 <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription" Visibility="Visible"/>
             </Grid>
             <Grid>
-                <Button Content="Input Steam Guard" Width="200" Height="50" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="Input2FAButton" Click="Input2FAButton_Click" Visibility="Collapsed"/>
                 <ScrollViewer Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="250" VerticalScrollBarVisibility="Hidden">
                     <TextBlock x:Name="DownloadText" Visibility="Visible" TextWrapping="Wrap"/>
                 </ScrollViewer>

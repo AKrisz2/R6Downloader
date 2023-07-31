@@ -15,15 +15,9 @@ using WinUI_3.Views;
 using Microsoft.UI.Text;
 using System.Threading.Tasks;
 using System.Text;
-using Windows.UI.Core;
-using System.Drawing;
-using Microsoft.UI.Xaml.Shapes;
-using Microsoft.UI;
 using Path = System.IO.Path;
 using Windows.UI.ViewManagement;
 using Windows.System;
-using PInvoke;
-using Microsoft.WindowsAppSDK.Runtime;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -69,7 +63,6 @@ namespace WinUI_3
         public static string manifestRus;
 
         public static Process process; 
-        private StreamWriter processStreamWriter;
 
         public HomePage()
         {
@@ -401,13 +394,13 @@ namespace WinUI_3
                 if (!(bool)App.settings["rus"])
                 {
                     File.AppendAllText("downloader.bat",
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
                         "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
                 }
                 else if ((bool)App.settings["rus"])
                 {
                     File.AppendAllText("downloader.bat",
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377238 -manifest " + manifestRus + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
+                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377238 -manifest " + manifestRus + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
                         "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
                 }
                 if (_4kCheckbox.IsChecked == true)
@@ -450,12 +443,14 @@ namespace WinUI_3
                 DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
             }, null);
         }
-
         public async Task<string> RunCommand(string batchFilePath, string workingDirectory, SynchronizationContext synchronizationContext)
         {
+            Directory.CreateDirectory(App.settings["folder"].ToString() + seasonFolder);
+
+            bool has2FA = false;
+
             _playButton.IsEnabled = false;
             _backButton.IsEnabled = false;
-            Input2FAButton.Visibility = Visibility.Visible;
             MainWindow._settingsButton.IsEnabled = false;
             StringBuilder outputBuilder = new StringBuilder();
 
@@ -475,12 +470,43 @@ namespace WinUI_3
                     string outputLine = e.Data;
                     UpdateOutputInUI(synchronizationContext, outputLine); // Update the output in the UI
 
-                    if(outputLine.Contains("Got depot key"))
+                    if (outputLine.Contains("Logging '" + App.settings["name"].ToString() + "' into Steam3"))
                     {
-                        DispatcherQueue.TryEnqueue(() =>
+                        if (!has2FA)
                         {
-                            Input2FAButton.Visibility = Visibility.Collapsed;
-                        });
+                            DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                ContentDialog dialog1 = new ContentDialog();
+                                dialog1.XamlRoot = this.XamlRoot;
+                                dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                                dialog1.Title = "Steam Guard";
+                                dialog1.PrimaryButtonText = "OK";
+                                dialog1.DefaultButton = ContentDialogButton.Primary;
+                                dialog1.Content = new _2FAPage();
+
+                                var result1 = await dialog1.ShowAsync();
+                                if (result1 == ContentDialogResult.Primary)
+                                {
+                                    if (process != null && !process.HasExited)
+                                    {
+                                        if(_2FAPage._steamGuardInput.Text != null)
+                                        {
+                                            using (StreamWriter writer = process.StandardInput)
+                                            {
+                                                await writer.WriteLineAsync(_2FAPage._steamGuardInput.Text);
+                                            }
+                                        }
+                                        _2FAPage._steamGuardInput.Text = null;
+                                    }
+                                    else
+                                    {
+                                        // Handle the case when the process has already exited or is not running
+                                        // (Optional: Display a message to the user)
+                                    }
+                                }
+                            });
+                            has2FA = true;
+                        }
                     }
                 }
             };
@@ -516,40 +542,9 @@ namespace WinUI_3
 
                 SeasonDescription.Visibility = Visibility.Visible;
                 DownloadScroller.Visibility = Visibility.Collapsed;
-                Input2FAButton.Visibility = Visibility.Collapsed;
 
                 ShowPlayButton();
             });
-        }
-
-        private async void Input2FAButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog1 = new ContentDialog();
-            dialog1.XamlRoot = this.XamlRoot;
-            dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog1.Title = "Please enter Steam Guard!";
-            dialog1.PrimaryButtonText = "OK";
-            dialog1.DefaultButton = ContentDialogButton.Primary;
-            dialog1.Content = new _2FAPage();
-
-            var result1 = await dialog1.ShowAsync();
-            if (result1 == ContentDialogResult.Primary)
-            {
-                if (process != null && !process.HasExited)
-                {
-                    using (StreamWriter writer = process.StandardInput)
-                    {
-                        await writer.WriteLineAsync(_2FAPage._steamGuardInput.Text);
-                    }
-                    _2FAPage._steamGuardInput.Text = null;
-                    Input2FAButton.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    // Handle the case when the process has already exited or is not running
-                    // (Optional: Display a message to the user)
-                }
-            }
         }
 
         private async Task<int> WaitForExitAsync()
