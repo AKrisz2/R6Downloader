@@ -1,0 +1,42 @@
+﻿<Page
+    x:Class="R6_Downloader.Views.DiskSpacePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:R6_Downloader.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent">
+
+    <Grid Padding="47,30,47,30">
+        <StackPanel>
+            <Grid CornerRadius="5" Margin="0,10,0,5" HorizontalAlignment="Left">
+                    <Rectangle Fill="#4d4d4d" Opacity="0.3" Width="1277" Height="10"/>
+                    <StackPanel Orientation="Horizontal" x:Name="CustomProgressBar">
+
+                    </StackPanel>
+            </Grid>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#fcba03" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Other" FontWeight="Bold" Margin="0,0,10,0" x:Name="otherSpaceSubText"/>
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#87cefa" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Downloader" FontWeight="Bold" Margin="0,0,10,0" x:Name="totalSizeSubText"/>
+                <Grid Margin="0,0,5,0">
+                    <Rectangle Height="10" Width="10" Fill="#4d4d4d" Opacity="0.3" RadiusX="10" RadiusY="10"/>
+                </Grid>
+                <TextBlock Text="Free" FontWeight="Bold" x:Name="freeSpaceSubText"/>
+            </StackPanel>
+            <ScrollViewer  VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden" MaxHeight="530">
+                <StackPanel Orientation="Vertical" x:Name="InstalledSeasonsStack">
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Width="200" Height="50" Content="Uninstall" IsEnabled="False" x:Name="UninstallButton" Click="UninstallButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>

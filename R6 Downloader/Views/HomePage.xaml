@@ -1,0 +1,84 @@
+﻿<Page
+    x:Class="R6_Downloader.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:R6_Downloader"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="Transparent"
+    Loaded="Page_Loaded">
+
+    <Grid Padding="47,30,47,30">
+        <!--Loading View-->
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="LoadingView">
+            <ProgressRing Width="50" Height="50" Margin="0,0,0,10"/>
+            <TextBlock Text="Loading..."/>
+        </StackPanel>
+        <!--Original Scroll View-->
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" x:Name="PageScrollview" VerticalScrollBarVisibility="Hidden">
+            <StackPanel Orientation="Vertical" x:Name="YourParentControl"></StackPanel>
+        </ScrollViewer>
+
+        <!--Season View-->
+        <StackPanel Visibility="Collapsed" x:Name="SeasonView">
+            <StackPanel Orientation="Horizontal">
+                <Grid Margin="0,0,30,0" CornerRadius="20" Width="500" Height="300" HorizontalAlignment="Left">
+                    <Image Width="500" Height="300" Stretch="Fill" x:Name="SeasonImage"/>
+                </Grid>
+                <Grid>
+                    <StackPanel VerticalAlignment="Center">
+                        <CheckBox IsEnabled="False">
+                            <TextBlock Text="Medium Textures"/>
+                        </CheckBox>
+                        <CheckBox IsEnabled="False">
+                            <TextBlock Text="High Textures"/>
+                        </CheckBox>
+                        <CheckBox IsEnabled="False">
+                            <TextBlock Text="Very High Textures"/>
+                        </CheckBox>
+                        <CheckBox x:Name="_4kCheckbox">
+                            <TextBlock Text="Ultra Textures"/>
+                        </CheckBox>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+            
+            <Grid>
+                <TextBlock Text="Season Description Placeholder" Margin="0,30,0,0" x:Name="SeasonDescription" Visibility="Visible"/>
+            </Grid>
+            <Grid>
+                <ScrollViewer Margin="0,30,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="DownloadScroller" Height="250" VerticalScrollBarVisibility="Hidden">
+                    <TextBlock x:Name="DownloadText" Visibility="Visible" TextWrapping="Wrap"/>
+                </ScrollViewer>
+            </Grid>
+        </StackPanel>
+
+
+        <!--Buttons Bar-->
+        <Grid x:Name="ButtonsBar" Visibility="Collapsed">
+            <Button Width="200" Height="50" x:Name="BackButton" Click="BackButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="0,10,0,0">
+                <TextBlock Text="Back"/>
+            </Button>
+
+            <Button Width="200" Height="50" x:Name="VerifyButton" Click="DownloadButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,420,0" Visibility="Collapsed">
+                <TextBlock Text="Verify Game Files"/>
+            </Button>
+
+            <Button Width="200" Height="50" x:Name="DownloadButton" Click="DownloadButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Visible">
+                <TextBlock Text="Download"/>
+            </Button>
+
+            <Button Width="200" Height="50" x:Name="OpenGameFolderButton" Click="OpenGameFolderButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,210,0" Visibility="Collapsed">
+                <TextBlock Text="Open Folder in Explorer"/>
+            </Button>
+
+            <Button Width="200" Height="50" x:Name="PlayButton" Click="PlayButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
+                <TextBlock Text="Play"/>
+            </Button>
+            <Button Width="200" Height="50" x:Name="CloseGameButton" Click="CloseGameButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
+                <TextBlock Text="Force Close Game"/>
+            </Button>
+        </Grid>
+    </Grid>
+</Page>

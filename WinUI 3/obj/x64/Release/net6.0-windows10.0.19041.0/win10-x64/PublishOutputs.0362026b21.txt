@@ -1,4 +1,0 @@
-C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-arm64\publish\WinUI 3.pdb
-C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-arm64\publish\Microsoft.WindowsAppRuntime.Bootstrap.dll
-C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-arm64\publish\resources.pri
-C:\Users\Krisz\source\repos\WinUI 3\WinUI 3\bin\win10-arm64\publish\WinUI 3.exe
