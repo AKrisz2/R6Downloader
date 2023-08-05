@@ -319,7 +319,7 @@ namespace R6_Downloader
             {
                 version = JObject.Parse(client.DownloadString("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/version.json"));
             }
-            if (version["version"].ToString() != "1")
+            if (version["version"].ToString() != "2")
             {
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
@@ -715,6 +715,7 @@ namespace R6_Downloader
         }
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
+            Process process = new Process();
             if (File.Exists(App.settings["folder"].ToString() + seasonFolder + "\\RainbowSixGame.exe"))
             {
                 process.StartInfo = new ProcessStartInfo
