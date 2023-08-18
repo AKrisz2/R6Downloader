@@ -281,21 +281,11 @@ namespace R6_Downloader
         }
         private void DownloadStuff()
         {
-            if (Directory.Exists("Cracks")) 
+            using (var client = new WebClient())
             {
-                Directory.Delete("Cracks", true);
-                using (var client = new WebClient())
-                {
-                    client.DownloadFileCompleted += CracksDownloaded;
-                    client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
-                }
+                client.DownloadFileCompleted += CracksDownloaded;
+                client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
             }
-            if (!Directory.Exists("Cracks"))
-                using (var client = new WebClient())
-                {
-                    client.DownloadFileCompleted += CracksDownloaded;
-                    client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
-                }
         }
         private void ImagesDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -304,6 +294,8 @@ namespace R6_Downloader
         }
         private void CracksDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
+            if (Directory.Exists("Cracks"))
+                Directory.Delete("Cracks", true);
             System.IO.Compression.ZipFile.ExtractToDirectory("cracks.zip", App.appFolder + "\\Cracks\\");
             File.Delete("cracks.zip");
         }
