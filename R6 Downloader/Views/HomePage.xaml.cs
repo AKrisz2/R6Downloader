@@ -283,7 +283,7 @@ namespace R6_Downloader
         {
             if (Directory.Exists("Cracks")) 
             {
-                Directory.Delete("Cracks");
+                Directory.Delete("Cracks", true);
                 using (var client = new WebClient())
                 {
                     client.DownloadFileCompleted += CracksDownloaded;
