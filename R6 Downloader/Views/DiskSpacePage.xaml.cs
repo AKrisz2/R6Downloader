@@ -85,7 +85,14 @@ namespace R6_Downloader.Views
                 totalInstallSize += Convert.ToInt32(season.Size.Split(" ").First());
             }
 
-            driveSize = GetDriveSize(App.settings["folder"].ToString().Substring(0, 1));
+            if(App.settings["folder"].ToString() == "")
+            {
+                driveSize = GetDriveSize("C");
+            }
+            else
+            {
+                driveSize = GetDriveSize(App.settings["folder"].ToString().Substring(0, 1));
+            }
             CreateProgressBar();
             otherSpaceSubText.Text = "Other " + (driveSize.Item2 - driveSize.Item1 - totalInstallSize) + " GB";
             totalSizeSubText.Text = "Downloader " + totalInstallSize + " GB";

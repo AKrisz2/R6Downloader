@@ -18,6 +18,8 @@ using System.Text;
 using Path = System.IO.Path;
 using Windows.UI.ViewManagement;
 using Windows.System;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -62,7 +64,8 @@ namespace R6_Downloader
         public static string manifest4K;
         public static string manifestRus;
 
-        public static Process process; 
+        public static Process process;
+        public static string _2FACode;
 
         public HomePage()
         {
@@ -181,14 +184,16 @@ namespace R6_Downloader
                             seasonImage.Margin = new Thickness(0, 0, 0, background.Height);
 
                             //Automatically change name ingame if game is installed
-                            if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini"))
-                                ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString()); 
+                            if (App.settings["ingame"].ToString() != "")
+                            {
+                                if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini"))
+                                    ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\CPlay.ini", "Username = ", App.settings["ingame"].ToString());
 
-                            else if(File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
-                                ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
+                                else if (File.Exists(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini"))
+                                    ReplaceLineStartsWith(App.settings["folder"].ToString() + items[i].ElementAt(j).First["name"] + "\\uplay_r2.ini", "Username = ", App.settings["ingame"].ToString());
+                            }
 
                             //Add season to installed list for storage check
-
                             R6Season seasonInstance = new R6Season(); 
                             seasonInstance.Name = items[i].ElementAt(j).First["name"].ToString();
 
@@ -276,23 +281,21 @@ namespace R6_Downloader
         }
         private void DownloadStuff()
         {
-            if (!File.Exists("DepotDownloader\\DepotDownloader.dll"))
-            using (var client = new WebClient())
+            if (Directory.Exists("Cracks")) 
             {
-                client.DownloadFileCompleted += DepotDownloaderDownloaded;
-                client.DownloadFileAsync(new Uri("https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.5.0/depotdownloader-2.5.0.zip"), "depotdownloader.zip");
+                Directory.Delete("Cracks");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFileCompleted += CracksDownloaded;
+                    client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
+                }
             }
             if (!Directory.Exists("Cracks"))
-            using (var client = new WebClient())
-            {
-                client.DownloadFileCompleted += CracksDownloaded;
-                client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
-            }
-        }
-        private void DepotDownloaderDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-        {
-            System.IO.Compression.ZipFile.ExtractToDirectory("depotdownloader.zip", App.appFolder + "\\DepotDownloader\\");
-            File.Delete("depotdownloader.zip");
+                using (var client = new WebClient())
+                {
+                    client.DownloadFileCompleted += CracksDownloaded;
+                    client.DownloadFileAsync(new Uri("https://github.com/AKrisz2/r6cucc/raw/main/Cracks.zip"), "cracks.zip");
+                }
         }
         private void ImagesDownloaded(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -379,8 +382,7 @@ namespace R6_Downloader
                         File.WriteAllText("config.json", App.settings.ToString());
                     }
                 }
-                
-                File.Delete("downloader.bat");
+
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
@@ -391,6 +393,7 @@ namespace R6_Downloader
 
                 var result = await dialog.ShowAsync();
 
+                /*
                 if (!(bool)App.settings["rus"])
                 {
                     File.AppendAllText("downloader.bat",
@@ -408,11 +411,7 @@ namespace R6_Downloader
                     File.AppendAllText("downloader.bat",
                     "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377239 -manifest " + manifest4K + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
                 }
-
-                File.AppendAllText("downloader.bat", "@echo Download Complete!");
-
-                string batchFilePath = "downloader.bat";
-                string workingDirectory = App.appFolder;
+                */
 
                 SeasonDescription.Visibility = Visibility.Collapsed;
                 DownloadScroller.Visibility = Visibility.Visible;
@@ -420,116 +419,137 @@ namespace R6_Downloader
                 BackButton.IsEnabled = false;
                 DownloadButton.IsEnabled = false;
 
-                SynchronizationContext synchronizationContext = SynchronizationContext.Current;
-                process = new Process();
-                string output = await RunCommand(batchFilePath, workingDirectory, synchronizationContext);
+                //Start download
+                List<DownloadObj> arguments = new List<DownloadObj>();
+                                
+                if (!(bool)App.settings["rus"])
+                {
+                    //ManifestContent
+                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, "359551"),
+                        new DownloaderArgument(ArgType.ManifestId, manifestContent),
+                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
+                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                    }));
+                    //Download WW
+                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, "377237"),
+                        new DownloaderArgument(ArgType.ManifestId, manifestWW),
+                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
+                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                    }));
+                }
+                else if ((bool)App.settings["rus"])
+                {
+                    //ManifestContent
+                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, "359551"),
+                        new DownloaderArgument(ArgType.ManifestId, manifestContent),
+                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
+                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                    }));
+                    //Download RUS
+                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, "377238"),
+                        new DownloaderArgument(ArgType.ManifestId, manifestRus),
+                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
+                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                    }));
+                }
+                if (_4kCheckbox.IsChecked == true)
+                {
+                    //Download RUS
+                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, "377239"),
+                        new DownloaderArgument(ArgType.ManifestId, manifest4K),
+                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
+                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                    }));
+                }
 
-                UpdateOutputInUI(synchronizationContext, output);
+                int doneCount = 0;
+                DepotDownloaderLib.onConsoleOutput += (f, s) =>
+                {
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        DownloadText.Text += f + " ";
+                        DownloadText.Text += s + "\n";
+                        DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
+                    });
 
-                // Scroll to the bottom
-                DownloadText.UpdateLayout();
-                DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
+                    if(f == 100){ doneCount++; }
+
+                    if(doneCount == arguments.Count)
+                    {
+                        DownloadDone();
+                    }
+                };
+
+                DepotDownloaderLib.onConsoleInput += () =>
+                {
+                    _2FACode = null;
+                    DispatcherQueue.TryEnqueue(async () =>
+                    {
+                        await Show2FAInputAsync();
+                    });
+                    while (_2FACode == null) { }
+                    return _2FACode;
+                };
+                DepotDownloaderLib.RunDownload(arguments, true);
             }
         }
-
-        private void UpdateOutputInUI(SynchronizationContext synchronizationContext, string output)
+        private async Task<string> Show2FAInputAsync()
         {
-            synchronizationContext.Post(_ =>
+            ContentDialog dialog1 = new ContentDialog();
+            dialog1.XamlRoot = this.XamlRoot;
+            dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+            dialog1.Title = "Steam Guard";
+            dialog1.PrimaryButtonText = "OK";
+            dialog1.DefaultButton = ContentDialogButton.Primary;
+            dialog1.Content = new _2FAPage();
+
+            ContentDialogResult result1 = await dialog1.ShowAsync();
+            if (result1 == ContentDialogResult.Primary)
             {
-                DownloadText.Text += output + Environment.NewLine; // Append the output with a new line
-
-                // Scroll to the bottom
-                DownloadText.UpdateLayout();
-                DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
-            }, null);
-        }
-        public async Task<string> RunCommand(string batchFilePath, string workingDirectory, SynchronizationContext synchronizationContext)
-        {
-            Directory.CreateDirectory(App.settings["folder"].ToString() + seasonFolder);
-
-            bool has2FA = false;
-
-            _playButton.IsEnabled = false;
-            _backButton.IsEnabled = false;
-            MainWindow._settingsButton.IsEnabled = false;
-            StringBuilder outputBuilder = new StringBuilder();
-
-            process = new Process();
-            process.StartInfo.FileName = batchFilePath;
-            process.StartInfo.WorkingDirectory = workingDirectory;
-            process.StartInfo.RedirectStandardOutput = true;
-            process.StartInfo.RedirectStandardError = true; // Enable redirecting standard error stream
-            process.StartInfo.RedirectStandardInput = true; // Enable redirecting standard input stream
-            process.StartInfo.UseShellExecute = false;
-            process.StartInfo.CreateNoWindow = true;
-
-            process.OutputDataReceived += async (sender, e) =>
+                _2FACode = _2FAPage._steamGuardInput.Text;
+                return _2FAPage._steamGuardInput.Text;
+            }
+            else
             {
-                if (e.Data != null)
-                {
-                    string outputLine = e.Data;
-                    UpdateOutputInUI(synchronizationContext, outputLine); // Update the output in the UI
-
-                    if (outputLine.Contains("Logging '" + App.settings["name"].ToString() + "' into Steam3"))
-                    {
-                        if (!has2FA)
-                        {
-                            DispatcherQueue.TryEnqueue(async () =>
-                            {
-                                ContentDialog dialog1 = new ContentDialog();
-                                dialog1.XamlRoot = this.XamlRoot;
-                                dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                                dialog1.Title = "Steam Guard";
-                                dialog1.PrimaryButtonText = "OK";
-                                dialog1.DefaultButton = ContentDialogButton.Primary;
-                                dialog1.Content = new _2FAPage();
-
-                                var result1 = await dialog1.ShowAsync();
-                                if (result1 == ContentDialogResult.Primary)
-                                {
-                                    if (process != null && !process.HasExited)
-                                    {
-                                        if(_2FAPage._steamGuardInput.Text != null)
-                                        {
-                                            using (StreamWriter writer = process.StandardInput)
-                                            {
-                                                await writer.WriteLineAsync(_2FAPage._steamGuardInput.Text);
-                                            }
-                                        }
-                                        _2FAPage._steamGuardInput.Text = null;
-                                    }
-                                    else
-                                    {
-                                        // Handle the case when the process has already exited or is not running
-                                        // (Optional: Display a message to the user)
-                                    }
-                                }
-                            });
-                            has2FA = true;
-                        }
-                    }
-                }
-            };
-
-            process.EnableRaisingEvents = true; // Enable raising events to detect process exit
-            process.Exited += Process_Exited; // Register the event handler for process exit
-
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-
-            await process.WaitForExitAsync();
-
-            // Get the captured output as a string
-            string output = outputBuilder.ToString().Trim();
-
-            process.Dispose();
-            process = null;
-
-            return output;
+                return null;
+            }
         }
-
-        private void Process_Exited(object sender, EventArgs e)
+        public void DownloadDone()
         {
             CopyCrack(selectedSeason, App.settings["folder"].ToString() + seasonFolder);
             GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
@@ -545,20 +565,6 @@ namespace R6_Downloader
 
                 ShowPlayButton();
             });
-        }
-
-        private async Task<int> WaitForExitAsync()
-        {
-            TaskCompletionSource<int> processExitCompletionSource = new TaskCompletionSource<int>();
-
-            void ProcessExited(object sender, EventArgs e)
-            {
-                processExitCompletionSource.TrySetResult(process.ExitCode);
-            }
-
-            process.Exited += ProcessExited;
-
-            return await processExitCompletionSource.Task;
         }
         public void CopyCrack(int seasonNum, string folder)
         {
