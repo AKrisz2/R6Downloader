@@ -314,7 +314,7 @@ namespace R6_Downloader
             {
                 version = JObject.Parse(client.DownloadString("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/version.json"));
             }
-            if (version["version"].ToString() != "2")
+            if (version["version"].ToString() != "3")
             {
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
