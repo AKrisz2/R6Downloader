@@ -118,12 +118,6 @@ namespace R6_Downloader.Views
             File.WriteAllText("config.json", App.settings.ToString());
         }
 
-        private void rusToggle_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            App.settings["rus"] = rusToggle.IsOn;
-            File.WriteAllText("config.json", App.settings.ToString());
-        }
-
         private void maxDownloads_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             App.settings["maxDownloads"] = maxDownloads.Value;
@@ -133,6 +127,12 @@ namespace R6_Downloader.Views
         private void ShowStorageButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.contentFrame.Navigate(typeof(DiskSpacePage), string.Empty);
+        }
+
+        private void rusToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            App.settings["rus"] = rusToggle.IsOn;
+            File.WriteAllText("config.json", App.settings.ToString());
         }
     }
 

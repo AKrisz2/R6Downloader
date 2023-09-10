@@ -16,7 +16,7 @@
             <TextBlock Text="Loading..."/>
         </StackPanel>
         <!--Original Scroll View-->
-        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" x:Name="PageScrollview" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer VerticalScrollMode="Enabled" HorizontalScrollMode="Disabled" x:Name="PageScrollview" VerticalScrollBarVisibility="Visible">
             <StackPanel Orientation="Vertical" x:Name="YourParentControl"></StackPanel>
         </ScrollViewer>
 

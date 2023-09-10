@@ -28,6 +28,7 @@
     <None Remove="Views\DownloadWarning.xaml" />
     <None Remove="Views\ExtractionEventsPage.xaml~RF7185b4.TMP" />
     <None Remove="Views\NameChange.xaml" />
+    <None Remove="Views\NoAccessErrorPage.xaml" />
     <None Remove="Views\PasswordPage.xaml" />
     <None Remove="Views\SettingsErrorPage.xaml" />
     <None Remove="Views\UninstallWarningPage.xaml" />
@@ -47,12 +48,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DepotDownloaderLib" Version="1.1.1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="SteamKit2" Version="2.4.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 	<!-- 
@@ -120,6 +121,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Remove="Views\SettingsErrorPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\NoAccessErrorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\_2FAPage.xaml">

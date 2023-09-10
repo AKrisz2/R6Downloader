@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>disable</Nullable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Title>DepotDownloaderLib</Title>
+        <Version>1.1.1</Version>
+        <PackageProjectUrl>https://github.com/WeeXnes/DepotDownloaderLib</PackageProjectUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/WeeXnes/DepotDownloaderLib</RepositoryUrl>
+        <Authors>WeeXnes</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <TargetFrameworks>net7.0;net6.0</TargetFrameworks>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Resource Include="..\README.md" Pack="true" PackagePath="\" />
+        <PackageReference Include="SteamKit2" Version="2.5.0-Beta.1" />
+    </ItemGroup>
+
+</Project>

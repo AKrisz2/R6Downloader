@@ -20,6 +20,9 @@ using Windows.UI.ViewManagement;
 using Windows.System;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using Microsoft.UI.Dispatching;
+using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
+using System.Runtime.CompilerServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -37,6 +40,9 @@ namespace R6_Downloader
         public static JObject version;
         public static List<JToken> seasons = new List<JToken>();
         public static List<R6Season> installedSeasons = new List<R6Season>();
+
+        public static DispatcherQueue dispatcherQueue;
+        public static XamlRoot _xamlRoot;
 
         public static StackPanel loadingStack;
         public static ScrollViewer yearViewer;
@@ -66,6 +72,8 @@ namespace R6_Downloader
 
         public static Process process;
         public static string _2FACode;
+        public static TextBlock _downloadText;
+        public static ScrollViewer _downloadScroller;
 
         public HomePage()
         {
@@ -85,6 +93,10 @@ namespace R6_Downloader
             _backButton = BackButton;
             _openGameFolderButton = OpenGameFolderButton;
             _closeGameButton = CloseGameButton;
+            _downloadText = DownloadText;
+            _downloadScroller = DownloadScroller;
+
+            dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
             process = new Process();
         }
@@ -410,6 +422,8 @@ namespace R6_Downloader
                 _4kCheckbox.IsEnabled = false;
                 BackButton.IsEnabled = false;
                 DownloadButton.IsEnabled = false;
+                PlayButton.IsEnabled = false;
+                MainWindow._settingsButton.IsEnabled = false;
 
                 //Start download
                 List<DownloadObj> arguments = new List<DownloadObj>();
@@ -427,7 +441,7 @@ namespace R6_Downloader
                         new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
                         new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
                         new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                        new DownloaderArgument(ArgType.RememberPassword, "")
                     }));
                     //Download WW
                     arguments.Add(new DownloadObj(new List<DownloaderArgument>()
@@ -440,7 +454,7 @@ namespace R6_Downloader
                         new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
                         new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
                         new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                        new DownloaderArgument(ArgType.RememberPassword, "")
                     }));
                 }
                 else if ((bool)App.settings["rus"])
@@ -456,7 +470,7 @@ namespace R6_Downloader
                         new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
                         new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
                         new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                        new DownloaderArgument(ArgType.RememberPassword, "")
                     }));
                     //Download RUS
                     arguments.Add(new DownloadObj(new List<DownloaderArgument>()
@@ -469,12 +483,12 @@ namespace R6_Downloader
                         new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
                         new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
                         new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                        new DownloaderArgument(ArgType.RememberPassword, "")
                     }));
                 }
                 if (_4kCheckbox.IsChecked == true)
                 {
-                    //Download RUS
+                    //Download 4K
                     arguments.Add(new DownloadObj(new List<DownloaderArgument>()
                     {
                         new DownloaderArgument(ArgType.AppId, "359550"),
@@ -485,20 +499,13 @@ namespace R6_Downloader
                         new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
                         new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
                         new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, " ")
+                        new DownloaderArgument(ArgType.RememberPassword, "")
                     }));
                 }
 
                 int doneCount = 0;
                 DepotDownloaderLib.onConsoleOutput += (f, s) =>
                 {
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        DownloadText.Text += f + " ";
-                        DownloadText.Text += s + "\n";
-                        DownloadScroller.ScrollToVerticalOffset(DownloadScroller.ExtentHeight);
-                    });
-
                     if(f == 100){ doneCount++; }
 
                     if(doneCount == arguments.Count)
@@ -506,24 +513,15 @@ namespace R6_Downloader
                         DownloadDone();
                     }
                 };
+                _xamlRoot = this.XamlRoot;
 
-                DepotDownloaderLib.onConsoleInput += () =>
-                {
-                    _2FACode = null;
-                    DispatcherQueue.TryEnqueue(async () =>
-                    {
-                        await Show2FAInputAsync();
-                    });
-                    while (_2FACode == null) { }
-                    return _2FACode;
-                };
                 DepotDownloaderLib.RunDownload(arguments, true);
             }
         }
-        private async Task<string> Show2FAInputAsync()
+        public static async Task<string> Show2FAInputAsync()
         {
             ContentDialog dialog1 = new ContentDialog();
-            dialog1.XamlRoot = this.XamlRoot;
+            dialog1.XamlRoot = _xamlRoot;
             dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
             dialog1.Title = "Steam Guard";
             dialog1.PrimaryButtonText = "OK";
@@ -533,7 +531,7 @@ namespace R6_Downloader
             ContentDialogResult result1 = await dialog1.ShowAsync();
             if (result1 == ContentDialogResult.Primary)
             {
-                _2FACode = _2FAPage._steamGuardInput.Text;
+                //_2FACode = _2FAPage._steamGuardInput.Text;
                 return _2FAPage._steamGuardInput.Text;
             }
             else
@@ -799,10 +797,6 @@ namespace R6_Downloader
                 // For example, the folder might not exist, or the user might not have permission to access it.
                 // You can display an error message or log the exception for further investigation.
             }
-        }
-        private async void UninstallButton_Click(object sender, RoutedEventArgs e)
-        {
-
         }
         static long GetFolderSize(string folderPath)
         {

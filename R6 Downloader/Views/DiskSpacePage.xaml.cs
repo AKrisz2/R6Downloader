@@ -66,8 +66,9 @@ namespace R6_Downloader.Views
                 nameStack.Children.Add(seasonName);
 
                 //Add size
+                int size = (int)float.Parse(season.Size.Split(" ").First());
                 TextBlock seasonSize = new TextBlock();
-                seasonSize.Text = season.Size;
+                seasonSize.Text = size.ToString() + " GB";
                 nameStack.Children.Add(seasonSize);
 
                 seasonGrid.Children.Add(nameStack);
@@ -82,7 +83,7 @@ namespace R6_Downloader.Views
 
                 InstalledSeasonsStack.Children.Add(seasonGrid);
 
-                totalInstallSize += Convert.ToInt32(season.Size.Split(" ").First());
+                totalInstallSize += (int)float.Parse(season.Size.Split(" ").First());
             }
 
             if(App.settings["folder"].ToString() == "")
@@ -192,10 +193,25 @@ namespace R6_Downloader.Views
 
             if (result == ContentDialogResult.Primary)
             {
-                foreach(var folder in selectedSeasons)
-                    Directory.Delete(folder, true);
+                foreach (var folder in selectedSeasons)
+                    try
+                    {
+                        Directory.Delete(folder, true);
+                    }
+                    catch (UnauthorizedAccessException ex)
+                    {
+                        Debug.WriteLine("Unauthorized access: " + ex.Message);
 
-                MainWindow.contentFrame.Navigate(typeof(HomePage), string.Empty);
+                        ContentDialog dialog2 = new ContentDialog();
+                        dialog2.XamlRoot = this.XamlRoot;
+                        dialog2.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                        dialog2.Title = "Error";
+                        dialog2.PrimaryButtonText = "OK";
+                        dialog2.Content = new NoAccessErrorPage();
+                        var result2 = await dialog2.ShowAsync();
+                    }
+
+                MainWindow._homeButton.IsSelected = true;
             }
         }
     }

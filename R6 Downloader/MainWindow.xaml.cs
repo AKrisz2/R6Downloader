@@ -10,13 +10,13 @@ using WinRT; // required to support Window.As<ICompositionSupportsSystemBackdrop
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Windowing;
 using System.Diagnostics;
-using Microsoft.WindowsAppSDK.Runtime;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using R6_Downloader.Views;
 using WinRT.Interop;
 using System.Reflection;
 using System.IO;
+using DepotDownloader;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,6 +33,7 @@ namespace R6_Downloader
         SystemBackdropConfiguration m_configurationSource;
         public static Frame contentFrame;
         public static NavigationView navigationView;
+        public static NavigationViewItem _homeButton;
         public static NavigationViewItem _settingsButton;
         private Process process;
 
@@ -61,6 +62,7 @@ namespace R6_Downloader
 
             contentFrame = ContentFrame;
             navigationView = NavigationViewControl;
+            _homeButton = HomeButton;
             _settingsButton = SettingsButton;
         }
         private void KillProcess(Process process)
@@ -87,6 +89,7 @@ namespace R6_Downloader
                 KillProcess(process);
             }
             process?.Dispose();
+            KillProcessByName(Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().MainModule.FileName));
             KillProcessByName("dotnet");
         }
         private bool IsCmdRunningDownloadBat(Process process)

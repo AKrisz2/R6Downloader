@@ -1,5 +1,6 @@
-﻿<Page
-    x:Class="R6_Downloader.Views.DownloadWarning"
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="R6_Downloader.Views.NoAccessErrorPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:R6_Downloader.Views"
@@ -7,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
-        <TextBlock Text="You will be prompted for Steam Guard multiple times.&#013;&#013;If the download seems stuck, or program freezes, please wait."/>
-    </StackPanel>
+    <Grid>
+        <TextBlock Text="Can not access selected folder. Try running as administrator!"/>
+    </Grid>
 </Page>
