@@ -1,163 +1,152 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using DepotDownloader;
 using SteamKit2;
 
-public enum ArgType
+namespace DepotDownloader
 {
-    [Description("-app")]
-    AppId,
-    [Description("-depot")]
-    DepotId,
-    [Description("-manifest")]
-    ManifestId,
-    [Description("-username")]
-    Username,
-    /// <summary>
-    /// Use either Password or RememberPassword, not both
-    /// </summary>
-    [Description("-password")]
-    Password,
-    /// <summary>
-    /// Use either Password or RememberPassword, not both
-    /// </summary>
-    [Description("-remember-password")]
-    RememberPassword,
-    [Description("-dir")]
-    Directory,
-    [Description("-max-servers")]
-    MaxServers,
-    [Description("-max-downloads")]
-    MaxDownloads,
-}
-
-
-public class DownloadObj
-{
-    public List<DownloaderArgument> argsList { get; set; }
-
-    public DownloadObj(List<DownloaderArgument> _list)
+    public enum ArgType
     {
-        this.argsList = _list;
+        [Description("-app")]
+        AppId,
+        [Description("-depot")]
+        DepotId,
+        [Description("-manifest")]
+        ManifestId,
+        [Description("-username")]
+        Username,
+        [Description("-password")]
+        Password,
+        [Description("-remember-password")]
+        RememberPassword,
+        [Description("-dir")]
+        Directory,
+        [Description("-max-servers")]
+        MaxServers,
+        [Description("-max-downloads")]
+        MaxDownloads,
     }
 
-    public string[] getArgStringList()
+
+    public class DownloadObj
     {
-        List<string> argumentsStringList = new List<string>();
-        foreach (var argument in this.argsList)
+        public List<DownloaderArgument> argsList { get; set; }
+
+        public DownloadObj(List<DownloaderArgument> _list)
         {
-            string[] argArr = argument.GetCommandArray();
-            argumentsStringList.Add(argArr[0]);
-            argumentsStringList.Add(argArr[1]);
+            this.argsList = _list;
         }
-        return argumentsStringList.ToArray();
-    }
-}
 
-public class DownloaderArgument
-{
-    public ArgType argType { get; set; }
-    public string argValue { get; set; }
-    public DownloaderArgument(ArgType type, string value)
-    {
-        this.argType = type;
-        this.argValue = value;
-    }
-
-    public string[] GetCommandArray()
-    {
-        return new[] { GetDescription(), this.argValue };
-    }
-    private string GetDescription()
-    {
-        var attribute =
-            argType.GetType()
-                    .GetTypeInfo()
-                    .GetMember(argType.ToString())
-                    .FirstOrDefault(member => member.MemberType == MemberTypes.Field)
-                    .GetCustomAttributes(typeof(DescriptionAttribute), false)
-                    .SingleOrDefault()
-                as DescriptionAttribute;
-
-        return attribute?.Description ?? argType.ToString();
-    }
-    
-}
-
-
-public static class DepotDownloaderLib
-{
-    /// <summary>
-    /// Function gets called after a worker has finished the download list and throws the completed event
-    /// </summary>
-    public static Action onDownloadCompleted = null;
-    /// <summary>
-    /// Intercepts the Percentage Output from DepotDownloader, u can use this to for example show the current Download Progress as a ProgressBar in your GUI
-    /// </summary>
-    /// <param name="percentage (float)">contains the current download percentage as float</param>
-    /// <param name="file (string)">contains the last written file</param>
-    public static Action<float, string> onConsoleOutput = null;
-    /// <summary>
-    /// Overrides DepotDownloader's Default Console.ReadLine call when trying to get the 2FA code
-    /// </summary>
-    /// <param name="2fa code (string)"></param>
-    public static Func<string> onConsoleInput = null;
-    /// <summary>
-    /// If calling this method from a GUI like WPF, use set the startAsWorker param to true
-    /// </summary>
-    /// <param name="downloaderArguments">provides the arguments for the downloads</param>
-    /// <param name="startFromGui">starts the download process as a backgroundWorker (used for GUI use-cases)</param>
-    
-    
-
-    public static async void RunDownload(List<DownloadObj> downloads, bool runAsWorker)
-    {
-      
-
-        
-
-        if (runAsWorker)
+        public string[] getArgStringList()
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += async (o, args) =>
+            List<string> argumentsStringList = new List<string>();
+            foreach (var argument in this.argsList)
+            {
+                string[] argArr = argument.GetCommandArray();
+                argumentsStringList.Add(argArr[0]);
+                argumentsStringList.Add(argArr[1]);
+            }
+            return argumentsStringList.ToArray();
+        }
+    }
+
+    public class DownloaderArgument
+    {
+        public ArgType argType { get; set; }
+        public string argValue { get; set; }
+        public DownloaderArgument(ArgType type, string value)
+        {
+            this.argType = type;
+            this.argValue = value;
+        }
+
+        public string[] GetCommandArray()
+        {
+            return new[] { GetDescription(), this.argValue };
+        }
+        private string GetDescription()
+        {
+            var attribute =
+                argType.GetType()
+                        .GetTypeInfo()
+                        .GetMember(argType.ToString())
+                        .FirstOrDefault(member => member.MemberType == MemberTypes.Field)
+                        .GetCustomAttributes(typeof(DescriptionAttribute), false)
+                        .SingleOrDefault()
+                    as DescriptionAttribute;
+
+            return attribute?.Description ?? argType.ToString();
+        }
+
+    }
+
+
+    public static class Program
+    {
+        /// <summary>
+        /// Function gets called after a worker has finished the download list and throws the completed event
+        /// </summary>
+        public static Action onDownloadCompleted = null;
+        /// <summary>
+        /// Intercepts the Percentage Output from DepotDownloader, u can use this to for example show the current Download Progress as a ProgressBar in your GUI
+        /// </summary>
+        /// <param name="percentage (float)">contains the current download percentage as float</param>
+        /// <param name="file (string)">contains the last written file</param>
+        public static Action<float, string> onConsoleOutput = null;
+        /// <summary>
+        /// Overrides DepotDownloader's Default Console.ReadLine call when trying to get the 2FA code
+        /// </summary>
+        /// <param name="2fa code (string)"></param>
+        public static Func<string> onConsoleInput = null;
+        /// <summary>
+        /// If calling this method from a GUI like WPF, use set the startAsWorker param to true
+        /// </summary>
+        /// <param name="downloaderArguments">provides the arguments for the downloads</param>
+        /// <param name="startFromGui">starts the download process as a backgroundWorker (used for GUI use-cases)</param>
+
+
+
+        public static async void RunDownload(List<DownloadObj> downloads, bool runAsWorker)
+        {
+            if (runAsWorker)
+            {
+                BackgroundWorker worker = new BackgroundWorker();
+                worker.DoWork += async (o, args) =>
+                {
+                    foreach (var obj in downloads)
+                    {
+                        await MainAsync(obj.getArgStringList());
+                    }
+                };
+                worker.RunWorkerCompleted += (o, args) =>
+                {
+                    Console.WriteLine("Download finished");
+                    if (onDownloadCompleted != null)
+                        onDownloadCompleted.Invoke();
+                };
+                worker.RunWorkerAsync();
+            }
+            else
             {
                 foreach (var obj in downloads)
                 {
                     await MainAsync(obj.getArgStringList());
                 }
-            };
-            worker.RunWorkerCompleted += (o, args) =>
-            {
-                Console.WriteLine("Download finished");
-                if (onDownloadCompleted != null)
-                    onDownloadCompleted.Invoke();
-            };
-            worker.RunWorkerAsync();
-        }
-        else
-        {
-            foreach (var obj in downloads)
-            {
-                await MainAsync(obj.getArgStringList());
             }
         }
 
+        internal static readonly char[] newLineCharacters = ['\n', '\r'];
 
-
-    }
-    static async Task<int> MainAsync(string[] args)
+        static async Task<int> MainAsync(string[] args)
         {
             if (args.Length == 0)
             {
-                PrintUsage();
                 return 1;
             }
 
@@ -184,6 +173,7 @@ public static class DepotDownloaderLib
             var username = GetParameter<string>(args, "-username") ?? GetParameter<string>(args, "-user");
             var password = GetParameter<string>(args, "-password") ?? GetParameter<string>(args, "-pass");
             ContentDownloader.Config.RememberPassword = HasParameter(args, "-remember-password");
+            ContentDownloader.Config.UseQrCode = HasParameter(args, "-qr");
 
             ContentDownloader.Config.DownloadManifestOnly = HasParameter(args, "-manifest-only");
 
@@ -199,20 +189,22 @@ public static class DepotDownloaderLib
 
             if (fileList != null)
             {
+                const string RegexPrefix = "regex:";
+
                 try
                 {
                     var fileListData = await File.ReadAllTextAsync(fileList);
-                    var files = fileListData.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+                    var files = fileListData.Split(newLineCharacters, StringSplitOptions.RemoveEmptyEntries);
 
                     ContentDownloader.Config.UsingFileList = true;
                     ContentDownloader.Config.FilesToDownload = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-                    ContentDownloader.Config.FilesToDownloadRegex = new List<Regex>();
+                    ContentDownloader.Config.FilesToDownloadRegex = [];
 
                     foreach (var fileEntry in files)
                     {
-                        if (fileEntry.StartsWith("regex:"))
+                        if (fileEntry.StartsWith(RegexPrefix))
                         {
-                            var rgx = new Regex(fileEntry.Substring(6), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                            var rgx = new Regex(fileEntry[RegexPrefix.Length..], RegexOptions.Compiled | RegexOptions.IgnoreCase);
                             ContentDownloader.Config.FilesToDownloadRegex.Add(rgx);
                         }
                         else
@@ -328,7 +320,7 @@ public static class DepotDownloaderLib
                 ContentDownloader.Config.DownloadAllPlatforms = HasParameter(args, "-all-platforms");
                 var os = GetParameter<string>(args, "-os");
 
-                if (ContentDownloader.Config.DownloadAllPlatforms && !String.IsNullOrEmpty(os))
+                if (ContentDownloader.Config.DownloadAllPlatforms && !string.IsNullOrEmpty(os))
                 {
                     Console.WriteLine("Error: Cannot specify -os when -all-platforms is specified.");
                     return 1;
@@ -339,7 +331,7 @@ public static class DepotDownloaderLib
                 ContentDownloader.Config.DownloadAllLanguages = HasParameter(args, "-all-languages");
                 var language = GetParameter<string>(args, "-language");
 
-                if (ContentDownloader.Config.DownloadAllLanguages && !String.IsNullOrEmpty(language))
+                if (ContentDownloader.Config.DownloadAllLanguages && !string.IsNullOrEmpty(language))
                 {
                     Console.WriteLine("Error: Cannot specify -language when -all-languages is specified.");
                     return 1;
@@ -402,35 +394,34 @@ public static class DepotDownloaderLib
 
             return 0;
         }
-        
-        
+
         static bool InitializeSteam(string username, string password)
         {
-            if (username != null && password == null && (!ContentDownloader.Config.RememberPassword || !AccountSettingsStore.Instance.LoginKeys.ContainsKey(username)))
+            if (!ContentDownloader.Config.UseQrCode)
             {
-                do
+                if (username != null && password == null && (!ContentDownloader.Config.RememberPassword || !AccountSettingsStore.Instance.LoginTokens.ContainsKey(username)))
                 {
-                    Console.Write("Enter account password for \"{0}\": ", username);
-                    if (Console.IsInputRedirected)
+                    do
                     {
-                        password = Console.ReadLine();
-                    }
-                    else
-                    {
-                        // Avoid console echoing of password
-                        password = Util.ReadPassword();
-                    }
+                        Console.Write("Enter account password for \"{0}\": ", username);
+                        if (Console.IsInputRedirected)
+                        {
+                            password = Console.ReadLine();
+                        }
+                        else
+                        {
+                            // Avoid console echoing of password
+                            password = Util.ReadPassword();
+                        }
 
-                    Console.WriteLine();
-                } while (string.Empty == password);
+                        Console.WriteLine();
+                    } while (string.Empty == password);
+                }
+                else if (username == null)
+                {
+                    Console.WriteLine("No username given. Using anonymous account with dedicated server subscription.");
+                }
             }
-            else if (username == null)
-            {
-                Console.WriteLine("No username given. Using anonymous account with dedicated server subscription.");
-            }
-
-            // capture the supplied password in case we need to re-use it after checking the login key
-            ContentDownloader.Config.SuppliedPassword = password;
 
             return ContentDownloader.InitializeSteam3(username, password);
         }
@@ -451,7 +442,7 @@ public static class DepotDownloaderLib
             return IndexOfParam(args, param) > -1;
         }
 
-        static T GetParameter<T>(string[] args, string param, T defaultValue = default(T))
+        static T GetParameter<T>(string[] args, string param, T defaultValue = default)
         {
             var index = IndexOfParam(args, param);
 
@@ -466,7 +457,7 @@ public static class DepotDownloaderLib
                 return (T)converter.ConvertFromString(strParam);
             }
 
-            return default(T);
+            return default;
         }
 
         static List<T> GetParameterList<T>(string[] args, string param)
@@ -483,12 +474,22 @@ public static class DepotDownloaderLib
             {
                 var strParam = args[index];
 
-                if (strParam[0] == '-') break;
-
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                if (converter != null)
+                // If the argument starts with a "-", it's the start of the next parameter,
+                // so we stop parsing this parameter's values.
+                if (strParam.StartsWith("-"))
                 {
-                    list.Add((T)converter.ConvertFromString(strParam));
+                    break;
+                }
+
+                var parts = strParam.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var part in parts)
+                {
+                    var converter = TypeDescriptor.GetConverter(typeof(T));
+                    if (converter != null)
+                    {
+                        list.Add((T)converter.ConvertFromString(part));
+                    }
                 }
 
                 index++;
@@ -497,66 +498,24 @@ public static class DepotDownloaderLib
             return list;
         }
 
-        static void PrintUsage()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Usage - downloading one or all depots for an app:");
-            Console.WriteLine("\tdepotdownloader -app <id> [-depot <id> [-manifest <id>]]");
-            Console.WriteLine("\t\t[-username <username> [-password <password>]] [other options]");
-            Console.WriteLine();
-            Console.WriteLine("Usage - downloading a workshop item using pubfile id");
-            Console.WriteLine("\tdepotdownloader -app <id> -pubfile <id> [-username <username> [-password <password>]]");
-            Console.WriteLine("Usage - downloading a workshop item using ugc id");
-            Console.WriteLine("\tdepotdownloader -app <id> -ugc <id> [-username <username> [-password <password>]]");
-            Console.WriteLine();
-            Console.WriteLine("Parameters:");
-            Console.WriteLine("\t-app <#>\t\t\t\t- the AppID to download.");
-            Console.WriteLine("\t-depot <#>\t\t\t\t- the DepotID to download.");
-            Console.WriteLine("\t-manifest <id>\t\t\t- manifest id of content to download (requires -depot, default: current for branch).");
-            Console.WriteLine("\t-beta <branchname>\t\t\t- download from specified branch if available (default: Public).");
-            Console.WriteLine("\t-betapassword <pass>\t\t- branch password if applicable.");
-            Console.WriteLine("\t-all-platforms\t\t\t- downloads all platform-specific depots when -app is used.");
-            Console.WriteLine("\t-os <os>\t\t\t\t- the operating system for which to download the game (windows, macos or linux, default: OS the program is currently running on)");
-            Console.WriteLine("\t-osarch <arch>\t\t\t\t- the architecture for which to download the game (32 or 64, default: the host's architecture)");
-            Console.WriteLine("\t-all-languages\t\t\t\t- download all language-specific depots when -app is used.");
-            Console.WriteLine("\t-language <lang>\t\t\t\t- the language for which to download the game (default: english)");
-            Console.WriteLine("\t-lowviolence\t\t\t\t- download low violence depots when -app is used.");
-            Console.WriteLine();
-            Console.WriteLine("\t-ugc <#>\t\t\t\t- the UGC ID to download.");
-            Console.WriteLine("\t-pubfile <#>\t\t\t- the PublishedFileId to download. (Will automatically resolve to UGC id)");
-            Console.WriteLine();
-            Console.WriteLine("\t-username <user>\t\t- the username of the account to login to for restricted content.");
-            Console.WriteLine("\t-password <pass>\t\t- the password of the account to login to for restricted content.");
-            Console.WriteLine("\t-remember-password\t\t- if set, remember the password for subsequent logins of this user. (Use -username <username> -remember-password as login credentials)");
-            Console.WriteLine();
-            Console.WriteLine("\t-dir <installdir>\t\t- the directory in which to place downloaded files.");
-            Console.WriteLine("\t-filelist <file.txt>\t- a list of files to download (from the manifest). Prefix file path with 'regex:' if you want to match with regex.");
-            Console.WriteLine("\t-validate\t\t\t\t- Include checksum verification of files already downloaded");
-            Console.WriteLine();
-            Console.WriteLine("\t-manifest-only\t\t\t- downloads a human readable manifest for any depots that would be downloaded.");
-            Console.WriteLine("\t-cellid <#>\t\t\t\t- the overridden CellID of the content server to download from.");
-            Console.WriteLine("\t-max-servers <#>\t\t- maximum number of content servers to use. (default: 20).");
-            Console.WriteLine("\t-max-downloads <#>\t\t- maximum number of chunks to download concurrently. (default: 8).");
-            Console.WriteLine("\t-loginid <#>\t\t- a unique 32-bit integer Steam LogonID in decimal, required if running multiple instances of DepotDownloader concurrently.");
-        }
-}
-
-public class UpdateVar<T>
-{
-    private T _value;
-
-    public Action ValueChanged;
-
-    public T Value
-    {
-        get => _value;
-
-        set
-        {
-            _value = value;
-            OnValueChanged();
-        }
     }
+    public class UpdateVar<T>
+    {
+        private T _value;
 
-    protected virtual void OnValueChanged() => ValueChanged?.Invoke();
+        public Action ValueChanged;
+
+        public T Value
+        {
+            get => _value;
+
+            set
+            {
+                _value = value;
+                OnValueChanged();
+            }
+        }
+
+        protected virtual void OnValueChanged() => ValueChanged?.Invoke();
+    }
 }

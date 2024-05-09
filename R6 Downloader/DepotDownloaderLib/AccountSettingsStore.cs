@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -11,22 +11,26 @@ namespace DepotDownloader
     [ProtoContract]
     class AccountSettingsStore
     {
-        [ProtoMember(1, IsRequired = false)]
-        public Dictionary<string, byte[]> SentryData { get; private set; }
+        // Member 1 was a Dictionary<string, byte[]> for SentryData.
 
         [ProtoMember(2, IsRequired = false)]
         public ConcurrentDictionary<string, int> ContentServerPenalty { get; private set; }
 
-        [ProtoMember(3, IsRequired = false)]
-        public Dictionary<string, string> LoginKeys { get; private set; }
+        // Member 3 was a Dictionary<string, string> for LoginKeys.
+
+        [ProtoMember(4, IsRequired = false)]
+        public Dictionary<string, string> LoginTokens { get; private set; }
+
+        [ProtoMember(5, IsRequired = false)]
+        public Dictionary<string, string> GuardData { get; private set; }
 
         string FileName;
 
         AccountSettingsStore()
         {
-            SentryData = new Dictionary<string, byte[]>();
             ContentServerPenalty = new ConcurrentDictionary<string, int>();
-            LoginKeys = new Dictionary<string, string>();
+            LoginTokens = [];
+            GuardData = [];
         }
 
         static bool Loaded
@@ -40,17 +44,15 @@ namespace DepotDownloader
         public static void LoadFromFile(string filename)
         {
             if (Loaded)
-                Console.WriteLine("Reloading account details");
+                throw new Exception("Config already loaded");
 
             if (IsolatedStorage.FileExists(filename))
             {
                 try
                 {
-                    using (var fs = IsolatedStorage.OpenFile(filename, FileMode.Open, FileAccess.Read))
-                    using (var ds = new DeflateStream(fs, CompressionMode.Decompress))
-                    {
-                        Instance = Serializer.Deserialize<AccountSettingsStore>(ds);
-                    }
+                    using var fs = IsolatedStorage.OpenFile(filename, FileMode.Open, FileAccess.Read);
+                    using var ds = new DeflateStream(fs, CompressionMode.Decompress);
+                    Instance = Serializer.Deserialize<AccountSettingsStore>(ds);
                 }
                 catch (IOException ex)
                 {
@@ -73,11 +75,9 @@ namespace DepotDownloader
 
             try
             {
-                using (var fs = IsolatedStorage.OpenFile(Instance.FileName, FileMode.Create, FileAccess.Write))
-                using (var ds = new DeflateStream(fs, CompressionMode.Compress))
-                {
-                    Serializer.Serialize(ds, Instance);
-                }
+                using var fs = IsolatedStorage.OpenFile(Instance.FileName, FileMode.Create, FileAccess.Write);
+                using var ds = new DeflateStream(fs, CompressionMode.Compress);
+                Serializer.Serialize(ds, Instance);
             }
             catch (IOException ex)
             {

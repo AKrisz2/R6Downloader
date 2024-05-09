@@ -30,9 +30,6 @@ namespace R6_Downloader.Views
             this.InitializeComponent();
             _usernameTB = usernameTB;
             passwordPB = passwordBox;
-
-            usernameTB.Text = App.settings["name"].ToString();
-            passwordBox.Password = App.settings["password"].ToString();
         }
 
         private void revealPasswordBox_Changed(object sender, RoutedEventArgs e)

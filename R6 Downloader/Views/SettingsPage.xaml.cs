@@ -40,8 +40,7 @@ namespace R6_Downloader.Views
                 downloadFolder.Text = App.settings["folder"].ToString();
             }
             changeInGameName.Text = App.settings["ingame"].ToString();
-            maxDownloads.Value = float.Parse(App.settings["maxDownloads"].ToString(), CultureInfo.InvariantCulture.NumberFormat); ;
-            rusToggle.IsOn = (bool)App.settings["rus"];
+            maxDownloads.Value = float.Parse(App.settings["maxDownloads"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
         }
 
         private async void changeDownloadFolder_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -84,26 +83,6 @@ namespace R6_Downloader.Views
                 }
             }
         }
-
-        private async void connectSteam_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = "Set Username and Password";
-            dialog.PrimaryButtonText = "Save";
-            dialog.CloseButtonText = "Cancel";
-            dialog.Content = new ConnectSteamPage();
-            var result = await dialog.ShowAsync();
-
-            if (result == ContentDialogResult.Primary)
-            {
-                App.settings["name"] = ConnectSteamPage._usernameTB.Text;
-                App.settings["password"] = ConnectSteamPage.passwordPB.Password;
-
-                File.WriteAllText("config.json", App.settings.ToString());
-            }
-        }
         private bool HasSpecialCharacters(string input)
         {
             // Regular expression pattern to match allowed characters
@@ -127,12 +106,6 @@ namespace R6_Downloader.Views
         private void ShowStorageButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.contentFrame.Navigate(typeof(DiskSpacePage), string.Empty);
-        }
-
-        private void rusToggle_Toggled(object sender, RoutedEventArgs e)
-        {
-            App.settings["rus"] = rusToggle.IsOn;
-            File.WriteAllText("config.json", App.settings.ToString());
         }
     }
 

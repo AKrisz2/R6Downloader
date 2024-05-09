@@ -23,6 +23,8 @@ using Windows.UI.Core;
 using Microsoft.UI.Dispatching;
 using DispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue;
 using System.Runtime.CompilerServices;
+using DepotDownloader;
+using SteamKit2;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -52,6 +54,9 @@ namespace R6_Downloader
         public static TextBlock _seasonDescription;
         public static StackPanel _seasonView;
         public static Grid _buttonsBar;
+        public static Grid _progressGrid;
+        public static TextBlock _progressText;
+        public static ProgressBar _downloadProgressBar;
 
         public static Button _downloadButton;
         public static Button _playButton;
@@ -95,8 +100,14 @@ namespace R6_Downloader
             _closeGameButton = CloseGameButton;
             _downloadText = DownloadText;
             _downloadScroller = DownloadScroller;
+            _progressGrid = ProgressGrid;
+            _progressText = ProgressText;
+            _downloadProgressBar = DownloadProgressBar;
 
             dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
+
+            DownloadNotifier.DownloadCompleted += DownloadCompletedHandler;
 
             process = new Process();
         }
@@ -326,7 +337,7 @@ namespace R6_Downloader
             {
                 version = JObject.Parse(client.DownloadString("https://raw.githubusercontent.com/AKrisz2/r6cucc/main/version.json"));
             }
-            if (version["version"].ToString() != "3")
+            if (version["version"].ToString() != "4")
             {
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
@@ -349,14 +360,18 @@ namespace R6_Downloader
         }
         private async void DownloadButton_Click(object sender, RoutedEventArgs e)
         {
-            _verifyButton.IsEnabled = false;
-            _openGameFolderButton.IsEnabled = false;
-            if (App.settings["name"].ToString() == "" || App.settings["folder"].ToString() == "")
+            _verifyButton.Visibility = Visibility.Collapsed;
+            _openGameFolderButton.Visibility = Visibility.Collapsed;
+
+            string username = "";
+            string password = "";
+
+            if (App.settings["folder"].ToString() == "")
             {
                 ContentDialog dialog = new ContentDialog();
                 dialog.XamlRoot = this.XamlRoot;
                 dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                dialog.Title = "Please check settings!";
+                dialog.Title = "Please set download folder!";
                 dialog.PrimaryButtonText = "OK";
                 dialog.DefaultButton = ContentDialogButton.Primary;
                 dialog.Content = new SettingsErrorPage();
@@ -369,22 +384,19 @@ namespace R6_Downloader
             }
             else
             {
-                if (App.settings["password"].ToString() == null)
-                {
-                    ContentDialog dialog1 = new ContentDialog();
-                    dialog1.XamlRoot = this.XamlRoot;
-                    dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-                    dialog1.Title = "Please enter Steam password!";
-                    dialog1.PrimaryButtonText = "OK";
-                    dialog1.DefaultButton = ContentDialogButton.Primary;
-                    dialog1.Content = new PasswordPage();
+                ContentDialog dialog1 = new ContentDialog();
+                dialog1.XamlRoot = this.XamlRoot;
+                dialog1.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
+                dialog1.Title = "Please login with Steam!";
+                dialog1.PrimaryButtonText = "OK";
+                dialog1.DefaultButton = ContentDialogButton.Primary;
+                dialog1.Content = new ConnectSteamPage();
 
-                    var result1 = await dialog1.ShowAsync();
-                    if (result1 == ContentDialogResult.Primary)
-                    {
-                        App.settings["password"] = PasswordPage._passwordBox.Password;
-                        File.WriteAllText("config.json", App.settings.ToString());
-                    }
+                var result1 = await dialog1.ShowAsync();
+                if (result1 == ContentDialogResult.Primary)
+                {
+                    username = ConnectSteamPage._usernameTB.Text;
+                    password = ConnectSteamPage.passwordPB.Password;
                 }
 
                 ContentDialog dialog = new ContentDialog();
@@ -397,26 +409,6 @@ namespace R6_Downloader
 
                 var result = await dialog.ShowAsync();
 
-                /*
-                if (!(bool)App.settings["rus"])
-                {
-                    File.AppendAllText("downloader.bat",
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377237 -manifest " + manifestWW + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
-                }
-                else if ((bool)App.settings["rus"])
-                {
-                    File.AppendAllText("downloader.bat",
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377238 -manifest " + manifestRus + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n" +
-                        "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 359551 -manifest " + manifestContent + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
-                }
-                if (_4kCheckbox.IsChecked == true)
-                {
-                    File.AppendAllText("downloader.bat",
-                    "@dotnet DepotDownloader\\DepotDownloader.dll -app 359550 -depot 377239 -manifest " + manifest4K + " -username " + App.settings["name"].ToString() + " -password " + App.settings["password"].ToString() + " -remember-password -dir \"" + App.settings["folder"].ToString() + seasonFolder + "\" -validate -max-servers " + App.settings["maxDownloads"].ToString() + " -max-downloads " + App.settings["maxDownloads"].ToString() + "\r\n");
-                }
-                */
-
                 SeasonDescription.Visibility = Visibility.Collapsed;
                 DownloadScroller.Visibility = Visibility.Visible;
                 _4kCheckbox.IsEnabled = false;
@@ -427,95 +419,36 @@ namespace R6_Downloader
 
                 //Start download
                 List<DownloadObj> arguments = new List<DownloadObj>();
-                                
-                if (!(bool)App.settings["rus"])
-                {
-                    //ManifestContent
-                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
-                    {
-                        new DownloaderArgument(ArgType.AppId, "359550"),
-                        new DownloaderArgument(ArgType.DepotId, "359551"),
-                        new DownloaderArgument(ArgType.ManifestId, manifestContent),
-                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
-                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
-                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
-                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, "")
-                    }));
-                    //Download WW
-                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
-                    {
-                        new DownloaderArgument(ArgType.AppId, "359550"),
-                        new DownloaderArgument(ArgType.DepotId, "377237"),
-                        new DownloaderArgument(ArgType.ManifestId, manifestWW),
-                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
-                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
-                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
-                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, "")
-                    }));
-                }
-                else if ((bool)App.settings["rus"])
-                {
-                    //ManifestContent
-                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
-                    {
-                        new DownloaderArgument(ArgType.AppId, "359550"),
-                        new DownloaderArgument(ArgType.DepotId, "359551"),
-                        new DownloaderArgument(ArgType.ManifestId, manifestContent),
-                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
-                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
-                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
-                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, "")
-                    }));
-                    //Download RUS
-                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
-                    {
-                        new DownloaderArgument(ArgType.AppId, "359550"),
-                        new DownloaderArgument(ArgType.DepotId, "377238"),
-                        new DownloaderArgument(ArgType.ManifestId, manifestRus),
-                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
-                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
-                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
-                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, "")
-                    }));
-                }
-                if (_4kCheckbox.IsChecked == true)
-                {
-                    //Download 4K
-                    arguments.Add(new DownloadObj(new List<DownloaderArgument>()
-                    {
-                        new DownloaderArgument(ArgType.AppId, "359550"),
-                        new DownloaderArgument(ArgType.DepotId, "377239"),
-                        new DownloaderArgument(ArgType.ManifestId, manifest4K),
-                        new DownloaderArgument(ArgType.Username,  App.settings["name"].ToString()),
-                        new DownloaderArgument(ArgType.Password, App.settings["password"].ToString()),
-                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
-                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString()),
-                        new DownloaderArgument(ArgType.RememberPassword, "")
-                    }));
-                }
-
-                int doneCount = 0;
-                DepotDownloaderLib.onConsoleOutput += (f, s) =>
-                {
-                    if(f == 100){ doneCount++; }
-
-                    if(doneCount == arguments.Count)
-                    {
-                        DownloadDone();
-                    }
-                };
                 _xamlRoot = this.XamlRoot;
 
-                DepotDownloaderLib.RunDownload(arguments, true);
+                string depots = "359551";
+                string manifests = manifestContent;
+
+                depots += " 377237";
+                manifests += $" {manifestWW}";
+                depots += " 377238";
+                manifests += $" {manifestRus}";
+
+                if(_4kCheckbox.IsChecked == true)
+                {
+                    depots += " 377239";
+                    manifests += $" {manifest4K}";
+                }
+
+                arguments.Add(new DownloadObj(new List<DownloaderArgument>()
+                    {
+                        new DownloaderArgument(ArgType.AppId, "359550"),
+                        new DownloaderArgument(ArgType.DepotId, depots),
+                        new DownloaderArgument(ArgType.ManifestId, manifests),
+                        new DownloaderArgument(ArgType.Username,  username),
+                        new DownloaderArgument(ArgType.Password, password),
+                        new DownloaderArgument(ArgType.Directory, App.settings["folder"].ToString() + seasonFolder),
+                        new DownloaderArgument(ArgType.MaxDownloads, App.settings["maxDownloads"].ToString()),
+                        new DownloaderArgument(ArgType.MaxServers, App.settings["maxDownloads"].ToString())
+                    }));
+                DepotDownloader.Program.RunDownload(arguments, true);
+
+                _progressGrid.Visibility = Visibility.Visible;
             }
         }
         public static async Task<string> Show2FAInputAsync()
@@ -545,6 +478,7 @@ namespace R6_Downloader
             GenerateStreaminginstall(App.settings["folder"].ToString() + seasonFolder);
             DispatcherQueue.TryEnqueue(() =>
             {
+                _progressGrid.Visibility = Visibility.Collapsed;
                 MainWindow._settingsButton.IsEnabled = true;
                 _4kCheckbox.IsEnabled = true;
                 _verifyButton.IsEnabled = true;
@@ -689,6 +623,7 @@ namespace R6_Downloader
         }
         public static void ShowPlayButton()
         {
+            _progressGrid.Visibility = Visibility.Collapsed;
             _downloadButton.Visibility = Visibility.Collapsed;
 
             _playButton.IsEnabled = true;
@@ -828,7 +763,12 @@ namespace R6_Downloader
             const int bytesInGigabyte = 1073741824; // 1024^3
             return (double)bytes / bytesInGigabyte;
         }
+        private void DownloadCompletedHandler(object sender, EventArgs e)
+        {
+            DownloadDone();
+        }
     }
+
     public class R6Season
     {
         public string Name { get; set; }

@@ -17,18 +17,6 @@
         <StackPanel Orientation="Vertical">
 
             <Grid Margin="5" CornerRadius="15">
-
-                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
-
-                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="Steam Login"/>
-                    <TextBlock Text="Input Steam credentials to use the downloader." FontSize="10" Foreground="LightGray"/>
-                </StackPanel>
-                <Button Width="200" Content="Login" x:Name="connectSteam" Click="connectSteam_Click" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="connectToSteam" HorizontalAlignment="Right"
-                        Margin="0,0,20,0"/>
-            </Grid>
-
-            <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 
                 <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
@@ -63,18 +51,6 @@
                 <TextBox Text="" Width="200" x:Name="changeInGameName" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="ChangeIGN" HorizontalAlignment="Right" Margin="0,0,20,0" Height="35" TextAlignment="Center" TextChanged="changeInGameName_TextChanged"/>
             </Grid>
 
-
-            <Grid Margin="5" CornerRadius="15">
-                <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
-
-                <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
-                    <TextBlock TextAlignment="Left" Text="Download RUS version"/>
-                    <TextBlock Text="Toggle ON if you own the Russian version of the game." FontSize="10" Foreground="LightGray"/>
-                </StackPanel>
-                <ToggleSwitch Width="200" IsOn="False" x:Name="rusToggle"  RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignRightWith="RUSToggle" HorizontalAlignment="Right" Margin="0,0,-50,0" Toggled="rusToggle_Toggled"/>
-           
-            </Grid>
-            
             <Grid Margin="5" CornerRadius="15">
                 <Rectangle Fill="#4d4d4d" Opacity="0.3" Height="60"/>
 

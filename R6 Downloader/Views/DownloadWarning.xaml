@@ -8,6 +8,6 @@
     mc:Ignorable="d">
 
     <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="Transparent">
-        <TextBlock Text="You will be prompted for Steam Guard multiple times.&#013;&#013;If the download seems stuck, or program freezes, please wait."/>
+        <TextBlock Text="You will be prompted for Steam Guard shortly after starting.&#013;&#013;If the download seems stuck, or program freezes, please wait."/>
     </StackPanel>
 </Page>

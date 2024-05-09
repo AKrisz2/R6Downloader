@@ -1,23 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>R6_Downloader</RootNamespace>
-    <Platforms>x64;arm64</Platforms>
-    <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
     <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
 	<WindowsPackageType>None</WindowsPackageType>
 	<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-	<PlatformTarget>AnyCPU</PlatformTarget>
+	<PlatformTarget>x64</PlatformTarget>
 	<AssemblyName>R6Downloader</AssemblyName>
 	<SignAssembly>False</SignAssembly>
 	<FileVersion></FileVersion>
 	<AssemblyVersion></AssemblyVersion>
 	<ApplicationIcon>Resources\icon.ico</ApplicationIcon>
 	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+	  <LangVersion>12.0</LangVersion>
+	  <PublishTrimmed>False</PublishTrimmed>
+	  <StartupObject>R6_Downloader.Program</StartupObject>
+	  <NoWin32Manifest>true</NoWin32Manifest>
+	  <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BlankPage1.xaml" />
@@ -48,12 +53,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PInvoke.User32" Version="0.7.124" />
+    <PackageReference Include="protobuf-net" Version="3.2.30" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
-    <PackageReference Include="SteamKit2" Version="2.4.1" />
+    <PackageReference Include="System.IO.Hashing" Version="8.0.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 	<!-- 
@@ -98,22 +106,22 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
     <NoWarn>SYSLIB0014;CS0436</NoWarn>
-    <DebugType>full</DebugType>
+    <DebugType>embedded</DebugType>
     <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>

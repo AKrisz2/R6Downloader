@@ -61,6 +61,13 @@
                 <TextBlock Text="Back"/>
             </Button>
 
+            <Grid VerticalAlignment="Bottom" Height="50" Visibility="Collapsed" x:Name="ProgressGrid">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="0.00GB/0.00GB" HorizontalAlignment="Center" x:Name="ProgressText" FontSize="12"/>
+                    <ProgressBar Height="20" Width="500" Value="0" Maximum="100" x:Name="DownloadProgressBar"/>
+                </StackPanel>
+            </Grid>
+
             <Button Width="200" Height="50" x:Name="VerifyButton" Click="DownloadButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,10,420,0" Visibility="Collapsed">
                 <TextBlock Text="Verify Game Files"/>
             </Button>
